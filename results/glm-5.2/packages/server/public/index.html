@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Splash Critters</title>
+    <style>
+      :root {
+        --bg: #1a1c2c;
+        --panel: #29366f;
+        --accent: #ffcd75;
+        --text: #f4f4f4;
+      }
+      * { box-sizing: border-box; }
+      html, body {
+        margin: 0; padding: 0; height: 100%;
+        background: var(--bg); color: var(--text);
+        font-family: "Courier New", monospace;
+        overflow: hidden;
+      }
+      #app { width: 100vw; height: 100vh; display: flex; align-items: center; justify-content: center; }
+      canvas { image-rendering: pixelated; image-rendering: crisp-edges; background: #000; }
+      .overlay {
+        position: absolute; inset: 0; display: flex; flex-direction: column;
+        align-items: center; justify-content: center; gap: 14px; text-align: center;
+        pointer-events: none;
+      }
+      .overlay > * { pointer-events: auto; }
+      .btn {
+        background: var(--panel); color: var(--text); border: 3px solid var(--accent);
+        padding: 10px 22px; font-family: inherit; font-size: 16px; cursor: pointer;
+        text-transform: uppercase; letter-spacing: 1px; min-width: 220px;
+      }
+      .btn:hover { background: var(--accent); color: var(--bg); }
+      h1 { font-size: 40px; margin: 0; text-shadow: 4px 4px 0 #000; color: var(--accent); letter-spacing: 2px; }
+      h2 { font-size: 22px; margin: 0; }
+      .row { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; }
+      .panel {
+        background: rgba(41,54,111,0.95); border: 3px solid var(--accent); padding: 20px 28px;
+        min-width: 340px; max-width: 720px;
+      }
+      .small { font-size: 12px; opacity: 0.8; }
+      input, select {
+        background: #1a1c2c; color: var(--text); border: 2px solid var(--accent);
+        padding: 8px; font-family: inherit; font-size: 14px;
+      }
+      .slots { display: flex; flex-direction: column; gap: 6px; margin: 10px 0; }
+      .slot { display: flex; justify-content: space-between; background: #1a1c2c; padding: 6px 10px; border: 1px solid #4a5294; }
+      .lobbylist { display: flex; flex-direction: column; gap: 6px; max-height: 280px; overflow-y: auto; width: 100%; }
+      .lobbyrow { display: flex; justify-content: space-between; background: #1a1c2c; padding: 8px 12px; border: 1px solid #4a5294; cursor: pointer; }
+      .lobbyrow:hover { background: #29366f; }
+      .hidden { display: none !important; }
+    </style>
+    <script type="module" crossorigin src="/assets/index-DJRtg_B0.js"></script>
+  </head>
+  <body>
+    <div id="app">
+      <canvas id="game" width="256" height="224"></canvas>
+      <div id="overlay" class="overlay"></div>
+    </div>
+  </body>
+</html>

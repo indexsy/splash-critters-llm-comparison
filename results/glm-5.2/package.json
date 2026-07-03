@@ -1,0 +1,30 @@
+{
+  "name": "splash-critters",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "workspaces": [
+    "packages/shared",
+    "packages/server",
+    "packages/client"
+  ],
+  "scripts": {
+    "dev": "concurrently -n server,client -c blue,magenta \"npm:dev:server\" \"npm:dev:client\"",
+    "dev:server": "npm -w @splash/server run dev",
+    "dev:client": "npm -w @splash/client run dev",
+    "build": "npm -w @splash/shared run build && npm -w @splash/client run build && npm run build:stage-client && npm -w @splash/server run build",
+    "build:stage-client": "node -e \"const fs=require('fs');const p='packages/server/public';fs.rmSync(p,{recursive:true,force:true});fs.cpSync('packages/client/dist',p,{recursive:true});fs.cpSync('packages/server/src/db/migrations',p+'/migrations',{recursive:true});console.log('[build] staged client -> server/public');\"",
+    "start": "node packages/server/dist/index.js",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "soak": "tsx packages/server/src/scripts/soak.ts"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2",
+    "typescript": "^5.4.0",
+    "vitest": "^1.6.0"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
