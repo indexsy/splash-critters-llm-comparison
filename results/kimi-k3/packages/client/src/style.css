@@ -1,0 +1,173 @@
+:root {
+  --px-font: 'Courier New', ui-monospace, monospace;
+  --c-bg: #1a1c2c;
+  --c-panel: #262b44;
+  --c-panel2: #333c68;
+  --c-accent: #41a6f6;
+  --c-accent2: #73eff7;
+  --c-warn: #ffcd75;
+  --c-bad: #ef7d57;
+  --c-good: #94e044;
+  --c-text: #f4f4f4;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body {
+  background: var(--c-bg);
+  color: var(--c-text);
+  font-family: var(--px-font);
+  overflow: hidden;
+  height: 100%;
+}
+
+#app {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  image-rendering: pixelated;
+}
+
+#game {
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+  background: #000;
+}
+
+#hud {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  font-family: var(--px-font);
+}
+
+.hidden { display: none !important; }
+
+h1.logo {
+  font-size: 42px;
+  letter-spacing: 2px;
+  color: var(--c-accent2);
+  text-shadow: 3px 3px 0 #0d2b45, 6px 6px 0 rgba(0,0,0,.35);
+  text-transform: uppercase;
+}
+
+h2 { font-size: 18px; color: var(--c-accent2); text-transform: uppercase; letter-spacing: 2px; }
+
+.panel {
+  background: var(--c-panel);
+  border: 3px solid var(--c-panel2);
+  box-shadow: 0 4px 0 rgba(0,0,0,.4);
+  padding: 16px;
+  min-width: 320px;
+  max-width: 90vw;
+}
+
+button, .btn {
+  font-family: var(--px-font);
+  font-weight: bold;
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #0d1b2a;
+  background: var(--c-accent);
+  border: 0;
+  border-bottom: 4px solid #1a5c96;
+  padding: 10px 18px;
+  cursor: pointer;
+}
+button:hover { background: var(--c-accent2); }
+button:active { transform: translateY(2px); border-bottom-width: 2px; }
+button:disabled { opacity: .45; cursor: default; }
+button.secondary { background: var(--c-panel2); color: var(--c-text); border-bottom-color: #1a1e33; }
+button.danger { background: var(--c-bad); border-bottom-color: #933c26; }
+button.good { background: var(--c-good); border-bottom-color: #4c7a1e; }
+
+.menu-list { display: flex; flex-direction: column; gap: 10px; min-width: 300px; }
+
+input[type="text"], input[type="number"], select {
+  font-family: var(--px-font);
+  font-size: 14px;
+  background: #14172a;
+  color: var(--c-text);
+  border: 2px solid var(--c-panel2);
+  padding: 8px 10px;
+}
+input:focus, select:focus { outline: 2px solid var(--c-accent); }
+
+.row { display: flex; gap: 10px; align-items: center; }
+.col { display: flex; flex-direction: column; gap: 8px; }
+.spacer { flex: 1; }
+.small { font-size: 11px; opacity: .8; }
+.dim { opacity: .65; }
+.warn { color: var(--c-warn); }
+.bad { color: var(--c-bad); }
+.good { color: var(--c-good); }
+
+.room-row, .lb-row {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  padding: 8px 10px;
+  background: #1b1f38;
+  border: 2px solid var(--c-panel2);
+}
+.room-row:hover { border-color: var(--c-accent); }
+
+.scroll { max-height: 50vh; overflow-y: auto; display: flex; flex-direction: column; gap: 6px; padding-right: 4px; }
+.scroll::-webkit-scrollbar { width: 8px; }
+.scroll::-webkit-scrollbar-thumb { background: var(--c-panel2); }
+
+.slot-row {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  padding: 8px 10px;
+  background: #1b1f38;
+  border: 2px solid var(--c-panel2);
+  min-width: 420px;
+}
+.slot-row.host { border-color: var(--c-warn); }
+.slot-row.me { border-color: var(--c-accent2); }
+
+.toast {
+  position: absolute;
+  top: 14px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--c-bad);
+  color: #201020;
+  font-weight: bold;
+  padding: 8px 16px;
+  border: 2px solid #fff;
+  z-index: 50;
+}
+
+.kbd {
+  background: #0d0f1f;
+  border: 2px solid var(--c-panel2);
+  padding: 1px 6px;
+  font-size: 12px;
+}
+
+.preview-canvas { image-rendering: pixelated; background: #14172a; border: 2px solid var(--c-panel2); }
+
+.tab-row { display: flex; gap: 6px; }
+.tab-row button.active { background: var(--c-accent2); }
+
+.xpbar { width: 260px; height: 14px; background: #14172a; border: 2px solid var(--c-panel2); position: relative; }
+.xpbar > div { height: 100%; background: var(--c-good); transition: width .8s ease; }
+
+.tier-badge {
+  padding: 2px 8px;
+  border: 2px solid var(--c-panel2);
+  background: #14172a;
+  font-size: 11px;
+  text-transform: uppercase;
+}
