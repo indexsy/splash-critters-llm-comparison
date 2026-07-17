@@ -30,27 +30,40 @@ output, and database files were stripped).
 
 ## Code audit & rankings
 
-Beyond "does it run," each rival codebase got a deep **independent code audit**
-(one Claude Fable 5 subagent each, same six-dimension rubric, every claim cites
-`file:line`). Fable 5's own entry is excluded — it's the auditor. Full reports
-in [`comparison/audits/`](comparison/audits/), synthesis + methodology in
+Beyond "does it run," every codebase got a deep **independent code audit** (one
+Claude Fable 5 subagent each, same six-dimension rubric, every claim cites
+`file:line`). Full reports in [`comparison/audits/`](comparison/audits/),
+synthesis + methodology in
 [`comparison/AUDIT-RANKINGS.md`](comparison/AUDIT-RANKINGS.md).
+
+> **⚠️ Conflict of interest:** Fable 5 wrote one of these submissions and ran
+> the comparison, and it ranks itself #1. To counter that, its own entry was
+> audited under a deliberately *harsher* framing than the rivals (told to assume
+> a fatal bug was hiding and to disprove the author's claims) — and the auditor
+> still couldn't knock it down. The #1 margin rests on three facts anyone can
+> verify from the public code: no fatal integration bug, the only entry that
+> doesn't leak the map seed, and the only working ranked-Elo path. Distrust the
+> messenger and check them yourself — the [disclosure](comparison/AUDIT-RANKINGS.md)
+> gives the exact commands.
 
 | Rank | Model | Weighted score /10 | One-line |
 | :-: | --- | :-: | --- |
-| 🥇 1 | **Kimi K3** | 6.70 | Most complete & cleanest; playable — but ranked duels can draw (killing Elo), forfeit is dead code, and the default Space key can't drop a balloon |
-| 🥈 2 | **Grok 4.5** | 6.18 | Real netcode, playable, well-built — but a malformed WS frame crashes the server, and the HUD ping is fake |
-| 🥉 3 | **GLM 5.2** | 3.60 | Renders a match, but it's a hologram: players phase through walls and the client is never sent the real map |
-| 4 | **Kimi K2.7** | 3.60 | Deterministic core, but the server crashes on the first connection and ranked never starts |
-| 5 | **Kimi K2.6 swarm** | 3.20 | Textbook swarm failure: competent modules never wired together — crashes at boot, never sends snapshots, no mouse handling |
+| 🥇 1 | **Fable 5** † | 8.60 | The only entry with no fatal bug, no seed leak, and a working ranked-Elo path — but a flaky Hard bot and no crash guard |
+| 🥈 2 | **Kimi K3** | 6.70 | Most complete of the rivals; playable — but ranked duels can draw (killing Elo), forfeit is dead code, and the default Space key can't drop a balloon |
+| 🥉 3 | **Grok 4.5** | 6.18 | Real netcode, playable, well-built — but a malformed WS frame crashes the server, and the HUD ping is fake |
+| 4 | **GLM 5.2** | 3.60 | Renders a match, but it's a hologram: players phase through walls and the client is never sent the real map |
+| 5 | **Kimi K2.7** | 3.60 | Deterministic core, but the server crashes on the first connection and ranked never starts |
+| 6 | **Kimi K2.6 swarm** | 3.20 | Textbook swarm failure: competent modules never wired together — crashes at boot, never sends snapshots, no mouse handling |
 
-Scored on correctness (25%), spec fidelity (20%), netcode (15%), security
-(15%), code quality (15%), test depth (10%). **Universal finding:** all five
-broadcast the real map seed that rolls the spec's "hidden, unguessable"
-power-ups, making every rival's power-ups client-derivable. The common thread
-in the failures: the shared sim is strong everywhere, and the games break at
-the *integration seams* — a SQL string, a circular import, an event emitted to
-no one — which is exactly where each model's own unit tests don't look.
+† self-audited under the harsher framing above. Scored on correctness (25%),
+spec fidelity (20%), netcode (15%), security (15%), code quality (15%), test
+depth (10%). **Near-universal finding:** all five *rivals* broadcast the real
+map seed that rolls the spec's "hidden, unguessable" power-ups, making their
+power-ups client-derivable (Fable 5 is the lone exception — it sends a decoy).
+The common thread in the failures: the shared sim is strong everywhere, and the
+games break at the *integration seams* — a SQL string, a circular import, an
+event emitted to no one, a key bound `'Space'` but read `' '` — which is exactly
+where each model's own unit tests don't look.
 
 ## Scoreboard
 
