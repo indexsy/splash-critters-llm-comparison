@@ -1,4 +1,4 @@
-import { CONFIG, GameState, computeSplashTiles, ringDepth, tileIndex } from '@splash/shared';
+import { CONFIG, GameState, computeSplashTiles, ringDepth, tileIndex, tideTiming } from '@splash/shared';
 
 export interface DangerMap {
   burstAt: Float64Array;
@@ -41,8 +41,7 @@ export function computeDangerMap(state: GameState): DangerMap {
   for (let iter = 0; iter < landed.length; iter++) {
     let changed = false;
     for (const a of landed) {
-      const owner = state.players[a.ownerSlot];
-      const range = owner ? owner.splashRange : CONFIG.STATS.RANGE_BASE;
+      const range = a.range || CONFIG.STATS.RANGE_BASE;
       const tiles = computeSplashTiles(state, a.tx, a.ty, range);
       for (const other of landed) {
         if (other.id === a.id) continue;
@@ -60,8 +59,7 @@ export function computeDangerMap(state: GameState): DangerMap {
   }
 
   for (const b of landed) {
-    const owner = state.players[b.ownerSlot];
-    const range = owner ? owner.splashRange : CONFIG.STATS.RANGE_BASE;
+    const range = b.range || CONFIG.STATS.RANGE_BASE;
     const t = eff.get(b.id)!;
     const origins = [ { tx: b.tx, ty: b.ty } ];
     if (b.slideDir !== 0) {
@@ -78,10 +76,11 @@ export function computeDangerMap(state: GameState): DangerMap {
 
   if (state.tideRing >= 0) {
     const roundTick = state.tick - state.roundStartTick;
+    const tide = tideTiming(state);
     const nextTideTick =
-      roundTick < CONFIG.TIDE_START_TICKS
-        ? state.roundStartTick + CONFIG.TIDE_START_TICKS
-        : state.tick + (CONFIG.TIDE_INTERVAL_TICKS - ((roundTick - CONFIG.TIDE_START_TICKS) % CONFIG.TIDE_INTERVAL_TICKS));
+      roundTick < tide.start
+        ? state.roundStartTick + tide.start
+        : state.tick + (tide.interval - ((roundTick - tide.start) % tide.interval));
     for (let y = 0; y < state.h; y++) {
       for (let x = 0; x < state.w; x++) {
         const depth = ringDepth(state, x, y);

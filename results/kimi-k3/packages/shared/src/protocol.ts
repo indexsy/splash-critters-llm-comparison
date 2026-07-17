@@ -83,6 +83,7 @@ export interface SnapshotBalloon {
   fy: number;
   slideDir: Dir;
   burstTick: number;
+  range: number;
   flying: boolean;
 }
 
@@ -180,6 +181,7 @@ export interface ProfileDto {
   selectedAnimal: AnimalId;
   selectedHat: HatId;
   tutorialDone: boolean;
+  customNickname: boolean;
   ratings: { mode: GameMode; rating: number; games: number; wins: number; peak: number }[];
   unlocks: string[];
 }

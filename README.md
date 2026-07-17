@@ -26,7 +26,7 @@ output, and database files were stripped).
 | [`results/kimi-k2.7/`](results/kimi-k2.7/) | **Kimi K2.7** (opencode) |
 | [`results/kimi-k2.6-agent-swarm/`](results/kimi-k2.6-agent-swarm/) | **Kimi K2.6 agent swarm** (multi-agent; its own `plan.md`/`SPEC.md` orchestration artifacts are included) |
 | [`results/grok-4.5/`](results/grok-4.5/) | **Grok 4.5** (added to the experiment two weeks after the first four; same prompt, same gauntlet) |
-| [`results/kimi-k3/`](results/kimi-k3/) | **Kimi K3** (added alongside Grok 4.5; same prompt, same gauntlet) |
+| [`results/kimi-k3/`](results/kimi-k3/) | **Kimi K3** (added alongside Grok 4.5; re-submitted — the first upload was an incomplete agent run, see Methodology) |
 
 ## Scoreboard
 
@@ -39,14 +39,14 @@ client served → headless browser probe.
 | --- | :-: | :-: | :-: | :-: | :-: | :-: |
 | `npm install` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
 | `npm test` (own suite) | ✅ 28 tests | ✅ 12 tests | ✅ 7 tests | ✅ 26 tests | ✅ 14 tests | ✅ 18 tests |
-| `npm run build` | ✅ | ✅ | ✅ ¹ | ✅ ¹ | ✅ | ❌ ⁸ |
-| Server boots, `/health` OK | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ (no client) |
-| Built client served on one port | ✅ | ✅ | ✅ | ✅ | ✅ | ❌ 404 |
-| **Client loads in a browser** | ✅ | ✅ | ✅ | ❌ crashes on load ² | ✅ | ❌ ⁸ |
-| **A player can actually connect** | ✅ | ✅ | ❌ server crashes ³ | ❌ | ✅ | ❌ |
-| **Full match playable vs bots** | ✅ | ✅ | ❌ | ❌ | ✅ | ❌ |
-| Bot-vs-bot soak script | ⚠️ flaky ⁴ | ✅ ⁵ | ✅ ⁵ | ❌ broken ⁶ | ✅ ⁵ | ✅ |
-| E2E acceptance script included | ✅ passes | — | — | — | — | — |
+| `npm run build` | ✅ | ✅ | ✅ ¹ | ✅ ¹ | ✅ | ✅ |
+| Server boots, `/health` OK | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
+| Built client served on one port | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
+| **Client loads in a browser** | ✅ | ✅ | ✅ | ❌ crashes on load ² | ✅ | ✅ |
+| **A player can actually connect** | ✅ | ✅ | ❌ server crashes ³ | ❌ | ✅ | ✅ |
+| **Full match playable vs bots** | ✅ | ✅ | ❌ | ❌ | ✅ | ✅ |
+| Bot-vs-bot soak script | ⚠️ flaky ⁴ | ✅ ⁵ | ✅ ⁵ | ❌ broken ⁶ | ✅ ⁵ | ✅ ⁵ |
+| E2E acceptance script included | ✅ passes | — | — | — | — | ⚠️ ranked section fails ⁸ |
 
 ¹ Both Kimi zips shipped **prebuilt `dist/` folders plus stale
 `tsconfig.tsbuildinfo`** files. After stripping `dist/` (as this repo does),
@@ -76,23 +76,25 @@ crash-freedom. Across 6 recorded runs the Hard-vs-Easy score was 9/10,
 time**. Honest reading: Hard reliably *outperforms* Easy (~70% duel win
 rate) but "reliably beats" at a 70% threshold is marginal. Logged as-is.
 
-⁵ GLM's, K2.7's, and Grok 4.5's soak scripts assert only that a match
-completes without crashing — no bot-skill assertion. (K2.7's duel soak logs
-`winner: null`.)
+⁵ GLM's, K2.7's, Grok 4.5's, and K3's soak scripts assert only that
+matches complete without crashing — no bot-skill assertion. (K2.7's duel
+soak logs `winner: null`; K3's is the most thorough of these, covering
+several scenarios including a revenge-duck match.)
 
 ⁶ **K2.6 swarm:** a soak script exists at `scripts/soak-test.mjs` but was
 never wired into `npm run soak` and crashes immediately (it imports `.js`
 paths that only exist as TypeScript source).
 
-⁸ **Kimi K3:** `render/sprites.ts` is missing a whole family of exports
-(`drawPixelRect`, `H`, and the text/panel helpers) that `main.ts`,
-`screens/common.ts`, and `render/hud.ts` all import — the symbols are
-defined **nowhere in the codebase**. `vite build` fails on the first one,
-and Vite dev mode dies at module load
-(`does not provide an export named 'H'`). Telling detail: K3's zip is the
-only one that shipped a server `dist/` but **no client `dist/`** — its
-client build never succeeded on its own machine either. Its soak script is
-solid, though (multiple scenarios, including a revenge-duck match).
+⁸ **Kimi K3** is the only other submission that ships its own end-to-end
+acceptance script — and, run to completion, that script is honest about a
+real defect: the casual section fully passes (room browser, 4p match with
+hard bots, XP persistence), but the ranked section ends with
+`✗ FAIL: winner gained rating (+0)` — the ranked duel finished with no Elo
+delta surfaced — after which the script itself crashes on a `TypeError`
+(no 2nd-place entry in the placements, consistent with a drawn duel, which
+the spec says first-to-3 duels can't produce). The server has rating-update
+code; whether the fault is in the Elo wiring or the match-end payload was
+not adjudicated further — either way its own gate reports 2 FAILURES.
 
 ## How far can you actually get?
 
@@ -101,11 +103,11 @@ menu, play a full match against bots.
 
 | Stage | Fable 5 | GLM 5.2 | Kimi K2.7 | K2.6 swarm | Grok 4.5 | Kimi K3 |
 | --- | :-: | :-: | :-: | :-: | :-: | :-: |
-| Title screen renders | ✅ | ✅ | ✅ | ❌ blank page | ✅ | ❌ blank page |
-| Guest account created | ✅ | ✅ | ❌ (server dead) | ❌ | ✅ | ❌ |
-| Main menu | ✅ | ✅ | ❌ stuck on title | ❌ | ✅ | ❌ |
-| Lobby / practice setup | ✅ | ✅ | ❌ | ❌ | ✅ | ❌ |
-| Live match vs bots | ✅ | ✅ | ❌ | ❌ | ✅ | ❌ |
+| Title screen renders | ✅ | ✅ | ✅ | ❌ blank page | ✅ | ✅ |
+| Guest account created | ✅ | ✅ | ❌ (server dead) | ❌ | ✅ | ✅ |
+| Main menu | ✅ | ✅ | ❌ stuck on title | ❌ | ✅ | ✅ |
+| Lobby / practice setup | ✅ | ✅ | ❌ | ❌ | ✅ | ✅ |
+| Live match vs bots | ✅ | ✅ | ❌ | ❌ | ✅ | ✅ |
 
 ### Fable 5 — title / menu / live match
 
@@ -155,42 +157,44 @@ second-largest codebase, near-best test count, all 12 screen files, and
 detailed planning artifacts — and none of it is reachable behind a
 client that crashes on load.*
 
-### Kimi K3 — blank page
+### Kimi K3 — menu / live match
 
-<p><img src="comparison/screenshots/kimi-k3-dev.png" width="45%"></p>
+<p>
+<img src="comparison/screenshots/kimi-k3-menu.png" width="45%"> <img src="comparison/screenshots/kimi-k3-game.png" width="45%">
+</p>
 
-*Same failure shape as the K2.6 swarm, different cause: a sprite-helper
-module that never got its helpers (see ⁸). 18 passing sim tests, a working
-server, one of the better soak scripts — and no way to ever see the game.*
+*K3's game plays: DOM-driven menus, a skippable 5-step tutorial, a
+create-room flow with every spec option, and a clean duel vs a bot (tidy
+tile art, HUD plates, round banner). Nits: the title screen uses OS emoji
+rather than the spec's procedural pixel art, the lobby's start button
+renders unlabeled, and ranked Elo fails its own e2e gate (see ⁸).*
 
 ## Static metrics
 
 | Metric | Fable 5 | GLM 5.2 | Kimi K2.7 | K2.6 swarm | Grok 4.5 | Kimi K3 |
 | --- | --: | --: | --: | --: | --: | --: |
-| TypeScript lines | 7,934 | 4,450 | 4,540 | 8,944 | 6,581 | 5,881 |
-| TypeScript files | 53 | 30 | 40 | 39 | 43 | 35 |
+| TypeScript lines | 7,934 | 4,450 | 4,540 | 8,944 | 6,581 | 6,536 |
+| TypeScript files | 53 | 30 | 40 | 39 | 43 | 45 |
 | Unit tests | 28 | 12 | 7 | 26 | 14 | 18 |
-| Client screen modules | 12 | 1 consolidated ⁷ | 11 | 12 | 12 | consolidated ⁷ |
-| Extra verification shipped | soak + WS e2e script | soak | soak | (broken soak) | soak | soak |
+| Client screen modules | 12 | 1 consolidated ⁷ | 11 | 12 | 12 | 12 |
+| Extra verification shipped | soak + WS e2e script | soak | soak | (broken soak) | soak | soak + e2e ⁸ |
 
 ⁷ GLM consolidated all screens into one 400-line file (every spec screen
 **except the tutorial, which GLM skipped entirely** — `grep -ri tutorial
-packages/` → 0 hits). Kimi K3 similarly keeps all screens as a state
-machine inside `main.ts`, tutorial included. Every submission except GLM
-implements the tutorial.
+packages/` → 0 hits). Every submission except GLM implements the tutorial.
 
 Feature-keyword footprint (case-insensitive grep hits across `packages/`,
 a *rough* proxy for how deeply a mechanic is wired through sim + bots + UI):
 
 | Keyword | Fable 5 | GLM 5.2 | Kimi K2.7 | K2.6 swarm | Grok 4.5 | Kimi K3 |
 | --- | --: | --: | --: | --: | --: | --: |
-| kick | 57 | 15 | 28 | 78 | 15 | 12 |
-| revenge (ducks) | 57 | 31 | 27 | 37 | 53 | 24 |
-| tide | 55 | 42 | 26 | 33 | 40 | 45 |
-| emote | 53 | 2 | 17 | 48 | 32 | 54 |
-| rematch | 22 | 12 | 13 | 21 | 32 | 14 |
-| tutorial | 28 | 0 | 15 | 11 | 31 | 26 |
-| colorblind | 11 | 0 | 0 | 11 | 10 | 7 |
+| kick | 57 | 15 | 28 | 78 | 15 | 16 |
+| revenge (ducks) | 57 | 31 | 27 | 37 | 53 | 28 |
+| tide | 55 | 42 | 26 | 33 | 40 | 57 |
+| emote | 53 | 2 | 17 | 48 | 32 | 51 |
+| rematch | 22 | 12 | 13 | 21 | 32 | 33 |
+| tutorial | 28 | 0 | 15 | 11 | 31 | 30 |
+| colorblind | 11 | 0 | 0 | 11 | 10 | 11 |
 | reconcil… (netcode) | 3 | 5 | 0 | 10 | 1 | 0 |
 
 ## Methodology & fairness notes
@@ -211,9 +215,14 @@ a *rough* proxy for how deeply a mechanic is wired through sim + bots + UI):
 - **Grok 4.5 and Kimi K3 were added two weeks after the original four**
   (zips dated 2026-07-16 vs 2026-07-02) and ran the exact same harness;
   their zips were stripped identically (`node_modules/`, `dist/`,
-  `*.tsbuildinfo`, databases). K3's build failure is NOT a stripping
-  artifact — the missing symbols exist nowhere in its source, and its own
-  zip contained no client build (see ⁸). The Fable 5 folder remains the frozen
+  `*.tsbuildinfo`, databases).
+- **K3 was re-submitted once.** The first K3 zip was accidentally uploaded
+  while its agent was still mid-run: the client's sprite-helper module was
+  truncated (functions imported by three files existed nowhere), so nothing
+  could build or load. The experimenter replaced it with the completed run
+  the same day; the scoreboard reflects only the finished submission. The
+  incomplete version's evaluation survives in the git history for the
+  curious. The Fable 5 folder remains the frozen
   2026-07-02 submission even though development continued in its source
   repo afterward.
 - Fable 5's flaky soak result is reported exactly as measured (see ⁴) —

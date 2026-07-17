@@ -42,6 +42,8 @@ export class BotController {
   private lastThinkTick = -999;
   private seq = 0;
   private escapeMode = false;
+  public debugFlee: 'ok' | 'none' | null = null;
+  public debugNowDanger = false;
   private lastX = 0;
   private lastY = 0;
   private stuckTicks = 0;
@@ -95,11 +97,12 @@ export class BotController {
     danger: DangerMap,
     startTx: number,
     startTy: number,
-    opts: { stopMargin: number; passMargin: number; ignoreOwnBalloons?: Set<number>; maxDepth?: number },
+    opts: { stopMargin: number; passMargin: number; ignoreOwnBalloons?: Set<number>; maxDepth?: number; stepTicks: number },
   ): { arrival: Map<number, number>; prev: Map<number, number> } {
     const arrival = new Map<number, number>();
     const prev = new Map<number, number>();
     const ignore = opts.ignoreOwnBalloons ?? new Set<number>();
+    const stepTicks = Math.max(1, opts.stepTicks);
     const q: { tx: number; ty: number; d: number }[] = [{ tx: startTx, ty: startTy, d: 0 }];
     arrival.set(tileIndex(state.w, startTx, startTy), state.tick);
     const maxDepth = opts.maxDepth ?? state.w * state.h;
@@ -113,7 +116,7 @@ export class BotController {
         const nIdx = tileIndex(state.w, nx, ny);
         if (arrival.has(nIdx)) continue;
         if (!this.passable(state, nx, ny, ignore)) continue;
-        const arriveTick = state.tick + cur.d + 1;
+        const arriveTick = state.tick + (cur.d + 1) * stepTicks;
         if (!tileSafeAt(danger, nIdx, arriveTick, opts.passMargin)) continue;
         arrival.set(nIdx, arriveTick);
         prev.set(nIdx, tileIndex(state.w, cur.tx, cur.ty));
@@ -155,33 +158,48 @@ export class BotController {
     const myIdx = tileIndex(state.w, tx, ty);
     const ownBalloons = new Set(me.overlappedBalloonIds);
 
-    const nowDanger = !tileSafeAt(danger, myIdx, state.tick, 0) || !tileSafeAt(danger, myIdx, state.tick + 6, 0);
+    const reactTicks = THINK_TICKS[this.difficulty] + 3 * this.stepTicks(state);
+    const nowDanger = !tileSafeAt(danger, myIdx, state.tick, 0) || !tileSafeAt(danger, myIdx, state.tick + reactTicks, 0);
     if (nowDanger) {
-      const { arrival, prev } = this.bfs(state, danger, tx, ty, { stopMargin: 12, passMargin: 0, ignoreOwnBalloons: ownBalloons });
+      const { arrival, prev } = this.bfs(state, danger, tx, ty, { stopMargin: 12, passMargin: 4, ignoreOwnBalloons: ownBalloons, stepTicks: this.stepTicks(state) });
       let best: number | null = null;
       let bestCost = Infinity;
+      let fallback: number | null = null;
+      let fallbackBurst = -Infinity;
       for (const [idx, arrive] of arrival) {
-        if (!tileSafeAt(danger, idx, arrive, 40)) continue;
-        const cost = arrive - state.tick;
-        if (cost < bestCost) {
-          bestCost = cost;
-          best = idx;
+        const burstAt = danger.burstAt[idx]!;
+        const safeToStand = burstAt === Infinity || arrive > burstAt + CONFIG.SPLASH_TICKS;
+        if (safeToStand) {
+          const cost = arrive - state.tick;
+          if (cost < bestCost) {
+            bestCost = cost;
+            best = idx;
+          }
+        } else if (burstAt > fallbackBurst) {
+          fallbackBurst = burstAt;
+          fallback = idx;
         }
       }
-      if (best !== null && best !== myIdx) {
-        this.path = this.buildPath(state, prev, myIdx, best);
+      const target = best ?? fallback;
+      if (target !== null && target !== myIdx) {
+        this.path = this.buildPath(state, prev, myIdx, target);
         this.escapeMode = true;
+        this.debugFlee = 'ok';
         return;
       }
+      this.debugFlee = 'none';
+    } else {
+      this.debugFlee = null;
     }
+    this.debugNowDanger = nowDanger;
     this.escapeMode = false;
 
-    const { arrival, prev } = this.bfs(state, danger, tx, ty, { stopMargin: 20, passMargin: 0, ignoreOwnBalloons: ownBalloons });
+    const { arrival, prev } = this.bfs(state, danger, tx, ty, { stopMargin: 20, passMargin: 4, ignoreOwnBalloons: ownBalloons, stepTicks: this.stepTicks(state) });
 
     for (const pu of state.exposedPowerUps) {
       const idx = tileIndex(state.w, pu.tx, pu.ty);
       const arrive = arrival.get(idx);
-      if (arrive !== undefined && tileSafeAt(danger, idx, arrive, 20)) {
+      if (arrive !== undefined && tileSafeAt(danger, idx, arrive, 25)) {
         this.path = this.buildPath(state, prev, myIdx, idx);
         return;
       }
@@ -264,7 +282,7 @@ export class BotController {
       const x = idx % state.w;
       const y = Math.floor(idx / state.w);
       if (!this.adjacentCastle(state, x, y)) continue;
-      if (!tileSafeAt(danger, idx, arrive, 30)) continue;
+      if (!tileSafeAt(danger, idx, arrive, CONFIG.FUSE_TICKS + CONFIG.SPLASH_TICKS)) continue;
       const cost = arrive - state.tick;
       if (cost < bestFarmCost) {
         bestFarmCost = cost;
@@ -278,7 +296,7 @@ export class BotController {
 
     const safeTiles: number[] = [];
     for (const [idx, arrive] of arrival) {
-      if (tileSafeAt(danger, idx, arrive, 40)) safeTiles.push(idx);
+      if (tileSafeAt(danger, idx, arrive, CONFIG.FUSE_TICKS + CONFIG.SPLASH_TICKS)) safeTiles.push(idx);
     }
     if (safeTiles.length > 0) {
       const pick = safeTiles[Math.floor(Math.random() * safeTiles.length)]!;
@@ -314,6 +332,7 @@ export class BotController {
     const hypot = computeDangerMap(state);
     const burstTick = state.tick + CONFIG.FUSE_TICKS;
     const tiles = this.splashFrom(state, tx, ty, me.splashRange);
+    const splashSet = new Set(tiles);
     for (const t of tiles) {
       hypot.burstAt[t] = Math.min(hypot.burstAt[t]!, burstTick);
     }
@@ -321,11 +340,13 @@ export class BotController {
       stopMargin: 8,
       passMargin: 0,
       ignoreOwnBalloons: new Set([...ownBalloons, -1]),
-      maxDepth: CONFIG.FUSE_TICKS - 10,
+      maxDepth: Math.floor((CONFIG.FUSE_TICKS - 10) / this.stepTicks(state)),
+      stepTicks: this.stepTicks(state),
     });
     for (const [idx, arrive] of arrival) {
       if (idx === tileIndex(state.w, tx, ty)) continue;
       if (arrive >= burstTick) break;
+      if (splashSet.has(idx)) continue;
       if (tileSafeAt(hypot, idx, arrive, 12)) return true;
     }
     return false;
@@ -334,19 +355,24 @@ export class BotController {
   private planEscape(state: GameState, danger: DangerMap, tx: number, ty: number, ownBalloons: Set<number>, withHypothetical: boolean): void {
     const me = state.players[this.slot]!;
     const hypot = computeDangerMap(state);
+    const splashSet = new Set<number>();
     if (withHypothetical) {
       const tiles = this.splashFrom(state, tx, ty, me.splashRange);
       for (const t of tiles) {
+        splashSet.add(t);
         hypot.burstAt[t] = Math.min(hypot.burstAt[t]!, state.tick + CONFIG.FUSE_TICKS);
       }
     }
     const myIdx = tileIndex(state.w, tx, ty);
-    const { arrival, prev } = this.bfs(state, hypot, tx, ty, { stopMargin: 10, passMargin: 0, ignoreOwnBalloons: ownBalloons });
+    const { arrival, prev } = this.bfs(state, hypot, tx, ty, { stopMargin: 10, passMargin: 4, ignoreOwnBalloons: ownBalloons, stepTicks: this.stepTicks(state) });
     let best: number | null = null;
     let bestCost = Infinity;
     for (const [idx, arrive] of arrival) {
       if (idx === myIdx) continue;
-      if (!tileSafeAt(hypot, idx, arrive, 30)) continue;
+      if (splashSet.has(idx)) continue;
+      const burstAt = hypot.burstAt[idx]!;
+      const safeToStand = burstAt === Infinity || arrive + 30 < burstAt || arrive > burstAt + CONFIG.SPLASH_TICKS;
+      if (!safeToStand) continue;
       const cost = arrive - state.tick;
       if (cost < bestCost) {
         bestCost = cost;
@@ -355,8 +381,16 @@ export class BotController {
     }
     if (best !== null) {
       this.path = this.buildPath(state, prev, myIdx, best);
+    } else {
+      this.path = [];
     }
     void danger;
+  }
+
+  private stepTicks(state: GameState): number {
+    const me = state.players[this.slot];
+    const speed = me ? me.speed : CONFIG.STATS.SPEED_BASE;
+    return Math.max(1, Math.round(CONFIG.TICK_RATE / speed));
   }
 
   private splashFrom(state: GameState, tx: number, ty: number, range: number): number[] {
@@ -377,7 +411,15 @@ export class BotController {
 
   private stepDir(state: GameState): Dir {
     const me = state.players[this.slot]!;
-    if (this.path.length === 0) return 0;
+    if (this.path.length === 0) {
+      const cx = Math.floor(me.x) + 0.5;
+      const cy = Math.floor(me.y) + 0.5;
+      const ddx = cx - me.x;
+      const ddy = cy - me.y;
+      if (Math.abs(ddx) > 0.14 && Math.abs(ddx) > Math.abs(ddy)) return ddx > 0 ? 2 : 4;
+      if (Math.abs(ddy) > 0.14) return ddy > 0 ? 3 : 1;
+      return 0;
+    }
     const next = this.path[0]!;
     const cx = next.tx + 0.5;
     const cy = next.ty + 0.5;

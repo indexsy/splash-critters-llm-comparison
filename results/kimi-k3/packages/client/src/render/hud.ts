@@ -1,145 +1,119 @@
-import type { AnimalId, HatId, Snapshot } from '@splash/shared';
-import { tierForRating } from '@splash/shared';
-import { ANIMAL_COLORS, P, W, drawAnimal, drawPixelRect, drawText } from './sprites.js';
+import { AnimalId, HatId } from '@splash/shared';
+import { MatchPlayerConfig, Placement } from '@splash/shared';
 
-export interface HudPlayer {
-  slot: number;
-  nickname: string;
-  animal: AnimalId;
-  hat: HatId;
-  rating: number | null;
+export interface KillFeedItem {
+  text: string;
+  until: number;
 }
 
-export function drawHud(
-  ctx: CanvasRenderingContext2D,
-  snap: Snapshot | null,
-  players: HudPlayer[],
-  localSlot: number,
-  ping: number,
-  killFeed: { text: string; life: number }[],
-  announcer: { text: string; life: number } | null,
-  shake: { x: number; y: number },
-): void {
-  ctx.save();
-  ctx.translate(shake.x, shake.y);
+export class Hud {
+  root: HTMLElement;
+  private cards: HTMLElement;
+  private feed: HTMLElement;
+  private announceEl: HTMLElement;
+  private banner: HTMLElement;
+  private announceTimer: number | null = null;
 
-  // top bar
-  drawPixelRect(ctx, 0, 0, W, 14, 'rgba(15,15,26,0.85)');
-  if (snap) {
-    const alive = snap.players.filter((p) => p.alive && !p.isDuck).length;
-    drawText(ctx, `R${snap.roundNo}`, 4, 3, P.gold);
-    drawText(ctx, `${alive} dry`, 28, 3, P.splash);
-    if (snap.tideRing > 0) drawText(ctx, 'TIDE!', 70, 3, P.red);
-    drawText(ctx, `${ping}ms`, W - 36, 3, P.gray);
+  constructor() {
+    this.root = document.getElementById('hud')!;
+    this.root.innerHTML = '';
+    this.cards = document.createElement('div');
+    this.cards.style.cssText = 'position:absolute;top:6px;left:6px;display:flex;flex-direction:column;gap:4px;';
+    this.feed = document.createElement('div');
+    this.feed.style.cssText = 'position:absolute;top:6px;right:6px;display:flex;flex-direction:column;gap:3px;align-items:flex-end;font-size:11px;';
+    this.announceEl = document.createElement('div');
+    this.announceEl.style.cssText =
+      'position:absolute;top:34%;left:50%;transform:translate(-50%,-50%);font-size:26px;font-weight:bold;color:#73eff7;text-shadow:2px 2px 0 #0d2b45;letter-spacing:2px;text-align:center;pointer-events:none;';
+    this.banner = document.createElement('div');
+    this.banner.style.cssText =
+      'position:absolute;bottom:8px;left:50%;transform:translateX(-50%);font-size:12px;color:#ffcd75;text-shadow:1px 1px 0 #000;';
+    this.root.append(this.cards, this.feed, this.announceEl, this.banner);
   }
 
-  // player panels
-  const slots = players.slice(0, 4);
-  slots.forEach((hp, i) => {
-    const sp = snap?.players.find((p) => p.slot === hp.slot);
-    const x = 2 + (i % 2) * 128;
-    const y = H_BOTTOM(i);
-    const bg = hp.slot === localSlot ? 'rgba(30,60,90,0.9)' : 'rgba(20,30,50,0.85)';
-    drawPixelRect(ctx, x, y, 124, 22, bg);
-    drawAnimal(ctx, x + 2, y + 2, hp.animal, hp.hat, 3, 0, sp ? !sp.alive : false);
-    drawText(ctx, hp.nickname.slice(0, 10), x + 20, y + 2, P.white);
-    if (sp) {
-      drawText(ctx, `B${sp.balloonCount} R${sp.splashRange}`, x + 20, y + 11, P.gray);
-      drawText(ctx, `${sp.roundWins}W`, x + 100, y + 2, P.gold);
+  destroy(): void {
+    this.root.innerHTML = '';
+  }
+
+  setCards(players: MatchPlayerConfig[], mySlot: number, wins: number[], soaks: number[], alive: boolean[], pingMs: number): void {
+    this.cards.innerHTML = '';
+    for (const p of players) {
+      const card = document.createElement('div');
+      card.style.cssText = `display:flex;align-items:center;gap:6px;background:rgba(20,23,42,.85);border:2px solid ${p.slot === mySlot ? '#73eff7' : '#333c68'};padding:3px 8px;font-size:11px;${alive[p.slot] === false ? 'opacity:.45;' : ''}`;
+      const c = document.createElement('canvas');
+      c.width = 12;
+      c.height = 12;
+      c.style.cssText = 'width:24px;height:24px;image-rendering:pixelated;';
+      drawMiniIcon(c, p.animal, p.hat);
+      const name = document.createElement('span');
+      name.textContent = p.nickname;
+      const stats = document.createElement('span');
+      stats.style.cssText = 'color:#ffcd75;';
+      stats.textContent = ` ${'●'.repeat(Math.max(0, wins[p.slot] ?? 0))}${'○'.repeat(Math.max(0, 3 - (wins[p.slot] ?? 0)))}`;
+      const soak = document.createElement('span');
+      soak.style.cssText = 'color:#41a6f6;';
+      soak.textContent = `~${soaks[p.slot] ?? 0}`;
+      card.append(c, name, stats, soak);
+      if (p.slot === mySlot && pingMs > 0) {
+        const ping = document.createElement('span');
+        ping.style.cssText = 'color:#94e044;font-size:9px;';
+        ping.textContent = `${pingMs}ms`;
+        card.append(ping);
+      }
+      this.cards.append(card);
     }
-    if (hp.rating != null) {
-      drawText(ctx, tierForRating(hp.rating).slice(0, 4), x + 90, y + 11, P.accent);
+  }
+
+  kill(text: string): void {
+    const item = document.createElement('div');
+    item.style.cssText = 'background:rgba(20,23,42,.9);border:1px solid #333c68;padding:2px 8px;';
+    item.textContent = text;
+    this.feed.prepend(item);
+    while (this.feed.children.length > 5) this.feed.lastChild!.remove();
+    setTimeout(() => {
+      item.style.transition = 'opacity .5s';
+      item.style.opacity = '0';
+      setTimeout(() => item.remove(), 500);
+    }, 4000);
+  }
+
+  announce(text: string, sub = '', ms = 1600): void {
+    this.announceEl.innerHTML = '';
+    const t = document.createElement('div');
+    t.textContent = text;
+    this.announceEl.append(t);
+    if (sub) {
+      const s = document.createElement('div');
+      s.style.cssText = 'font-size:13px;color:#ffcd75;';
+      s.textContent = sub;
+      this.announceEl.append(s);
     }
-  });
-
-  // kill feed
-  killFeed.forEach((k, i) => {
-    ctx.globalAlpha = Math.min(1, k.life / 30);
-    drawText(ctx, k.text, 4, 16 + i * 9, P.white);
-  });
-  ctx.globalAlpha = 1;
-
-  // announcer
-  if (announcer && announcer.life > 0) {
-    ctx.globalAlpha = Math.min(1, announcer.life / 20);
-    const tw = ctx.measureText(announcer.text).width;
-    drawPixelRect(ctx, (W - tw) / 2 - 6, 90, tw + 12, 16, 'rgba(0,0,0,0.7)');
-    drawText(ctx, announcer.text, (W - tw) / 2, 94, P.gold);
-    ctx.globalAlpha = 1;
+    if (this.announceTimer !== null) clearTimeout(this.announceTimer);
+    this.announceTimer = window.setTimeout(() => {
+      this.announceEl.innerHTML = '';
+    }, ms);
   }
 
-  ctx.restore();
-}
-
-function H_BOTTOM(i: number): number {
-  return i < 2 ? 202 : 202; // all bottom — actually stack top corners for 4p
-}
-
-// fix layout: 4 corners style mini
-export function drawHudCorners(
-  ctx: CanvasRenderingContext2D,
-  snap: Snapshot | null,
-  players: HudPlayer[],
-  localSlot: number,
-  ping: number,
-  killFeed: { text: string; life: number }[],
-  announcer: { text: string; life: number } | null,
-  shake: { x: number; y: number },
-  frame: number,
-): void {
-  ctx.save();
-  ctx.translate(shake.x, shake.y);
-
-  drawPixelRect(ctx, 0, 0, W, 12, 'rgba(15,15,26,0.8)');
-  if (snap) {
-    drawText(ctx, `Round ${snap.roundNo}`, 4, 2, P.gold);
-    const scores = snap.players.map((p) => p.roundWins).join('-');
-    drawText(ctx, scores, 70, 2, P.white);
-    if (snap.phase === 'countdown') drawText(ctx, 'READY', 120, 2, P.accent);
-    if (snap.tideRing > 0) drawText(ctx, `TIDE ${snap.tideRing}`, 160, 2, P.red);
-    drawText(ctx, `${ping}ms`, W - 32, 2, P.gray);
+  setBanner(text: string): void {
+    this.banner.textContent = text;
   }
-
-  const pos = [
-    { x: 2, y: 14 },
-    { x: W - 70, y: 14 },
-    { x: 2, y: H - 28 },
-    { x: W - 70, y: H - 28 },
-  ];
-  // import H
-  const HH = 224;
-  pos[2]!.y = HH - 28;
-  pos[3]!.y = HH - 28;
-
-  players.forEach((hp, i) => {
-    const p = pos[i] ?? pos[0]!;
-    const sp = snap?.players.find((x) => x.slot === hp.slot);
-    drawPixelRect(ctx, p.x, p.y, 68, 24, hp.slot === localSlot ? 'rgba(40,80,120,0.85)' : 'rgba(20,30,50,0.8)');
-    drawAnimal(ctx, p.x + 1, p.y + 4, hp.animal, hp.hat, 3, frame, sp ? !sp.alive && !sp.isDuck : false);
-    drawText(ctx, hp.nickname.slice(0, 8), p.x + 18, p.y + 3, P.white);
-    if (sp) {
-      drawText(ctx, `×${sp.roundWins}`, p.x + 18, p.y + 12, P.gold);
-      if (!sp.alive) drawText(ctx, sp.isDuck ? 'DUCK' : 'SOAK', p.x + 40, p.y + 12, P.splash);
-    }
-  });
-
-  killFeed.forEach((k, i) => {
-    ctx.globalAlpha = Math.min(1, k.life / 40);
-    drawText(ctx, k.text, 80, 16 + i * 9, P.white);
-  });
-  ctx.globalAlpha = 1;
-
-  if (announcer && announcer.life > 0) {
-    ctx.globalAlpha = Math.min(1, announcer.life / 15);
-    ctx.font = '12px monospace';
-    const tw = ctx.measureText(announcer.text).width;
-    drawPixelRect(ctx, (W - tw) / 2 - 8, 96, tw + 16, 18, 'rgba(0,0,0,0.75)');
-    ctx.fillStyle = P.gold;
-    ctx.fillText(announcer.text, (W - tw) / 2, 100);
-    ctx.globalAlpha = 1;
-  }
-
-  ctx.restore();
 }
 
-const H = 224;
+import { animalSprite, drawSprite, hatSprite } from '../render/sprites.js';
+
+export function drawMiniIcon(canvas: HTMLCanvasElement, animal: AnimalId, hat: HatId): void {
+  const ctx = canvas.getContext('2d')!;
+  ctx.clearRect(0, 0, 12, 12);
+  const spr = animalSprite(animal, 0);
+  const yOff = Math.max(0, spr.rows.length - 12);
+  drawSprite(ctx, spr.rows, spr.pal, 0, -yOff);
+  const h = hatSprite(hat);
+  if (h) drawSprite(ctx, h.rows, h.pal, 0, Math.max(0, 2 - yOff));
+}
+
+export interface ResultsData {
+  placements: Placement[];
+  xp: Record<string, number>;
+  ratingDeltas: Record<string, number>;
+  myPlayerId: string;
+  ranked: boolean;
+}

@@ -17,10 +17,16 @@ export class Net {
   private reconnectTimer: number | null = null;
   private queued: ClientMessage[] = [];
 
-  on<T extends ServerMessage['t']>(type: T, fn: (msg: Extract<ServerMessage, { t: T }>) => void): void {
+  on<T extends ServerMessage['t']>(type: T, fn: (msg: Extract<ServerMessage, { t: T }>) => void): () => void {
     const list = this.handlers.get(type) ?? [];
     list.push(fn as Handler);
     this.handlers.set(type, list);
+    return () => {
+      const l = this.handlers.get(type);
+      if (!l) return;
+      const i = l.indexOf(fn as Handler);
+      if (i >= 0) l.splice(i, 1);
+    };
   }
 
   onAny(fn: Handler): void {

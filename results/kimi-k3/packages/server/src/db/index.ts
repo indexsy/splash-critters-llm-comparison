@@ -245,6 +245,7 @@ export function profileFor(playerId: string) {
     selectedAnimal: p.selected_animal,
     selectedHat: p.selected_hat,
     tutorialDone: p.tutorial_done === 1,
+    customNickname: p.custom_nickname === 1,
     ratings,
     unlocks: getUnlocks(playerId),
     recentMatches: recent,

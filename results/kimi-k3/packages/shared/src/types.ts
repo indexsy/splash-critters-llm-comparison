@@ -64,6 +64,7 @@ export interface BalloonState {
   slideDir: Dir;
   placedTick: number;
   burstTick: number;
+  range: number;
   flying: boolean;
   flyDir: Dir;
   flyTilesLeft: number;
@@ -132,6 +133,7 @@ export interface GameState {
   matchWinner: number;
   countdownUntilTick: number;
   roundStartTick: number;
+  drawStreak: number;
   options: SimOptions;
   biggestChain: number;
 }

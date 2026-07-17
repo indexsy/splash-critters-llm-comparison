@@ -13,6 +13,7 @@ export function profileDtoForSend(playerId: string): ProfileDto | null {
     selectedAnimal: p.selectedAnimal as AnimalId,
     selectedHat: p.selectedHat as HatId,
     tutorialDone: p.tutorialDone,
+    customNickname: (p as { customNickname?: boolean }).customNickname ?? false,
     ratings: p.ratings,
     unlocks: p.unlocks,
   };

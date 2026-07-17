@@ -328,6 +328,7 @@ export class Room {
         fy: Math.round(b.fy * 1000) / 1000,
         slideDir: b.slideDir,
         burstTick: b.burstTick,
+        range: b.range,
         flying: b.flying,
       })),
       splashes: s.splashes.map((sp) => ({ tiles: sp.tiles, untilTick: sp.untilTick })),
@@ -407,16 +408,23 @@ export class Room {
         const rb = db.getRating(b!.playerId, this.mode);
         a!.ratingBefore = Math.round(ra.rating);
         b!.ratingBefore = Math.round(rb.rating);
-        const aWon = a!.placement < b!.placement;
-        const { duelDelta } = eloShared;
-        const da = duelDelta(ra.rating, rb.rating, aWon, ra.games);
-        const db2 = duelDelta(rb.rating, ra.rating, !aWon, rb.games);
-        a!.ratingAfter = Math.round(ra.rating + da);
-        b!.ratingAfter = Math.round(rb.rating + db2);
-        ratingDeltas[a!.playerId] = Math.round(da);
-        ratingDeltas[b!.playerId] = Math.round(db2);
-        db.applyRatingChange(a!.playerId, this.mode, ra.rating + da, aWon);
-        db.applyRatingChange(b!.playerId, this.mode, rb.rating + db2, !aWon);
+        if (a!.placement === b!.placement) {
+          a!.ratingAfter = Math.round(ra.rating);
+          b!.ratingAfter = Math.round(rb.rating);
+          ratingDeltas[a!.playerId] = 0;
+          ratingDeltas[b!.playerId] = 0;
+        } else {
+          const aWon = a!.placement < b!.placement;
+          const { duelDelta } = eloShared;
+          const da = duelDelta(ra.rating, rb.rating, aWon, ra.games);
+          const db2 = duelDelta(rb.rating, ra.rating, !aWon, rb.games);
+          a!.ratingAfter = Math.round(ra.rating + da);
+          b!.ratingAfter = Math.round(rb.rating + db2);
+          ratingDeltas[a!.playerId] = Math.round(da);
+          ratingDeltas[b!.playerId] = Math.round(db2);
+          db.applyRatingChange(a!.playerId, this.mode, ra.rating + da, aWon);
+          db.applyRatingChange(b!.playerId, this.mode, rb.rating + db2, !aWon);
+        }
       } else if (this.mode === 'ffa') {
         const results = humans.map((pl) => {
           const r = db.getRating(pl.playerId, this.mode);
@@ -677,7 +685,7 @@ export class RoomManager {
           })),
       },
     });
-    client.send({ t: 'round_start', roundNo: s.roundNo, mapSeed: room.mapSeed, castleGrid: [], theme: room.theme });
+    client.send({ t: 'round_start', roundNo: s.roundNo, mapSeed: room.mapSeed, castleGrid: [...s.tiles], theme: room.theme });
     return room;
   }
 

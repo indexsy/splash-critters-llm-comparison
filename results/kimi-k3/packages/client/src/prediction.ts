@@ -102,6 +102,7 @@ export class PredictedGame {
       slideDir: b.slideDir,
       placedTick: b.burstTick - CONFIG.FUSE_TICKS,
       burstTick: b.burstTick,
+      range: b.range,
       flying: b.flying,
       flyDir: 0,
       flyTilesLeft: 0,

@@ -46,6 +46,7 @@ export function createGame(options: SimOptions): GameState {
     matchWinner: -1,
     countdownUntilTick: 0,
     roundStartTick: 0,
+    drawStreak: 0,
     options,
     biggestChain: 0,
   };
@@ -239,13 +240,18 @@ function dropBalloon(state: GameState, p: PlayerState): void {
     slideDir: DIR_NONE,
     placedTick: state.tick,
     burstTick: state.tick + CONFIG.FUSE_TICKS,
+    range: p.splashRange,
     flying: false,
     flyDir: DIR_NONE,
     flyTilesLeft: 0,
   };
   state.balloons.push(b);
   p.activeBalloons++;
-  if (!p.overlappedBalloonIds.includes(b.id)) p.overlappedBalloonIds.push(b.id);
+  for (const pl of state.players) {
+    if (pl.alive && !pl.isDuck && !pl.overlappedBalloonIds.includes(b.id) && circleOverlapsTile(pl.x, pl.y, CONFIG.PLAYER_RADIUS, tx, ty)) {
+      pl.overlappedBalloonIds.push(b.id);
+    }
+  }
   state.events.push({ type: 'balloon_dropped', slot: p.slot, tx, ty });
 }
 
@@ -432,6 +438,7 @@ function duckLob(state: GameState, p: PlayerState): void {
     slideDir: DIR_NONE,
     placedTick: state.tick,
     burstTick: state.tick + CONFIG.FUSE_TICKS + 60,
+    range: CONFIG.STATS.RANGE_BASE,
     flying: true,
     flyDir: inward,
     flyTilesLeft: CONFIG.DUCK_LOB_RANGE,
@@ -455,7 +462,7 @@ function burstBalloons(state: GameState, initial: BalloonState[]): void {
     state.balloons.splice(idx, 1);
     const owner = state.players[b.ownerSlot];
     if (owner && !b.flying) owner.activeBalloons = Math.max(0, owner.activeBalloons - 1);
-    const range = owner ? owner.splashRange : CONFIG.STATS.RANGE_BASE;
+    const range = b.range || CONFIG.STATS.RANGE_BASE;
     state.events.push({ type: 'balloon_burst', balloonId: b.id, tx: b.tx, ty: b.ty, chainDepth: depth });
     if (depth > 0) {
       maxChain = Math.max(maxChain, depth + 1);
@@ -546,6 +553,12 @@ function collectPowerUps(state: GameState): void {
   }
 }
 
+export function tideTiming(state: GameState): { start: number; interval: number } {
+  const start = Math.max(CONFIG.TICK_RATE * 15, CONFIG.TIDE_START_TICKS - state.drawStreak * CONFIG.TICK_RATE * 30);
+  const interval = Math.max(10, CONFIG.TIDE_INTERVAL_TICKS - state.drawStreak * 10);
+  return { start, interval };
+}
+
 function applyTide(state: GameState): void {
   if (state.tideRing >= Math.ceil(Math.min(state.w, state.h) / 2)) return;
   state.tideRing++;
@@ -592,9 +605,18 @@ function checkRoundEnd(state: GameState): void {
   if (!draw && winner >= 0) {
     const wp = state.players[winner];
     if (wp) wp.roundWins++;
+    state.drawStreak = 0;
+  } else if (draw) {
+    state.drawStreak++;
   }
   state.roundWinner = winner;
   state.events.push({ type: 'round_end', winnerSlot: winner, draw });
+  if (state.drawStreak > 3) {
+    state.matchWinner = -1;
+    state.phase = 'matchEnd';
+    state.events.push({ type: 'match_end', winnerSlot: -1 });
+    return;
+  }
   const target = state.options.roundsToWin;
   const matchWinner = state.players.find((p) => p.roundWins >= target);
   if (matchWinner) {
@@ -691,7 +713,8 @@ export function simulateTick(state: GameState, inputs: Map<number, InputFrame>):
   collectPowerUps(state);
 
   const roundTick = state.tick - state.roundStartTick;
-  if (roundTick >= CONFIG.TIDE_START_TICKS && (roundTick - CONFIG.TIDE_START_TICKS) % CONFIG.TIDE_INTERVAL_TICKS === 0) {
+  const tide = tideTiming(state);
+  if (roundTick >= tide.start && (roundTick - tide.start) % tide.interval === 0) {
     applyTide(state);
   }
 
