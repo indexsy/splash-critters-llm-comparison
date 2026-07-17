@@ -28,6 +28,30 @@ output, and database files were stripped).
 | [`results/grok-4.5/`](results/grok-4.5/) | **Grok 4.5** (added to the experiment two weeks after the first four; same prompt, same gauntlet) |
 | [`results/kimi-k3/`](results/kimi-k3/) | **Kimi K3** (added alongside Grok 4.5; re-submitted — the first upload was an incomplete agent run, see Methodology) |
 
+## Code audit & rankings
+
+Beyond "does it run," each rival codebase got a deep **independent code audit**
+(one Claude Fable 5 subagent each, same six-dimension rubric, every claim cites
+`file:line`). Fable 5's own entry is excluded — it's the auditor. Full reports
+in [`comparison/audits/`](comparison/audits/), synthesis + methodology in
+[`comparison/AUDIT-RANKINGS.md`](comparison/AUDIT-RANKINGS.md).
+
+| Rank | Model | Weighted score /10 | One-line |
+| :-: | --- | :-: | --- |
+| 🥇 1 | **Kimi K3** | 6.70 | Most complete & cleanest; playable — but ranked duels can draw (killing Elo), forfeit is dead code, and the default Space key can't drop a balloon |
+| 🥈 2 | **Grok 4.5** | 6.18 | Real netcode, playable, well-built — but a malformed WS frame crashes the server, and the HUD ping is fake |
+| 🥉 3 | **GLM 5.2** | 3.60 | Renders a match, but it's a hologram: players phase through walls and the client is never sent the real map |
+| 4 | **Kimi K2.7** | 3.60 | Deterministic core, but the server crashes on the first connection and ranked never starts |
+| 5 | **Kimi K2.6 swarm** | 3.20 | Textbook swarm failure: competent modules never wired together — crashes at boot, never sends snapshots, no mouse handling |
+
+Scored on correctness (25%), spec fidelity (20%), netcode (15%), security
+(15%), code quality (15%), test depth (10%). **Universal finding:** all five
+broadcast the real map seed that rolls the spec's "hidden, unguessable"
+power-ups, making every rival's power-ups client-derivable. The common thread
+in the failures: the shared sim is strong everywhere, and the games break at
+the *integration seams* — a SQL string, a circular import, an event emitted to
+no one — which is exactly where each model's own unit tests don't look.
+
 ## Scoreboard
 
 Same machine (macOS, Node 23), same gauntlet for everyone
