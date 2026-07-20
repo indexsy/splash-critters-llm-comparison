@@ -1,0 +1,13 @@
+{
+  "name": "@splash/server",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "main": "./src/index.ts",
+  "dependencies": {
+    "@splash/shared": "*",
+    "better-sqlite3": "^11.1.0",
+    "express": "^4.19.0",
+    "ws": "^8.18.0"
+  }
+}

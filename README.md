@@ -1,6 +1,6 @@
-# Splash Critters — one prompt, six AI coding agents
+# Splash Critters — one prompt, seven AI coding agents
 
-An experiment: give six frontier LLM coding setups the **same ~200-line spec** —
+An experiment: give seven frontier LLM coding setups the **same ~200-line spec** —
 build a complete, shippable 8-bit online multiplayer water-balloon battler
 (deterministic shared sim, server-authoritative netcode, bots, ranked Elo,
 SQLite, lobby browser, cosmetics, procedural pixel art) — and compare what
@@ -27,6 +27,7 @@ output, and database files were stripped).
 | [`results/kimi-k2.6-agent-swarm/`](results/kimi-k2.6-agent-swarm/) | **Kimi K2.6 agent swarm** (multi-agent; its own `plan.md`/`SPEC.md` orchestration artifacts are included) |
 | [`results/grok-4.5/`](results/grok-4.5/) | **Grok 4.5** (added to the experiment two weeks after the first four; same prompt, same gauntlet) |
 | [`results/kimi-k3/`](results/kimi-k3/) | **Kimi K3** (added alongside Grok 4.5; re-submitted — the first upload was an incomplete agent run, see Methodology) |
+| [`results/opus-4.8-ultracode/`](results/opus-4.8-ultracode/) | **Opus 4.8 (ultracode)** (Claude Opus 4.8 running multi-agent "ultracode" orchestration; added 2026-07-19) |
 
 ## Code audit & rankings
 
@@ -36,34 +37,39 @@ Claude Fable 5 subagent each, same six-dimension rubric, every claim cites
 synthesis + methodology in
 [`comparison/AUDIT-RANKINGS.md`](comparison/AUDIT-RANKINGS.md).
 
-> **⚠️ Conflict of interest:** Fable 5 wrote one of these submissions and ran
-> the comparison, and it ranks itself #1. To counter that, its own entry was
-> audited under a deliberately *harsher* framing than the rivals (told to assume
-> a fatal bug was hiding and to disprove the author's claims) — and the auditor
-> still couldn't knock it down. The #1 margin rests on three facts anyone can
-> verify from the public code: no fatal integration bug, the only entry that
-> doesn't leak the map seed, and the only working ranked-Elo path. Distrust the
-> messenger and check them yourself — the [disclosure](comparison/AUDIT-RANKINGS.md)
-> gives the exact commands.
+> **⚠️ Conflict of interest:** Two entries are Claude-family (Fable 5 and Opus
+> 4.8), and Fable 5 both wrote one of them and ran the comparison — then ranked
+> itself #1, above the other Claude entry. To counter that, Fable 5's entry was
+> audited under a deliberately *harsher* framing than everyone else, while Opus
+> 4.8 got the neutral framing **plus** a second independent fact-checker (more
+> scrutiny than any other entry) — and Opus still landed 2nd. The #1-vs-#2 gap
+> is two verified facts, both reproduced firsthand: Opus leaks the real map seed
+> (`match.ts:74`→`:109`) and one malformed `hello` packet crashes its server;
+> Fable 5 sends a decoy seed and validates its inputs. Distrust the messenger
+> and check them yourself — the [disclosure](comparison/AUDIT-RANKINGS.md) has
+> the commands.
 
 | Rank | Model | Weighted score /10 | One-line |
 | :-: | --- | :-: | --- |
 | 🥇 1 | **Fable 5** † | 8.60 | The only entry with no fatal bug, no seed leak, and a working ranked-Elo path — but a flaky Hard bot and no crash guard |
-| 🥈 2 | **Kimi K3** | 6.70 | Most complete of the rivals; playable — but ranked duels can draw (killing Elo), forfeit is dead code, and the default Space key can't drop a balloon |
-| 🥉 3 | **Grok 4.5** | 6.18 | Real netcode, playable, well-built — but a malformed WS frame crashes the server, and the HUD ping is fake |
-| 4 | **GLM 5.2** | 3.60 | Renders a match, but it's a hologram: players phase through walls and the client is never sent the real map |
-| 5 | **Kimi K2.7** | 3.60 | Deterministic core, but the server crashes on the first connection and ranked never starts |
-| 6 | **Kimi K2.6 swarm** | 3.20 | Textbook swarm failure: competent modules never wired together — crashes at boot, never sends snapshots, no mouse handling |
+| 🥈 2 | **Opus 4.8 (ultracode)** ‡ | 7.40 | Excellent, playable, cleanly integrated — but leaks the real map seed AND one malformed packet crashes the whole server |
+| 3 | **Kimi K3** | 6.70 | Playable — but ranked duels can draw (killing Elo), forfeit is dead code, and the default Space key can't drop a balloon |
+| 4 | **Grok 4.5** | 6.18 | Real netcode, playable — but a malformed WS frame crashes the server, and the HUD ping is fake |
+| 5 | **GLM 5.2** | 3.60 | Renders a match, but it's a hologram: players phase through walls and the client is never sent the real map |
+| 6 | **Kimi K2.7** | 3.60 | Deterministic core, but the server crashes on the first connection and ranked never starts |
+| 7 | **Kimi K2.6 swarm** | 3.20 | Textbook swarm failure: competent modules never wired together — crashes at boot, never sends snapshots, no mouse handling |
 
-† self-audited under the harsher framing above. Scored on correctness (25%),
-spec fidelity (20%), netcode (15%), security (15%), code quality (15%), test
-depth (10%). **Near-universal finding:** all five *rivals* broadcast the real
-map seed that rolls the spec's "hidden, unguessable" power-ups, making their
-power-ups client-derivable (Fable 5 is the lone exception — it sends a decoy).
-The common thread in the failures: the shared sim is strong everywhere, and the
-games break at the *integration seams* — a SQL string, a circular import, an
-event emitted to no one, a key bound `'Space'` but read `' '` — which is exactly
-where each model's own unit tests don't look.
+† Fable 5 audited under the harsher adversarial framing; ‡ Opus 4.8 under neutral
+framing + an extra independent verifier. Scored on correctness (25%), spec
+fidelity (20%), netcode (15%), security (15%), code quality (15%), test depth
+(10%). **Near-universal finding:** **six of the seven** entries broadcast the
+real map seed that rolls the spec's "hidden, unguessable" power-ups, making their
+power-ups client-derivable — GLM, K2.7, K2.6, Grok, K3, *and Opus 4.8* all leak
+it; Fable 5 alone sends a decoy. The common thread in the failures: the shared
+sim is strong everywhere, and the games break at the *integration seams* — a SQL
+string, a circular import, an event emitted to no one, a numeric `hello` token,
+a key bound `'Space'` but read `' '` — which is exactly where each model's own
+unit tests don't look.
 
 ## Scoreboard
 
@@ -72,18 +78,18 @@ Same machine (macOS, Node 23), same gauntlet for everyone
 `npm install` → `npm test` → `npm run build` → `npm start` → `/health` →
 client served → headless browser probe.
 
-| Check | Fable 5 | GLM 5.2 | Kimi K2.7 | K2.6 swarm | Grok 4.5 | Kimi K3 |
-| --- | :-: | :-: | :-: | :-: | :-: | :-: |
-| `npm install` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
-| `npm test` (own suite) | ✅ 28 tests | ✅ 12 tests | ✅ 7 tests | ✅ 26 tests | ✅ 14 tests | ✅ 18 tests |
-| `npm run build` | ✅ | ✅ | ✅ ¹ | ✅ ¹ | ✅ | ✅ |
-| Server boots, `/health` OK | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
-| Built client served on one port | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
-| **Client loads in a browser** | ✅ | ✅ | ✅ | ❌ crashes on load ² | ✅ | ✅ |
-| **A player can actually connect** | ✅ | ✅ | ❌ server crashes ³ | ❌ | ✅ | ✅ |
-| **Full match playable vs bots** | ✅ | ✅ | ❌ | ❌ | ✅ | ✅ |
-| Bot-vs-bot soak script | ⚠️ flaky ⁴ | ✅ ⁵ | ✅ ⁵ | ❌ broken ⁶ | ✅ ⁵ | ✅ ⁵ |
-| E2E acceptance script included | ✅ passes | — | — | — | — | ⚠️ ranked section fails ⁸ |
+| Check | Fable 5 | GLM 5.2 | Kimi K2.7 | K2.6 swarm | Grok 4.5 | Kimi K3 | Opus 4.8 |
+| --- | :-: | :-: | :-: | :-: | :-: | :-: | :-: |
+| `npm install` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
+| `npm test` (own suite) | ✅ 28 tests | ✅ 12 tests | ✅ 7 tests | ✅ 26 tests | ✅ 14 tests | ✅ 18 tests | ✅ 22 tests |
+| `npm run build` | ✅ | ✅ | ✅ ¹ | ✅ ¹ | ✅ | ✅ | ✅ |
+| Server boots, `/health` OK | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
+| Built client served on one port | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
+| **Client loads in a browser** | ✅ | ✅ | ✅ | ❌ crashes on load ² | ✅ | ✅ | ✅ |
+| **A player can actually connect** | ✅ | ✅ | ❌ server crashes ³ | ❌ | ✅ | ✅ | ✅ |
+| **Full match playable vs bots** | ✅ | ✅ | ❌ | ❌ | ✅ | ✅ | ✅ |
+| Bot-vs-bot soak script | ⚠️ flaky ⁴ | ✅ ⁵ | ✅ ⁵ | ❌ broken ⁶ | ✅ ⁵ | ✅ ⁵ | ✅ skill-asserting ⁹ |
+| E2E acceptance script included | ✅ passes | — | — | — | — | ⚠️ ranked section fails ⁸ | — |
 
 ¹ Both Kimi zips shipped **prebuilt `dist/` folders plus stale
 `tsconfig.tsbuildinfo`** files. After stripping `dist/` (as this repo does),
@@ -106,9 +112,9 @@ clause. One missing SQL fragment, and no player can ever connect (there is
 no error handling around it, so the whole process dies). Its soak test
 passes because it bypasses the network/DB layer entirely.
 
-⁴ **Fable 5's soak is the strictest of the six** — it asserts a *skill
-ordering* (Hard bots must beat Easy bots in ≥70% of duels), not just
-crash-freedom. Across 6 recorded runs the Hard-vs-Easy score was 9/10,
+⁴ **Fable 5's soak is skill-asserting** (Hard bots must beat Easy in ≥70% of
+duels), not just crash-freedom — one of only two that check skill (Opus 4.8's
+is the other, footnote 9), but unlike Opus's it is *flaky*. Across 6 recorded runs the Hard-vs-Easy score was 9/10,
 10/10, 6/10, 7/10, 6/10, 6/10 — i.e. it **failed its own bar half the
 time**. Honest reading: Hard reliably *outperforms* Easy (~70% duel win
 rate) but "reliably beats" at a 70% threshold is marginal. Logged as-is.
@@ -121,6 +127,10 @@ several scenarios including a revenge-duck match.)
 ⁶ **K2.6 swarm:** a soak script exists at `scripts/soak-test.mjs` but was
 never wired into `npm run soak` and crashes immediately (it imports `.js`
 paths that only exist as TypeScript source).
+
+⁹ **Opus 4.8's** soak is skill-asserting like Fable 5's (checks Hard beats Easy,
+not just completion) and passes reliably — Hard won 22/30 duels in the gauntlet
+run with per-difficulty self-soak telemetry (Hard 7 vs Easy 49 self-soaks).
 
 ⁸ **Kimi K3** is the only other submission that ships its own end-to-end
 acceptance script — and, run to completion, that script is honest about a
@@ -138,13 +148,13 @@ not adjudicated further — either way its own gate reports 2 FAILURES.
 The spec's core acceptance test is a human one: open the game, reach the
 menu, play a full match against bots.
 
-| Stage | Fable 5 | GLM 5.2 | Kimi K2.7 | K2.6 swarm | Grok 4.5 | Kimi K3 |
-| --- | :-: | :-: | :-: | :-: | :-: | :-: |
-| Title screen renders | ✅ | ✅ | ✅ | ❌ blank page | ✅ | ✅ |
-| Guest account created | ✅ | ✅ | ❌ (server dead) | ❌ | ✅ | ✅ |
-| Main menu | ✅ | ✅ | ❌ stuck on title | ❌ | ✅ | ✅ |
-| Lobby / practice setup | ✅ | ✅ | ❌ | ❌ | ✅ | ✅ |
-| Live match vs bots | ✅ | ✅ | ❌ | ❌ | ✅ | ✅ |
+| Stage | Fable 5 | GLM 5.2 | Kimi K2.7 | K2.6 swarm | Grok 4.5 | Kimi K3 | Opus 4.8 |
+| --- | :-: | :-: | :-: | :-: | :-: | :-: | :-: |
+| Title screen renders | ✅ | ✅ | ✅ | ❌ blank page | ✅ | ✅ | ✅ |
+| Guest account created | ✅ | ✅ | ❌ (server dead) | ❌ | ✅ | ✅ | ✅ |
+| Main menu | ✅ | ✅ | ❌ stuck on title | ❌ | ✅ | ✅ | ✅ |
+| Lobby / practice setup | ✅ | ✅ | ❌ | ❌ | ✅ | ✅ | ✅ |
+| Live match vs bots | ✅ | ✅ | ❌ | ❌ | ✅ | ✅ | ✅ |
 
 ### Fable 5 — title / menu / live match
 
@@ -178,6 +188,18 @@ vs a bot (castles, HUD, kill feed). Simpler visuals than Fable 5's and its
 in-game ping readout is clearly wrong (steady "2002ms" on localhost), but the
 loop works end to end.*
 
+### Opus 4.8 (ultracode) — title / live match
+
+<p>
+<img src="comparison/screenshots/opus-4.8-ultracode-title.png" width="45%"> <img src="comparison/screenshots/opus-4.8-ultracode-game.png" width="45%">
+</p>
+
+*The most polished of the field: a title with live connection status + guest
+badge, a full practice-setup screen (size + bot difficulty), and a clean 4-bot
+FFA match with detailed HUD plates and a splash cascade in progress. Playable
+end to end — its liabilities are under the hood (audit: seed leak + one-packet
+server crash).*
+
 ### Kimi K2.7 — permanently stuck at title
 
 <p><img src="comparison/screenshots/kimi-k2.7-title.png" width="45%"></p>
@@ -208,13 +230,13 @@ renders unlabeled, and ranked Elo fails its own e2e gate (see ⁸).*
 
 ## Static metrics
 
-| Metric | Fable 5 | GLM 5.2 | Kimi K2.7 | K2.6 swarm | Grok 4.5 | Kimi K3 |
-| --- | --: | --: | --: | --: | --: | --: |
-| TypeScript lines | 7,934 | 4,450 | 4,540 | 8,944 | 6,581 | 6,536 |
-| TypeScript files | 53 | 30 | 40 | 39 | 43 | 45 |
-| Unit tests | 28 | 12 | 7 | 26 | 14 | 18 |
-| Client screen modules | 12 | 1 consolidated ⁷ | 11 | 12 | 12 | 12 |
-| Extra verification shipped | soak + WS e2e script | soak | soak | (broken soak) | soak | soak + e2e ⁸ |
+| Metric | Fable 5 | GLM 5.2 | Kimi K2.7 | K2.6 swarm | Grok 4.5 | Kimi K3 | Opus 4.8 |
+| --- | --: | --: | --: | --: | --: | --: | --: |
+| TypeScript lines | 7,934 | 4,450 | 4,540 | 8,944 | 6,581 | 6,536 | 8,842 |
+| TypeScript files | 53 | 30 | 40 | 39 | 43 | 45 | 89 |
+| Unit tests | 28 | 12 | 7 | 26 | 14 | 18 | 22 |
+| Client screen modules | 12 | 1 consolidated ⁷ | 11 | 12 | 12 | 12 | 12 |
+| Extra verification shipped | soak + WS e2e script | soak | soak | (broken soak) | soak | soak + e2e ⁸ | soak (skill-asserting) |
 
 ⁷ GLM consolidated all screens into one 400-line file (every spec screen
 **except the tutorial, which GLM skipped entirely** — `grep -ri tutorial
@@ -223,16 +245,16 @@ packages/` → 0 hits). Every submission except GLM implements the tutorial.
 Feature-keyword footprint (case-insensitive grep hits across `packages/`,
 a *rough* proxy for how deeply a mechanic is wired through sim + bots + UI):
 
-| Keyword | Fable 5 | GLM 5.2 | Kimi K2.7 | K2.6 swarm | Grok 4.5 | Kimi K3 |
-| --- | --: | --: | --: | --: | --: | --: |
-| kick | 57 | 15 | 28 | 78 | 15 | 16 |
-| revenge (ducks) | 57 | 31 | 27 | 37 | 53 | 28 |
-| tide | 55 | 42 | 26 | 33 | 40 | 57 |
-| emote | 53 | 2 | 17 | 48 | 32 | 51 |
-| rematch | 22 | 12 | 13 | 21 | 32 | 33 |
-| tutorial | 28 | 0 | 15 | 11 | 31 | 30 |
-| colorblind | 11 | 0 | 0 | 11 | 10 | 11 |
-| reconcil… (netcode) | 3 | 5 | 0 | 10 | 1 | 0 |
+| Keyword | Fable 5 | GLM 5.2 | Kimi K2.7 | K2.6 swarm | Grok 4.5 | Kimi K3 | Opus 4.8 |
+| --- | --: | --: | --: | --: | --: | --: | --: |
+| kick | 57 | 15 | 28 | 78 | 15 | 16 | 28 |
+| revenge (ducks) | 57 | 31 | 27 | 37 | 53 | 28 | 79 |
+| tide | 55 | 42 | 26 | 33 | 40 | 57 | 45 |
+| emote | 53 | 2 | 17 | 48 | 32 | 51 | 61 |
+| rematch | 22 | 12 | 13 | 21 | 32 | 33 | 16 |
+| tutorial | 28 | 0 | 15 | 11 | 31 | 30 | 21 |
+| colorblind | 11 | 0 | 0 | 11 | 10 | 11 | 46 |
+| reconcil… (netcode) | 3 | 5 | 0 | 10 | 1 | 0 | 7 |
 
 ## Methodology & fairness notes
 
