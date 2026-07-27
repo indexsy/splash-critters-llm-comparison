@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="dark" />
+    <title>Splash Critters</title>
+    <meta
+      name="description"
+      content="An 8-bit online water balloon battler. Drop balloons, wash away sandcastles, stay dry."
+    />
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><rect width='16' height='16' fill='%23123'/><circle cx='8' cy='9' r='5' fill='%2339a9f0'/><circle cx='6' cy='7' r='1.5' fill='%23fff'/></svg>" />
+  </head>
+  <body>
+    <div id="app">
+      <canvas id="stage" width="256" height="224" hidden></canvas>
+      <div id="screen"></div>
+      <div id="toasts" aria-live="polite"></div>
+    </div>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>

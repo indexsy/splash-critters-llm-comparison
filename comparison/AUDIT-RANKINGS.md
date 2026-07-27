@@ -1,18 +1,30 @@
 # Code Audit & Rankings
 
-Eight independent code audits — one Claude subagent per codebase, all given the
-**same six-dimension rubric** and required to cite `file:line` and quote the
-code for every claim. Full per-model reports are in [`audits/`](audits/); this
+Nine codebases audited by independent Claude subagents, all against the
+**same six-dimension rubric**, every claim citing `file:line`. (Opus 5 got
+*three* passes — neutral, adversarial, and a steelman advocate.) Full per-model reports are in [`audits/`](audits/); this
 file synthesizes and ranks them. Every headline finding was independently
 re-verified against the source before publishing (the two most recent additions,
 Opus 4.8 and GPT-5.6 SOL, each also got a *second* independent fact-checker pass).
 
 > ## ⚠️ Conflict of interest — read this first
 >
-> **Two of the eight entries are Claude-family (Fable 5 and Opus 4.8), and
-> Fable 5 both wrote one of them AND ran this whole comparison — then ranked
-> its own entry #1, above the other Claude entry.** Treat that with the
-> skepticism it deserves. Here is exactly what was done to keep it honest:
+> **Three of the nine entries are Claude-family (Fable 5, Opus 4.8, Opus 5),
+> and Fable 5 both wrote one of them AND ran this whole comparison — then
+> ranked its own entry #1.** Treat that with the skepticism it deserves. Here
+> is exactly what was done to keep it honest — including a correction that
+> moved the orchestrator's own score DOWN:
+>
+> - **The Opus 5 audit found a flaw that turned out to apply to Fable 5 too —
+>   and worse.** Its adversarial auditor showed that omitting the map seed is
+>   not enough: the transmitted `castleGrid` carries ~93 Bernoulli outcomes
+>   that pin a 32-bit seed, recovering every hidden power-up in ~76s. The
+>   orchestrator then ran that same attack against **its own entry** and
+>   recovered the seed in **21.8s** (2^31 keyspace — half of Opus 5's), exposing
+>   all 20 buried power-ups. Fable 5's Security score was cut 8 → 7 and its
+>   total 8.60 → 8.45 as a result. The attack script is in
+>   [`harness/attack-seed-recovery.mjs`](harness/attack-seed-recovery.mjs) —
+>   run it yourself.
 >
 > - **Fable 5's own entry was audited under a deliberately *harsher* framing**
 >   than everyone else: its auditor was told to hold the code to a stricter
@@ -22,24 +34,23 @@ Opus 4.8 and GPT-5.6 SOL, each also got a *second* independent fact-checker pass
 >   *more* scrutiny than any other entry** (a second independent fact-checker
 >   re-verified every finding), and it still landed below the harder-graded
 >   Fable 5. The deck is stacked *against* the orchestrator, not for it.
-> - **The #1-vs-#2 gap (8.60 vs 7.40) is two verified security facts, not
->   polish**, both checkable from the public code and both reproduced firsthand:
->   - **Seed secrecy:** Opus 4.8 broadcasts the real seed that rolls hidden
->     power-ups (`match.ts:74`→`:109`; contents client-derivable). Fable 5 sends
->     an independent decoy (`gameLoop.ts:151` real seed stays server-side, `:174`
->     decoy). `grep -n mapSeed` in each proves it.
->   - **Crash surface:** one malformed `hello` packet kills the Opus server
->     process (reproduced live: `TypeError` in `hashToken`, no `uncaughtException`
->     guard). Fable 5's handlers validate input; no such trigger was found.
+> - **The #1-vs-#2 gap (8.45 vs 7.75) is now a single fact: Opus 5 loses
+>   round 1 of every match.** Its client sits on the VS card for the entire
+>   first round while the server plays it out — reproduced 5× in a real browser
+>   by the orchestrator, and independently by its adversarial auditor. On
+>   security the two are now effectively tied (both brute-forcible; Opus 5's
+>   keyspace is actually *twice* Fable 5's, and its hostile-frame hardening is
+>   better-demonstrated — 47 malformed frames survived).
 > - **Fable 5's frozen 2026-07-02 snapshot was audited**, same as the rivals'
 >   frozen zips — not its later continued work.
-> - **Fable 5's real weaknesses are recorded as prominently as anyone's** (flaky
->   Hard bot that fails its own soak ~half the time; no `uncaughtException` guard
->   — the same latent gap as Grok/Opus, though not triggerable here; FFA bot
->   matches that drag to the draw cap).
+> - **Fable 5's real weaknesses are recorded as prominently as anyone's**
+>   (seed recoverable in 21.8s — the worst keyspace in the top tier; flaky Hard
+>   bot that fails its own soak ~half the time; no `uncaughtException` guard;
+>   FFA bot matches that drag to the draw cap).
 >
-> If you distrust the messenger, the two facts that decide #1 vs #2 take about
-> a minute to verify yourself. Do that and decide.
+> If you distrust the messenger: run the seed attack against both entries, and
+> click "Practice vs bots" in Opus 5 and watch round 1 never appear. Both take
+> minutes. Do that and decide.
 
 ## Scoring rubric
 
@@ -58,16 +69,23 @@ means correctness and spec-coverage matter most:
 
 ## Scoreboard
 
-| Dimension (0–10) | Fable 5 † | Opus 4.8 ‡ | SOL xhigh ‡ | Kimi K3 | Grok 4.5 | GLM 5.2 | Kimi K2.7 | K2.6 swarm |
-| --- | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: |
-| Correctness (×.25) | 8 | 6.5 | 6 | 5 | 5 | 2 | 3 | 2 |
-| Spec fidelity (×.20) | 9 | 9 | 8 | 8 | 8 | 4 | 4 | 3 |
-| Netcode (×.15) | 9 | 8.5 | 8 | 7 | 6.5 | 2 | 3 | 2 |
-| Security (×.15) | 8 | 3 | 6 | 6 | 3 | 5 | 3 | 4 |
-| Code quality (×.15) | 9 | 9 | 8 | 8 | 8 | 5 | 5 | 4 |
-| Test depth (×.10) | 9 | 9 | 6 | 7 | 7 | 5 | 4 | 6 |
-| **Weighted total** | **8.60** | **7.40** | **7.00** | **6.70** | **6.18** | **3.60** | **3.60** | **3.20** |
-| Playable end-to-end? | ✅ | ✅ | ✅ § | ✅ | ✅ | ⚠️ renders, desynced | ❌ crashes on connect | ❌ crashes on load |
+| Dimension (0–10) | Fable 5 † | Opus 5 ¶ | Opus 4.8 ‡ | SOL xhigh ‡ | Kimi K3 | Grok 4.5 | GLM 5.2 | Kimi K2.7 | K2.6 swarm |
+| --- | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: |
+| Correctness (×.25) | 8 | 6 | 6.5 | 6 | 5 | 5 | 2 | 3 | 2 |
+| Spec fidelity (×.20) | 9 | 8.5 | 9 | 8 | 8 | 8 | 4 | 4 | 3 |
+| Netcode (×.15) | 9 | 9 | 8.5 | 8 | 7 | 6.5 | 2 | 3 | 2 |
+| Security (×.15) | 7 ◆ | 7 | 3 | 6 | 6 | 3 | 5 | 3 | 4 |
+| Code quality (×.15) | 9 | 9 | 9 | 8 | 8 | 8 | 5 | 5 | 4 |
+| Test depth (×.10) | 9 | 8 | 9 | 6 | 7 | 7 | 5 | 4 | 6 |
+| **Weighted total** | **8.45** | **7.75** | **7.40** | **7.00** | **6.70** | **6.18** | **3.60** | **3.60** | **3.20** |
+| Playable end-to-end? | ✅ | ⚠️ loses round 1 ¶ | ✅ | ✅ § | ✅ | ✅ | ⚠️ renders, desynced | ❌ crashes on connect | ❌ crashes on load |
+
+◆ Fable 5's Security was **corrected 8 → 7** after the Opus 5 audit's
+seed-recovery attack was turned on Fable 5's own code and broke it faster
+(21.8s vs 76s). ¶ Opus 5 audited under THREE passes (neutral, adversarial,
+steelman); the neutral pass scored Correctness 8 and missed the round-1 bug,
+the adversarial pass caught it, and the orchestrator reproduced it 5× in a real
+browser — the adversarial finding governs.
 
 † Fable 5 audited under the *harsher* adversarial framing (assume a fatal bug
 hides; disprove the author) — the tougher curve, and no fatal flaw was found.
@@ -85,28 +103,63 @@ Weighted audit score, with **empirical playability** as the tiebreaker for the
 middle tier (the spec grades the shipped artifact, so "does it run" breaks the
 GLM/K2.7 score tie in favor of the one that reaches a live match).
 
-### 🥇 1. Fable 5 — 8.60 *(see the conflict-of-interest disclosure above)*
+### 🥇 1. Fable 5 — 8.45 *(see the conflict-of-interest disclosure above)*
 
-The only entry with no fatal integration bug, the only one that doesn't leak
-the map seed, and the only one whose ranked-Elo path works end to end — the
-three facts that carry the margin, all independently verifiable. Real
+The only entry with no fatal integration bug and the only one whose ranked-Elo
+path works end to end — the two facts that now carry the margin. Real
 rewind-replay netcode with per-seat input acks and a working 150ms-latency
 test; a provably pure sim (zero `Math.random`/`Date.now` in `shared/`); zero
 `any` in source; every file under the spec's 500-line cap; 28 tests that pin
 exact Elo fixtures and the chain-in-one-tick invariant. Its adversarial auditor
-verified the anti-cheat claim is true, not a decoy story (`gameLoop.ts:151` real
-seed stays server-side; `:174` ships an independent decoy; the client mirror
-null-fills contents at `prediction.ts:57`). **Genuine weaknesses, held to the
-same bar as everyone's:** (1) no `process.on('uncaughtException')` guard — the
-same latent gap as Grok, though Fable 5's is not currently triggerable because
-its message handlers validate input where Grok's don't; (2) a marginally-tuned
+verified the decoy-seed design is real (`gameLoop.ts:151` real seed stays
+server-side; `:174` ships an independent decoy; the client mirror null-fills
+contents at `prediction.ts:57`). **Genuine weaknesses, held to the same bar as
+everyone's:** (0) **the decoy is not enough** — the transmitted `castleGrid`
+pins the 31-bit seed, and the orchestrator's own attack recovered it in **21.8s**,
+exposing all 20 hidden power-ups (`map.ts:71-84` rolls placement and contents
+from one interleaved stream). Fable 5 does NOT meet the spec's "unguessable,
+unhackable" bar either; it is merely harder than the 7 entries that ship the
+seed outright, and *easier* than Opus 5 (half the keyspace). Security cut 8 → 7.
+(1) no `process.on('uncaughtException')` guard — the same latent gap as Grok,
+though not currently triggerable because its handlers validate input; (2) a marginally-tuned
 Hard bot whose BFS escape-time ignores corner-assist turn cost (`bot.ts:64,287`
 vs `movement.ts:88-137`), so it fails its own soak's "Hard beats Easy ≥70%" bar
 about half the time; (3) FFA bot matches drag to the `MAX_ROUNDS` draw cap.
 Nothing here is game-breaking — the distinction from the field is that its
 defects are quality/robustness gaps, not "the game doesn't work" gaps.
 
-### 🥈 2. Opus 4.8 (ultracode) — 7.40
+### 🥈 2. Opus 5 — 7.75
+
+The strongest engineering in the field on almost every axis — and the entry that
+found a real hole in the #1. It is the **only submission whose client never
+receives anything that identifies hidden power-ups** (no seed on the wire at all:
+`snapshot.ts:113-131` ships `castleGrid` only, and `prediction.ts:95` zero-fills
+`castleContents`), it survived **47 hostile frames + binary + 20 KB payloads**
+with the process staying up (per-message and per-room `try/catch`, prototype
+pollution closed at `protocolGuards.ts:236`), and a 12-room / 36-bot / 90s stress
+produced zero tick failures. 103 tests all pass, zero `any` / zero `@ts-ignore`
+across 136 files, genuine rewind-replay netcode. Its adversarial auditor still
+broke the seed — the shipped grid pins the 32-bit seed in ~76s — which is the
+same structural flaw Fable 5 has (and Fable 5 falls *faster*), so the two are
+tied at Security 7.
+
+**What costs it the top spot is one fatal client bug: you lose round 1 of every
+match.** `router.ts:69-77` navigates by setting `location.hash` and relying on an
+async `hashchange`, so the game screen mounts one task *after* the server's
+back-to-back `match_start`/`round_start` land; `round_start` is dispatched to an
+empty handler set (`net.ts:131-133`) and buffered nowhere, leaving
+`roundStarted=false`, so `introActive()` (`game.ts:100`) never clears and the VS
+card paints forever. I reproduced this five times in a real browser: at t+60s the
+server is in `phase:"playing"` streaming events while the client still shows
+"GET READY" — and it recovers **exactly** when round 2's `round_start` arrives
+(HUD `R2/3`). The player is bombed blind for the whole first round, in Practice,
+Casual and Ranked alike; only the tutorial is immune. It is a one-line fix
+(`render()` unconditionally in `navigate`), but as shipped it is the single
+worst user-facing defect in the top tier. Secondary: soaked *bots* never drive
+their revenge ducks (`bots/bot.ts:330 ghostInput` is unreachable — dead bots keep
+a frozen stale input), and lobby GC evicts seated humans without notice.
+
+### 🥉 3. Opus 4.8 (ultracode) — 7.40
 
 The strongest submission after Fable 5's, and the best of the non-frozen field:
 playable, a coherent multi-agent decomposition where **the swarm seams the other
@@ -129,7 +182,7 @@ no `uncaughtException` handler (I booted it and killed it with one packet). Thos
 two land it a Security 3 despite otherwise excellent fundamentals. Fix both and
 it's neck-and-neck with #1.
 
-### 🥉 3. GPT-5.6 SOL (xhigh) — 7.00
+### 4. GPT-5.6 SOL (xhigh) — 7.00
 
 Playable, cleanly typed (zero `any` in source), a pure sim, and — notably — the
 **only entry besides Fable 5 with no process-crash path**: its `isClientMessage`
@@ -151,7 +204,7 @@ client** — it needs `NODE_ENV=production` to serve on one port, missing the
 spec's single-port criterion as-shipped. Strong fundamentals, a couple of
 gameplay/robustness gaps its thin test suite let through.
 
-### 4. Kimi K3 — 6.70
+### 5. Kimi K3 — 6.70
 
 The most complete and cleanest of the *Kimi/Grok* field by the audit, and
 playable. Genuine
@@ -166,7 +219,7 @@ the *competitive-integrity core*: ranked duels can genuinely end in a draw
 remarkably — the default **Space key can't drop a balloon** (bound as
 `'Space'`, but the key set stores `' '`; only the `E` fallback works).
 
-### 5. Grok 4.5 — 6.18
+### 6. Grok 4.5 — 6.18
 
 Neck-and-neck with K3 on spec fidelity, architecture, and tests, and also
 playable end to end. Its netcode is real (rewind-replay + 100ms interpolation).
@@ -178,7 +231,7 @@ interval* instead of RTT (clock-sync is dead code), same-tick mutual soak awards
 a win instead of the spec's draw, and Easy bots skip their escape-check 20% of
 the time and self-soak.
 
-### 6. GLM 5.2 — 3.60 *(playable-but-broken)*
+### 7. GLM 5.2 — 3.60 *(playable-but-broken)*
 
 Renders a live match, which is why it edges K2.7 — but the audit shows that
 match is a **hologram**. Players phase straight through walls, castles, and
@@ -193,7 +246,7 @@ never persisted (dead code), and combo announcements can never fire
 positions, hashed tokens, parameterized SQL, a pure deterministic sim), but as
 a *game* it does not work. It also skipped the tutorial entirely.
 
-### 7. Kimi K2.7 — 3.60 *(doesn't boot)*
+### 8. Kimi K2.7 — 3.60 *(doesn't boot)*
 
 A genuinely deterministic sim and correct Elo math at the core, but the shipped
 artifact is 100% non-functional: the server crashes on the **first client
@@ -206,7 +259,7 @@ unreachable, and its signature mechanics (kick, revenge ducks, emotes) are dead
 code behind live config flags. Ranks just below GLM only because it never
 reaches a playable frame.
 
-### 8. Kimi K2.6 agent swarm — 3.20
+### 9. Kimi K2.6 agent swarm — 3.20
 
 A textbook multi-agent integration failure. The individual modules are
 competent — a pure, well-tested sim (26 assertions), strict typing, a real
@@ -228,14 +281,15 @@ auditor's) are strong. The ranking is decided almost entirely at the
 **integration seams**: a SQL string, a module's exports, a circular import, an
 event that's emitted to no one, a key bound as `'Space'` but read as `' '`. The
 three that fail (K2.7, GLM's netcode, K2.6) all pass their own unit tests
-because the bug lives *between* the tested units. And one security flaw is
-**near-universal**: **seven of the eight** entries broadcast the real map seed
-that rolls the "hidden, unguessable" power-up contents, so their hidden power-ups
-are client-derivable — GLM, K2.7, K2.6, Grok, K3, Opus 4.8, *and GPT-5.6 SOL* all
-leak it; none built the separate secret-seed the spec's threat model requires.
-**Fable 5 is the sole exception** (real seed stays server-side, an independent
-decoy is sent instead), which is a large part of why it tops the security
-dimension. A second near-universal flaw: a **one-packet server crash** from an
+because the bug lives *between* the tested units. And on the spec's "unguessable,
+unhackable" power-up requirement, **all nine entries fail — just at different
+costs**, which is the most interesting result in the whole benchmark:
+**seven** (GLM, K2.7, K2.6, Grok, K3, Opus 4.8, SOL) broadcast the real seed, so
+recovery is free and instant. **Opus 5** omits the seed entirely and **Fable 5**
+sends a decoy — but both still ship the castle grid, which pins the seed by brute
+force: ~76s for Opus 5 (2^32) and **21.8s for Fable 5** (2^31, verified by the
+orchestrator against its own code). Nobody rolled contents from an independently
+seeded PRNG, which is the one-line fix the threat model actually required. A second near-universal flaw: a **one-packet server crash** from an
 unvalidated message — four entries (K2.7, Grok, Opus 4.8, and K2.6's tableless-DB
 variant) die from a single malformed packet; only **Fable 5 and SOL** validate
 inputs defensively enough to survive it. The two most robust submissions
