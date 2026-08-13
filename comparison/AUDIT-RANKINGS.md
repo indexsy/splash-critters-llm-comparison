@@ -1,15 +1,14 @@
 # Code Audit & Rankings
 
-Nine codebases audited by independent Claude subagents, all against the
-**same six-dimension rubric**, every claim citing `file:line`. (Opus 5 got
-*three* passes — neutral, adversarial, and a steelman advocate.) Full per-model reports are in [`audits/`](audits/); this
+Ten codebases audited by independent Claude subagents, all against the
+**same six-dimension rubric**, every claim citing `file:line`. (Opus 5 got *three* passes — neutral, adversarial, steelman; Opus 4.8, SOL and Grok 4.6 each got a neutral pass plus an independent fact-checker.) Full per-model reports are in [`audits/`](audits/); this
 file synthesizes and ranks them. Every headline finding was independently
 re-verified against the source before publishing (the two most recent additions,
 Opus 4.8 and GPT-5.6 SOL, each also got a *second* independent fact-checker pass).
 
 > ## ⚠️ Conflict of interest — read this first
 >
-> **Three of the nine entries are Claude-family (Fable 5, Opus 4.8, Opus 5),
+> **Three of the ten entries are Claude-family (Fable 5, Opus 4.8, Opus 5),
 > and Fable 5 both wrote one of them AND ran this whole comparison — then
 > ranked its own entry #1.** Treat that with the skepticism it deserves. Here
 > is exactly what was done to keep it honest — including a correction that
@@ -69,16 +68,16 @@ means correctness and spec-coverage matter most:
 
 ## Scoreboard
 
-| Dimension (0–10) | Fable 5 † | Opus 5 ¶ | Opus 4.8 ‡ | SOL xhigh ‡ | Kimi K3 | Grok 4.5 | GLM 5.2 | Kimi K2.7 | K2.6 swarm |
-| --- | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: |
-| Correctness (×.25) | 8 | 6 | 6.5 | 6 | 5 | 5 | 2 | 3 | 2 |
-| Spec fidelity (×.20) | 9 | 8.5 | 9 | 8 | 8 | 8 | 4 | 4 | 3 |
-| Netcode (×.15) | 9 | 9 | 8.5 | 8 | 7 | 6.5 | 2 | 3 | 2 |
-| Security (×.15) | 7 ◆ | 7 | 3 | 6 | 6 | 3 | 5 | 3 | 4 |
-| Code quality (×.15) | 9 | 9 | 9 | 8 | 8 | 8 | 5 | 5 | 4 |
-| Test depth (×.10) | 9 | 8 | 9 | 6 | 7 | 7 | 5 | 4 | 6 |
-| **Weighted total** | **8.45** | **7.75** | **7.40** | **7.00** | **6.70** | **6.18** | **3.60** | **3.60** | **3.20** |
-| Playable end-to-end? | ✅ | ⚠️ loses round 1 ¶ | ✅ | ✅ § | ✅ | ✅ | ⚠️ renders, desynced | ❌ crashes on connect | ❌ crashes on load |
+| Dimension (0–10) | Fable 5 † | Opus 5 ¶ | Opus 4.8 ‡ | SOL xhigh ‡ | Kimi K3 | Grok 4.5 | Grok 4.6 ‡ | GLM 5.2 | Kimi K2.7 | K2.6 swarm |
+| --- | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: |
+| Correctness (×.25) | 8 | 6 | 6.5 | 6 | 5 | 5 | 5 | 2 | 3 | 2 |
+| Spec fidelity (×.20) | 9 | 8.5 | 9 | 8 | 8 | 8 | 8 | 4 | 4 | 3 |
+| Netcode (×.15) | 9 | 9 | 8.5 | 8 | 7 | 6.5 | 4 | 2 | 3 | 2 |
+| Security (×.15) | 7 ◆ | 7 | 3 | 6 | 6 | 3 | 3 ★ | 5 | 3 | 4 |
+| Code quality (×.15) | 9 | 9 | 9 | 8 | 8 | 8 | 8 | 5 | 5 | 4 |
+| Test depth (×.10) | 9 | 8 | 9 | 6 | 7 | 7 | 7 | 5 | 4 | 6 |
+| **Weighted total** | **8.45** | **7.75** | **7.40** | **7.00** | **6.70** | **6.18** | **5.80** | **3.60** | **3.60** | **3.20** |
+| Playable end-to-end? | ✅ | ⚠️ loses round 1 ¶ | ✅ | ✅ § | ✅ | ✅ | ✅ | ⚠️ renders, desynced | ❌ crashes on connect | ❌ crashes on load |
 
 ◆ Fable 5's Security was **corrected 8 → 7** after the Opus 5 audit's
 seed-recovery attack was turned on Fable 5's own code and broke it faster
@@ -91,7 +90,10 @@ browser — the adversarial finding governs.
 hides; disprove the author) — the tougher curve, and no fatal flaw was found.
 ‡ Opus 4.8 and SOL xhigh audited under the neutral framing PLUS a second
 independent fact-checker that re-verified every finding; the orchestrator also
-reproduced their critical findings firsthand. § SOL is fully playable, but its
+reproduced their critical findings firsthand. ★ Grok 4.6's auditor scored
+Security **2**; the orchestrator set it to **3** to match the identical
+seed-leak-plus-one-packet-crash profile of Opus 4.8 and Grok 4.5 (both 3) — a
+slightly *more* generous call, since 4.6 adds real input validation. § SOL is fully playable, but its
 shipped `npm start` 404s the client — it needs `NODE_ENV=production` to serve on
 one port (verified: 404 without, 200 with), so it misses the spec's literal
 single-port acceptance criterion as-shipped. Scores come straight from each
@@ -231,7 +233,30 @@ interval* instead of RTT (clock-sync is dead code), same-tick mutual soak awards
 a win instead of the spec's draw, and Easy bots skip their escape-check 20% of
 the time and self-soak.
 
-### 7. GLM 5.2 — 3.60 *(playable-but-broken)*
+
+### 7. Grok 4.6 — 5.80 *(a rare regression: below its own predecessor)*
+
+The most interesting result in the late additions: **Grok 4.6 audits slightly
+*below* Grok 4.5**, and the per-dimension deltas show exactly why. It genuinely
+**fixes two real 4.5 bugs** — same-tick mutual soak now correctly yields a DRAW
+(`checkRoundEnd:452`) instead of awarding a win, and Easy bots now run the
+escape check before dropping (`bot.ts:279`) instead of self-soaking — and its
+soak became skill-asserting (Hard 5 / Easy 0, not flaky). Playable end to end
+(tutorial + practice both render live at round 1), pure sim, zero `any`, strict
+typecheck clean. But three things drag it under 4.5: (1) **its netcode audited
+much weaker** — the server sends no input ack (grep for `ackSeq`/`lastAck` in
+server src = zero, verified firsthand), so reconciliation can't trim by ack, and
+`INTERP_DELAY_MS` is dead (never read in the client), so the spec's
+`serverTime−100ms` interpolation is replaced by a cosmetic exponential ease
+(`prediction.ts:64`) — Netcode 6.5 → 4; (2) it **still leaks the seed outright**
+(client `createRound(msg.mapSeed)` re-derives all 22 hidden power-ups — the free,
+worst tier); (3) it **still crashes on one malformed packet** (`hashToken(12345)`
+→ `ERR_INVALID_ARG_TYPE`, `handle()` outside the lone `JSON.parse` try/catch, no
+`uncaughtException` guard — reproduced live) and its **HUD ping is still fake**
+(`ping = 40` pinned by `ping*0.95 + 40*0.05`, `net.pingMs` never assigned). Real
+correctness progress on the sim, no progress on the security/netcode fundamentals
+that the weighting rewards most.
+### 8. GLM 5.2 — 3.60 *(playable-but-broken)*
 
 Renders a live match, which is why it edges K2.7 — but the audit shows that
 match is a **hologram**. Players phase straight through walls, castles, and
@@ -246,7 +271,7 @@ never persisted (dead code), and combo announcements can never fire
 positions, hashed tokens, parameterized SQL, a pure deterministic sim), but as
 a *game* it does not work. It also skipped the tutorial entirely.
 
-### 8. Kimi K2.7 — 3.60 *(doesn't boot)*
+### 9. Kimi K2.7 — 3.60 *(doesn't boot)*
 
 A genuinely deterministic sim and correct Elo math at the core, but the shipped
 artifact is 100% non-functional: the server crashes on the **first client
@@ -259,7 +284,7 @@ unreachable, and its signature mechanics (kick, revenge ducks, emotes) are dead
 code behind live config flags. Ranks just below GLM only because it never
 reaches a playable frame.
 
-### 9. Kimi K2.6 agent swarm — 3.20
+### 10. Kimi K2.6 agent swarm — 3.20
 
 A textbook multi-agent integration failure. The individual modules are
 competent — a pure, well-tested sim (26 assertions), strict typing, a real
@@ -282,9 +307,9 @@ auditor's) are strong. The ranking is decided almost entirely at the
 event that's emitted to no one, a key bound as `'Space'` but read as `' '`. The
 three that fail (K2.7, GLM's netcode, K2.6) all pass their own unit tests
 because the bug lives *between* the tested units. And on the spec's "unguessable,
-unhackable" power-up requirement, **all nine entries fail — just at different
+unhackable" power-up requirement, **all ten entries fail — just at different
 costs**, which is the most interesting result in the whole benchmark:
-**seven** (GLM, K2.7, K2.6, Grok, K3, Opus 4.8, SOL) broadcast the real seed, so
+**eight** (GLM, K2.7, K2.6, both Groks, K3, Opus 4.8, SOL) broadcast the real seed, so
 recovery is free and instant. **Opus 5** omits the seed entirely and **Fable 5**
 sends a decoy — but both still ship the castle grid, which pins the seed by brute
 force: ~76s for Opus 5 (2^32) and **21.8s for Fable 5** (2^31, verified by the
