@@ -1,6 +1,6 @@
-# Splash Critters — one prompt, eleven AI coding agents
+# Splash Critters — one prompt, twelve AI coding agents
 
-An experiment: give eleven frontier LLM coding setups the **same ~200-line spec** —
+An experiment: give twelve frontier LLM coding setups the **same ~200-line spec** —
 build a complete, shippable 8-bit online multiplayer water-balloon battler
 (deterministic shared sim, server-authoritative netcode, bots, ranked Elo,
 SQLite, lobby browser, cosmetics, procedural pixel art) — and compare what
@@ -32,6 +32,7 @@ output, and database files were stripped).
 | [`results/opus-5/`](results/opus-5/) | **Claude Opus 5** (added 2026-07-24; audited under three passes — neutral, adversarial, steelman) |
 | [`results/grok-4.6/`](results/grok-4.6/) | **Grok 4.6** (xAI; added 2026-08-12; direct successor to the Grok 4.5 entry) |
 | [`results/0x-alpha/`](results/0x-alpha/) | **0x alpha** (added 2026-08-22) |
+| [`results/muse-spark-1.3/`](results/muse-spark-1.3/) | **Muse Spark 1.3** (added 2026-09-02) |
 
 ## Code audit & rankings
 
@@ -66,7 +67,8 @@ synthesis + methodology in
 | 8 | **0x alpha** ‡ | 4.40 | Strong sim + 26 tests + survives fuzzing + playable *offline* tutorial — but the server never sends `match_start`, so online play freezes on the lobby |
 | 9 | **GLM 5.2** | 3.60 | Renders a match, but it's a hologram: players phase through walls and the client is never sent the real map |
 | 10 | **Kimi K2.7** | 3.60 | Deterministic core, but the server crashes on the first connection and ranked never starts |
-| 11 | **Kimi K2.6 swarm** | 3.20 | Textbook swarm failure: competent modules never wired together — crashes at boot, never sends snapshots, no mouse handling |
+| 11 | **Muse Spark 1.3** ‡ | 3.20 | Actually runs through round 2 — but every bot suicides in ~3s (the soak says PASS), five one-packet crashes, seed leaked, clients pick their own credentials, and the server rate-limits its own player's inputs |
+| 12 | **Kimi K2.6 swarm** | 3.20 | Textbook swarm failure: competent modules never wired together — crashes at boot, never sends snapshots, no mouse handling |
 
 † Fable 5 audited under the harsher adversarial framing; ‡ Opus 4.8 and SOL under
 neutral framing + an extra verifier; ¶ Opus 5 under three passes (neutral,
@@ -74,15 +76,15 @@ adversarial, steelman) — the neutral pass missed the round-1 bug the adversari
 pass caught. Scored on correctness (25%), spec fidelity (20%), netcode (15%),
 security (15%), code quality (15%), test depth (10%).
 
-**The headline finding: all eleven entries fail the spec's "unguessable,
-unhackable" power-up requirement — they just fail at different prices.** Nine
+**The headline finding: all twelve entries fail the spec's "unguessable,
+unhackable" power-up requirement — they just fail at different prices.** Ten
 broadcast the real seed (free, instant recovery). Opus 5 omits it and Fable 5
 sends a decoy, but both still ship the castle grid, which pins the seed by brute
 force: ~76s for Opus 5 (2³²) and **21.8s for Fable 5** (2³¹). Nobody rolled the
 contents from an independently seeded PRNG. **A second near-universal flaw:** one
-malformed packet crashes the server for **five** of them (K2.7, K2.6, Opus 4.8,
-and *both* Groks); only Fable 5, SOL, Opus 5 and 0x alpha validate inputs well
-enough to survive it. The common thread: every model's shared sim is
+malformed packet crashes the server for **six** of them (K2.7, K2.6, Opus 4.8,
+*both* Groks, and Muse Spark — which has five distinct vectors); only Fable 5,
+SOL, Opus 5 and 0x alpha validate inputs well enough to survive it. The common thread: every model's shared sim is
 strong, and the games break at the *integration seams* — a SQL string, a circular
 import, an event emitted to no one, a numeric `hello` token, a key bound `'Space'`
 but read `' '`, a `pendingInput` deleted a tick too early, a `hashchange` that
@@ -95,18 +97,27 @@ Same machine (macOS, Node 23), same gauntlet for everyone
 `npm install` → `npm test` → `npm run build` → `npm start` → `/health` →
 client served → headless browser probe.
 
-| Check | Fable 5 | GLM 5.2 | Kimi K2.7 | K2.6 swarm | Grok 4.5 | Kimi K3 | Opus 4.8 | SOL xhigh | Opus 5 | Grok 4.6 | 0x alpha |
-| --- | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: |
-| `npm install` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
-| `npm test` (own suite) | ✅ 28 tests | ✅ 12 tests | ✅ 7 tests | ✅ 26 tests | ✅ 14 tests | ✅ 18 tests | ✅ 22 tests | ✅ 7 tests | ✅ 103 tests ¹ | ✅ 16 tests | ✅ 26 tests |
-| `npm run build` | ✅ | ✅ | ✅ ¹ | ✅ ¹ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
-| Server boots, `/health` OK | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
-| Built client served on one port | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ⚠️ needs NODE_ENV=prod ¹⁰ | ✅ | ✅ | ✅ |
-| **Client loads in a browser** | ✅ | ✅ | ✅ | ❌ crashes on load ² | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
-| **A player can actually connect** | ✅ | ✅ | ❌ server crashes ³ | ❌ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
-| **Full match playable vs bots** | ✅ | ✅ | ❌ | ❌ | ✅ | ✅ | ✅ | ✅ ¹¹ | ⚠️ round 1 invisible ¹² | ✅ | ❌ no match_start ¹³ |
-| Bot-vs-bot soak script | ⚠️ flaky ⁴ | ✅ ⁵ | ✅ ⁵ | ❌ broken ⁶ | ✅ ⁵ | ✅ ⁵ | ✅ skill-asserting ⁹ | ⚠️ passes but masks a bug ¹¹ | ✅ 4 scenarios | ✅ skill-asserting | ❌ mis-wired ¹³ |
-| E2E acceptance script included | ✅ passes | — | — | — | — | ⚠️ ranked section fails ⁸ | — | — | — | — | — |
+| Check | Fable 5 | GLM 5.2 | Kimi K2.7 | K2.6 swarm | Grok 4.5 | Kimi K3 | Opus 4.8 | SOL xhigh | Opus 5 | Grok 4.6 | 0x alpha | Muse Spark 1.3 |
+| --- | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: |
+| `npm install` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
+| `npm test` (own suite) | ✅ 28 tests | ✅ 12 tests | ✅ 7 tests | ✅ 26 tests | ✅ 14 tests | ✅ 18 tests | ✅ 22 tests | ✅ 7 tests | ✅ 103 tests ¹ | ✅ 16 tests | ✅ 26 tests | ✅ 11 tests |
+| `npm run build` | ✅ | ✅ | ✅ ¹ | ✅ ¹ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
+| Server boots, `/health` OK | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
+| Built client served on one port | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ⚠️ needs NODE_ENV=prod ¹⁰ | ✅ | ✅ | ✅ | ✅ |
+| **Client loads in a browser** | ✅ | ✅ | ✅ | ❌ crashes on load ² | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
+| **A player can actually connect** | ✅ | ✅ | ❌ server crashes ³ | ❌ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
+| **Full match playable vs bots** | ✅ | ✅ | ❌ | ❌ | ✅ | ✅ | ✅ | ✅ ¹¹ | ⚠️ round 1 invisible ¹² | ✅ | ❌ no match_start ¹³ | ⚠️ bots suicide ~3s ¹⁴ |
+| Bot-vs-bot soak script | ⚠️ flaky ⁴ | ✅ ⁵ | ✅ ⁵ | ❌ broken ⁶ | ✅ ⁵ | ✅ ⁵ | ✅ skill-asserting ⁹ | ⚠️ passes but masks a bug ¹¹ | ✅ 4 scenarios | ✅ skill-asserting | ❌ mis-wired ¹³ | ⚠️ passes, certifies broken bots ¹⁴ |
+| E2E acceptance script included | ✅ passes | — | — | — | — | ⚠️ ranked section fails ⁸ | — | — | — | — | — | — |
+
+¹⁴ **Muse Spark 1.3:** `dangerMap.ts:85` marks a tile safe when the burst is
+more than 22 ticks away, so with a 90-tick fuse every bot difficulty places a
+balloon and stands on it (Hard 0/12 vs Easy; an idle human beat three Medium
+bots 8/8 in ~3-second rounds). The shipped `soak.ts` asserts completion only, so
+it reports PASS. Separately, the client sends inputs from a
+`requestAnimationFrame` loop (`game.ts:167-179`) against a 60/s server cap
+(`config.ts:87`), so the server discards the player's own inputs as `rate_limit`
+errors — observed 9 in one short match, worse on 120Hz displays.
 
 ¹³ **0x alpha:** the server plays the match (round_start → events → round_end
 stream on the wire) but **never emits `match_start`**, which is the client's
@@ -195,13 +206,13 @@ not adjudicated further — either way its own gate reports 2 FAILURES.
 The spec's core acceptance test is a human one: open the game, reach the
 menu, play a full match against bots.
 
-| Stage | Fable 5 | GLM 5.2 | Kimi K2.7 | K2.6 swarm | Grok 4.5 | Kimi K3 | Opus 4.8 | SOL | Opus 5 | Grok 4.6 | 0x alpha |
-| --- | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: |
-| Title screen renders | ✅ | ✅ | ✅ | ❌ blank page | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
-| Guest account created | ✅ | ✅ | ❌ (server dead) | ❌ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
-| Main menu | ✅ | ✅ | ❌ stuck on title | ❌ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
-| Lobby / practice setup | ✅ | ✅ | ❌ | ❌ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
-| Live match vs bots | ✅ | ✅ | ❌ | ❌ | ✅ | ✅ | ✅ | ✅ (bots sluggish ¹¹) | ⚠️ round 2+ only ¹² | ✅ | ❌ never mounts ¹³ |
+| Stage | Fable 5 | GLM 5.2 | Kimi K2.7 | K2.6 swarm | Grok 4.5 | Kimi K3 | Opus 4.8 | SOL | Opus 5 | Grok 4.6 | 0x alpha | Muse Spark 1.3 |
+| --- | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: |
+| Title screen renders | ✅ | ✅ | ✅ | ❌ blank page | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
+| Guest account created | ✅ | ✅ | ❌ (server dead) | ❌ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
+| Main menu | ✅ | ✅ | ❌ stuck on title | ❌ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
+| Lobby / practice setup | ✅ | ✅ | ❌ | ❌ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ (auto-starts) |
+| Live match vs bots | ✅ | ✅ | ❌ | ❌ | ✅ | ✅ | ✅ | ✅ (bots sluggish ¹¹) | ⚠️ round 2+ only ¹² | ✅ | ❌ never mounts ¹³ | ⚠️ runs, bots suicide ¹⁴ |
 
 ### Fable 5 — title / menu / live match
 
@@ -258,6 +269,18 @@ a pixel arena; a full lobby with per-slot bot difficulty, and a live FFA match
 with HUD plates + a splash burst. Playable end to end — caveats are the seed
 leak, sluggish production bots, and that `npm start` needs `NODE_ENV=production`
 to serve the client.*
+
+### Muse Spark 1.3 — a real match, won by standing still
+
+<p>
+<img src="comparison/screenshots/muse-spark-1.3-menu.png" width="45%"> <img src="comparison/screenshots/muse-spark-1.3-game.png" width="45%">
+</p>
+
+*Left: the full menu (ranked duel/FFA, casual rooms, practice, tutorial, locker,
+leaderboard). Right: a live 4-player FFA at Round 2 — the human is at 🏆1 having
+done nothing, and the kill feed reads "Bot-medium soaked Bot-medium!" four times,
+because every bot stands on its own first balloon. Note "Ping 0ms" (fake) and the
+unscaled ~240px arena.*
 
 ### 0x alpha — playable offline tutorial vs. stuck online lobby
 
@@ -323,13 +346,13 @@ renders unlabeled, and ranked Elo fails its own e2e gate (see ⁸).*
 
 ## Static metrics
 
-| Metric | Fable 5 | GLM 5.2 | Kimi K2.7 | K2.6 swarm | Grok 4.5 | Kimi K3 | Opus 4.8 | SOL | Opus 5 | Grok 4.6 | 0x alpha |
-| --- | --: | --: | --: | --: | --: | --: | --: | --: | --: | --: | --: |
-| TypeScript lines | 7,934 | 4,450 | 4,540 | 8,944 | 6,581 | 6,536 | 8,842 | 7,392 | **20,510** | 5,394 | 6,358 |
-| TypeScript files | 53 | 30 | 40 | 39 | 43 | 45 | 89 | 42 | **136** | 45 | 39 |
-| Unit tests | 28 | 12 | 7 | 26 | 14 | 18 | 22 | 7 | **103** | 16 | 26 |
-| Client screen modules | 12 | 1 consolidated ⁷ | 11 | 12 | 12 | 12 | 12 | 12 | 17 | 12 | 10 |
-| Extra verification shipped | soak + WS e2e script | soak | soak | (broken soak) | soak | soak + e2e ⁸ | soak (skill-asserting) | soak ¹¹ | soak (4 scenarios) | soak (skill-asserting) | broken soak ¹³ |
+| Metric | Fable 5 | GLM 5.2 | Kimi K2.7 | K2.6 swarm | Grok 4.5 | Kimi K3 | Opus 4.8 | SOL | Opus 5 | Grok 4.6 | 0x alpha | Muse Spark 1.3 |
+| --- | --: | --: | --: | --: | --: | --: | --: | --: | --: | --: | --: | --: |
+| TypeScript lines | 7,934 | 4,450 | 4,540 | 8,944 | 6,581 | 6,536 | 8,842 | 7,392 | **20,510** | 5,394 | 6,358 | 4,828 |
+| TypeScript files | 53 | 30 | 40 | 39 | 43 | 45 | 89 | 42 | **136** | 45 | 39 | 42 |
+| Unit tests | 28 | 12 | 7 | 26 | 14 | 18 | 22 | 7 | **103** | 16 | 26 | 11 |
+| Client screen modules | 12 | 1 consolidated ⁷ | 11 | 12 | 12 | 12 | 12 | 12 | 17 | 12 | 10 | 11 |
+| Extra verification shipped | soak + WS e2e script | soak | soak | (broken soak) | soak | soak + e2e ⁸ | soak (skill-asserting) | soak ¹¹ | soak (4 scenarios) | soak (skill-asserting) | broken soak ¹³ | soak (completion-only ¹⁴) |
 
 ⁷ GLM consolidated all screens into one 400-line file (every spec screen
 **except the tutorial, which GLM skipped entirely** — `grep -ri tutorial
@@ -338,16 +361,16 @@ packages/` → 0 hits). Every submission except GLM implements the tutorial.
 Feature-keyword footprint (case-insensitive grep hits across `packages/`,
 a *rough* proxy for how deeply a mechanic is wired through sim + bots + UI):
 
-| Keyword | Fable 5 | GLM 5.2 | Kimi K2.7 | K2.6 swarm | Grok 4.5 | Kimi K3 | Opus 4.8 | SOL | 0x alpha |
-| --- | --: | --: | --: | --: | --: | --: | --: | --: | --: |
-| kick | 57 | 15 | 28 | 78 | 15 | 16 | 28 | 20 | 35 |
-| revenge (ducks) | 57 | 31 | 27 | 37 | 53 | 28 | 79 | 55 | 50 |
-| tide | 55 | 42 | 26 | 33 | 40 | 57 | 45 | 36 | 42 |
-| emote | 53 | 2 | 17 | 48 | 32 | 51 | 61 | 37 | 39 |
-| rematch | 22 | 12 | 13 | 21 | 32 | 33 | 16 | 22 | 28 |
-| tutorial | 28 | 0 | 15 | 11 | 31 | 30 | 21 | 35 | 7 |
-| colorblind | 11 | 0 | 0 | 11 | 10 | 11 | 46 | 8 (dead ¹¹) | 8 |
-| reconcil… (netcode) | 3 | 5 | 0 | 10 | 1 | 0 | 7 | 0 | 5 |
+| Keyword | Fable 5 | GLM 5.2 | Kimi K2.7 | K2.6 swarm | Grok 4.5 | Kimi K3 | Opus 4.8 | SOL | 0x alpha | Muse Spark 1.3 |
+| --- | --: | --: | --: | --: | --: | --: | --: | --: | --: | --: |
+| kick | 57 | 15 | 28 | 78 | 15 | 16 | 28 | 20 | 35 | 19 |
+| revenge (ducks) | 57 | 31 | 27 | 37 | 53 | 28 | 79 | 55 | 50 | 36 |
+| tide | 55 | 42 | 26 | 33 | 40 | 57 | 45 | 36 | 42 | 41 |
+| emote | 53 | 2 | 17 | 48 | 32 | 51 | 61 | 37 | 39 | 30 |
+| rematch | 22 | 12 | 13 | 21 | 32 | 33 | 16 | 22 | 28 | 17 |
+| tutorial | 28 | 0 | 15 | 11 | 31 | 30 | 21 | 35 | 7 | 14 |
+| colorblind | 11 | 0 | 0 | 11 | 10 | 11 | 46 | 8 (dead ¹¹) | 8 | 13 |
+| reconcil… (netcode) | 3 | 5 | 0 | 10 | 1 | 0 | 7 | 0 | 5 | 2 |
 
 ## Methodology & fairness notes
 

@@ -1,0 +1,27 @@
+{
+  "name": "splash-critters",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Splash Critters — 8-bit online water balloon battler",
+  "workspaces": [
+    "packages/shared",
+    "packages/server",
+    "packages/client"
+  ],
+  "scripts": {
+    "dev": "concurrently \"npm run dev --workspace=packages/server\" \"npm run dev --workspace=packages/client\"",
+    "dev:server": "npm run dev --workspace=packages/server",
+    "dev:client": "npm run dev --workspace=packages/client",
+    "build": "npm run build --workspace=packages/shared && npm run build --workspace=packages/server && npm run build --workspace=packages/client",
+    "start": "npm start --workspace=packages/server",
+    "test": "npm test --workspace=packages/shared",
+    "soak": "npm run soak --workspace=packages/server"
+  },
+  "devDependencies": {
+    "concurrently": "^9.0.1",
+    "typescript": "^5.4.5"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

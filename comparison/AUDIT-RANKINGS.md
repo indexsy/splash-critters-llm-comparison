@@ -1,14 +1,14 @@
 # Code Audit & Rankings
 
-Eleven codebases audited by independent Claude subagents, all against the
-**same six-dimension rubric**, every claim citing `file:line`. (Opus 5 got *three* passes — neutral, adversarial, steelman; Opus 4.8, SOL, Grok 4.6 and 0x alpha each got a neutral pass plus an independent fact-checker.) Full per-model reports are in [`audits/`](audits/); this
+Twelve codebases audited by independent Claude subagents, all against the
+**same six-dimension rubric**, every claim citing `file:line`. (Opus 5 got *three* passes — neutral, adversarial, steelman; Opus 4.8, SOL, Grok 4.6, 0x alpha and Muse Spark 1.3 each got a neutral pass plus an independent fact-checker.) Full per-model reports are in [`audits/`](audits/); this
 file synthesizes and ranks them. Every headline finding was independently
 re-verified against the source before publishing (the two most recent additions,
 Opus 4.8 and GPT-5.6 SOL, each also got a *second* independent fact-checker pass).
 
 > ## ⚠️ Conflict of interest — read this first
 >
-> **Three of the eleven entries are Claude-family (Fable 5, Opus 4.8, Opus 5),
+> **Three of the twelve entries are Claude-family (Fable 5, Opus 4.8, Opus 5),
 > and Fable 5 both wrote one of them AND ran this whole comparison — then
 > ranked its own entry #1.** Treat that with the skepticism it deserves. Here
 > is exactly what was done to keep it honest — including a correction that
@@ -68,16 +68,16 @@ means correctness and spec-coverage matter most:
 
 ## Scoreboard
 
-| Dimension (0–10) | Fable 5 † | Opus 5 ¶ | Opus 4.8 ‡ | SOL xhigh ‡ | Kimi K3 | Grok 4.5 | Grok 4.6 ‡ | 0x alpha ‡ | GLM 5.2 | Kimi K2.7 | K2.6 swarm |
-| --- | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: |
-| Correctness (×.25) | 8 | 6 | 6.5 | 6 | 5 | 5 | 5 | 3 | 2 | 3 | 2 |
-| Spec fidelity (×.20) | 9 | 8.5 | 9 | 8 | 8 | 8 | 8 | 4 | 4 | 4 | 3 |
-| Netcode (×.15) | 9 | 9 | 8.5 | 8 | 7 | 6.5 | 4 | 3 | 2 | 3 | 2 |
-| Security (×.15) | 7 ◆ | 7 | 3 | 6 | 6 | 3 | 3 ★ | 5 | 5 | 3 | 4 |
-| Code quality (×.15) | 9 | 9 | 9 | 8 | 8 | 8 | 8 | 7 | 5 | 5 | 4 |
-| Test depth (×.10) | 9 | 8 | 9 | 6 | 7 | 7 | 7 | 6 | 5 | 4 | 6 |
-| **Weighted total** | **8.45** | **7.75** | **7.40** | **7.00** | **6.70** | **6.18** | **5.80** | **4.40** | **3.60** | **3.60** | **3.20** |
-| Playable end-to-end? | ✅ | ⚠️ loses round 1 ¶ | ✅ | ✅ § | ✅ | ✅ | ✅ | ❌ online never renders ✦ | ⚠️ renders, desynced | ❌ crashes on connect | ❌ crashes on load |
+| Dimension (0–10) | Fable 5 † | Opus 5 ¶ | Opus 4.8 ‡ | SOL xhigh ‡ | Kimi K3 | Grok 4.5 | Grok 4.6 ‡ | 0x alpha ‡ | GLM 5.2 | Kimi K2.7 | Muse Spark 1.3 ‡ | K2.6 swarm |
+| --- | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: |
+| Correctness (×.25) | 8 | 6 | 6.5 | 6 | 5 | 5 | 5 | 3 | 2 | 3 | 2 | 2 |
+| Spec fidelity (×.20) | 9 | 8.5 | 9 | 8 | 8 | 8 | 8 | 4 | 4 | 4 | 4 | 3 |
+| Netcode (×.15) | 9 | 9 | 8.5 | 8 | 7 | 6.5 | 4 | 3 | 2 | 3 | 3 | 2 |
+| Security (×.15) | 7 ◆ | 7 | 3 | 6 | 6 | 3 | 3 ★ | 5 | 5 | 3 | 2 | 4 |
+| Code quality (×.15) | 9 | 9 | 9 | 8 | 8 | 8 | 8 | 7 | 5 | 5 | 5 | 4 |
+| Test depth (×.10) | 9 | 8 | 9 | 6 | 7 | 7 | 7 | 6 | 5 | 4 | 4 | 6 |
+| **Weighted total** | **8.45** | **7.75** | **7.40** | **7.00** | **6.70** | **6.18** | **5.80** | **4.40** | **3.60** | **3.60** | **3.20** | **3.20** |
+| Playable end-to-end? | ✅ | ⚠️ loses round 1 ¶ | ✅ | ✅ § | ✅ | ✅ | ✅ | ❌ online never renders ✦ | ⚠️ renders, desynced | ❌ crashes on connect | ⚠️ runs, but every bot suicides in ~3s ⊗ | ❌ crashes on load |
 
 ◆ Fable 5's Security was **corrected 8 → 7** after the Opus 5 audit's
 seed-recovery attack was turned on Fable 5's own code and broke it faster
@@ -98,7 +98,12 @@ the wire) but **never sends `match_start`**, and the client mounts gameplay only
 on that message — so online play (practice/casual/ranked) freezes on the lobby
 while the match plays out invisibly (reproduced firsthand). Its offline tutorial
 renders and plays fine, so the sim/renderer work; only the server→client wiring
-is missing. § SOL is fully playable, but its
+is missing. ⊗ Muse Spark 1.3 boots, connects and renders a real match through Round 2 — but
+`dangerMap.ts:85` treats any burst more than 22 ticks away as safe, so **every
+bot difficulty stands on its own first balloon** (Hard 0/12 vs Easy; an idle
+human beat three Medium bots 8/8 in ~3-second rounds) while `soak.ts` certifies
+it as PASS. It ties K2.6 at 3.20 and ranks above it only on the playability
+tiebreak (it runs; K2.6 crashes on load). § SOL is fully playable, but its
 shipped `npm start` 404s the client — it needs `NODE_ENV=production` to serve on
 one port (verified: 404 without, 200 with), so it misses the spec's literal
 single-port acceptance criterion as-shipped. Scores come straight from each
@@ -317,7 +322,41 @@ unreachable, and its signature mechanics (kick, revenge ducks, emotes) are dead
 code behind live config flags. Ranks just below GLM only because it never
 reaches a playable frame.
 
-### 11. Kimi K2.6 agent swarm — 3.20
+### 11. Muse Spark 1.3 — 3.20 *(runs, but the bots kill themselves — and the soak says PASS)*
+
+The only bottom-tier entry that genuinely **plays end to end**: it boots, connects,
+sends `match_start`, renders round 1 (fact-checked 4/4 trials, and reproduced by
+the orchestrator through Round 2), with a live kill feed and revenge ducks. Its
+shared sim is pure and deterministic and its Elo math is correct
+(`elo.ts:8-10,51`). That is the whole of the good news. **Every bot difficulty
+suicides on its own first balloon**: `dangerMap.ts:85` marks a tile safe when the
+burst is more than 22 ticks away, so with a 90-tick fuse `canEscapeAfterPlace`
+(`bot.ts:95-101`) returns a zero-length escape and the bot stands on its balloon
+— measured Hard 0/12 vs Easy and an idle human beating three Medium bots 8/8 in
+~3-second rounds, while the shipped `soak.ts` is completion-only and **certifies
+this as PASS**. The orchestrator's own screenshot shows exactly this: an idle
+human at 🏆1 with a kill feed of "Bot-medium soaked Bot-medium!". Security is
+the worst in the field: **five distinct unauthenticated one-frame crashes** —
+`onMessage` routes `hello` at `net.ts:78-79` *before* both the rate limiter and
+the guarded `try/catch` (`:96-278`), so a raw `null` frame or a `hello` with a
+number/object/array/boolean token reaches `createHash().update()` unchecked and
+exits the process (reproduced live); the **seed is leaked outright**
+(`net.ts:476` ships the real `mapSeed`, `map.ts:51-75` rolls layout and contents
+from one stream — 100% reproduction, and gratuitous since no in-match client code
+reads it); `db.ts:67` `token || randomUUID()` lets a **client choose its own
+credential** (`hello{token:"a"}` → `welcome.token:"a"`); `/api/tutorial` has no
+idempotency (**unlimited XP farming**); and pre-auth `hello` spam grows the
+`players` table unbounded. Then a bug class no other entry has: the client sends
+inputs from inside a `requestAnimationFrame` loop (`game.ts:167-179`) against a
+60/s server cap (`config.ts:87`), so **the server throws away the human's own
+inputs** as `rate_limit` errors — worse on high-refresh displays. Add dead
+disconnect handling (`substituteBot` never clears `disconnected`, so the
+"bot" never moves), a Forfeit button that never forfeits, bots that freeze for a
+whole round after round 1 (`lastDecisionTick` never reset), a fake "Ping 0ms",
+and only 11 tests. A complete-looking scaffold whose one working loop is a match
+the bots refuse to contest.
+
+### 12. Kimi K2.6 agent swarm — 3.20
 
 A textbook multi-agent integration failure. The individual modules are
 competent — a pure, well-tested sim (26 assertions), strict typing, a real
@@ -340,7 +379,7 @@ auditor's) are strong. The ranking is decided almost entirely at the
 event that's emitted to no one, a key bound as `'Space'` but read as `' '`. The
 three that fail (K2.7, GLM's netcode, K2.6) all pass their own unit tests
 because the bug lives *between* the tested units. And on the spec's "unguessable,
-unhackable" power-up requirement, **all eleven entries fail — just at different
+unhackable" power-up requirement, **all twelve entries fail — just at different
 costs**, which is the most interesting result in the whole benchmark:
 **eight** (GLM, K2.7, K2.6, both Groks, K3, Opus 4.8, SOL) broadcast the real seed, so
 recovery is free and instant. **Opus 5** omits the seed entirely and **Fable 5**
