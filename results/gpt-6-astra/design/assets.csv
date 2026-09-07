@@ -1,0 +1,12 @@
+id,role,type,description,size/ratio,style line ref,source
+style,visual contract,text,"Chunky original 8-bit pixel art with stepped silhouettes and dark navy outlines. Environments use muted mint grass, warm sandy cream, or pale aqua pool tiles; critters use vivid lime, butter yellow, coral, and lavender against those backgrounds. Water hazards sparkle electric blue and white, while pickups carry warm gold borders. Flat sunny lighting keeps the mood mischievous and summery. Clean top-down perspective, sparse texture, sharp pixel edges, and strong foreground contrast make every arena action immediately readable.",all,style,procedural
+animals,players and previews,pixel data,eight original animals with two-frame walk cycles,16x16,style,procedural
+hats,cosmetic overlays,pixel data,bucket snorkel crown bandana propeller,16x16,style,procedural
+terrain,arena tiles,canvas,backyard beach and pool floors boulders and sandcastles,16x16,style,procedural
+balloon,placed and sliding balloons,canvas,inflating water balloon and knot,16x16,style,procedural
+powerups,collectibles,pixel data,extra balloon splash flippers and rubber boots,12x12,style,procedural
+water,splashes and tide,canvas,cross sprays droplets shimmer and duckies,16x16,style,procedural
+title,animated menu scene,canvas,summer water battle diorama,256x224,style,procedural
+badges,rank tiers,canvas,six stepped water badges,16x16,style,procedural
+effects,action feedback,web audio,drop burst chain pickup soak tide victory and emotes,mono,style,procedural
+music,screen soundtrack,web audio,square and triangle chiptune loops with showdown tempo,stereo,style,procedural

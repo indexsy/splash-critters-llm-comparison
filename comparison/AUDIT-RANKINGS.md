@@ -1,19 +1,36 @@
 # Code Audit & Rankings
 
-Twelve codebases audited by independent Claude subagents, all against the
-**same six-dimension rubric**, every claim citing `file:line`. (Opus 5 got *three* passes — neutral, adversarial, steelman; Opus 4.8, SOL, Grok 4.6, 0x alpha and Muse Spark 1.3 each got a neutral pass plus an independent fact-checker.) Full per-model reports are in [`audits/`](audits/); this
+Thirteen codebases audited by independent Claude subagents, all against the
+**same six-dimension rubric**, every claim citing `file:line`. (Opus 5 got *three* passes — neutral, adversarial, steelman; Opus 4.8, SOL, Grok 4.6, 0x alpha, Muse Spark 1.3 and GPT-6 Astra each got a neutral pass plus an independent fact-checker.) Full per-model reports are in [`audits/`](audits/); this
 file synthesizes and ranks them. Every headline finding was independently
 re-verified against the source before publishing (the two most recent additions,
 Opus 4.8 and GPT-5.6 SOL, each also got a *second* independent fact-checker pass).
 
 > ## ⚠️ Conflict of interest — read this first
 >
-> **Three of the twelve entries are Claude-family (Fable 5, Opus 4.8, Opus 5),
+> **Three of the thirteen entries are Claude-family (Fable 5, Opus 4.8, Opus 5),
 > and Fable 5 both wrote one of them AND ran this whole comparison — then
 > ranked its own entry #1.** Treat that with the skepticism it deserves. Here
 > is exactly what was done to keep it honest — including a correction that
 > moved the orchestrator's own score DOWN:
 >
+> - **The single most important result in this benchmark belongs to a
+>   non-Claude entry — and a Claude orchestrator is telling you so.** GPT-6 Astra
+>   (#2, 8.35) is the ONLY one of thirteen to satisfy the spec's core
+>   "unguessable, unhackable" requirement: it rolls each castle's hidden contents
+>   from an **independent per-tile CSPRNG stream** (`rooms.ts:336-338`), so the
+>   same attack that recovered Fable 5's loot in 21.8s and Opus 5's in ~76s
+>   scores at pure chance against Astra (1.29 hits/map vs a 1.30 independent-secret
+>   control, 400 trials — verified firsthand). It sits **0.10 behind Fable 5**
+>   only because the weighted rubric rewards Fable 5's slightly cleaner code
+>   (quality 9 vs 8) and one extra test file (test depth 9 vs 8); on the hardest
+>   and most spec-central dimension — did you actually solve the problem the whole
+>   comparison is built around — **Astra is first and Fable 5 is not** (security
+>   8 vs 7). A reader who weights "solved the core problem" above code polish
+>   should read Astra as co-#1. This entry was processed while the orchestrator
+>   ran as **Opus 5 — itself entry #3** — so the conflict, if it tilted anything,
+>   tilted *toward* keeping a Claude entry on top, and the result still went the
+>   other way.
 > - **The Opus 5 audit found a flaw that turned out to apply to Fable 5 too —
 >   and worse.** Its adversarial auditor showed that omitting the map seed is
 >   not enough: the transmitted `castleGrid` carries ~93 Bernoulli outcomes
@@ -33,8 +50,7 @@ Opus 4.8 and GPT-5.6 SOL, each also got a *second* independent fact-checker pass
 >   *more* scrutiny than any other entry** (a second independent fact-checker
 >   re-verified every finding), and it still landed below the harder-graded
 >   Fable 5. The deck is stacked *against* the orchestrator, not for it.
-> - **The #1-vs-#2 gap (8.45 vs 7.75) is now a single fact: Opus 5 loses
->   round 1 of every match.** Its client sits on the VS card for the entire
+> - **Opus 5 (now #3, 7.75) loses round 1 of every match.** Its client sits on the VS card for the entire
 >   first round while the server plays it out — reproduced 5× in a real browser
 >   by the orchestrator, and independently by its adversarial auditor. On
 >   security the two are now effectively tied (both brute-forcible; Opus 5's
@@ -68,16 +84,16 @@ means correctness and spec-coverage matter most:
 
 ## Scoreboard
 
-| Dimension (0–10) | Fable 5 † | Opus 5 ¶ | Opus 4.8 ‡ | SOL xhigh ‡ | Kimi K3 | Grok 4.5 | Grok 4.6 ‡ | 0x alpha ‡ | GLM 5.2 | Kimi K2.7 | Muse Spark 1.3 ‡ | K2.6 swarm |
-| --- | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: |
-| Correctness (×.25) | 8 | 6 | 6.5 | 6 | 5 | 5 | 5 | 3 | 2 | 3 | 2 | 2 |
-| Spec fidelity (×.20) | 9 | 8.5 | 9 | 8 | 8 | 8 | 8 | 4 | 4 | 4 | 4 | 3 |
-| Netcode (×.15) | 9 | 9 | 8.5 | 8 | 7 | 6.5 | 4 | 3 | 2 | 3 | 3 | 2 |
-| Security (×.15) | 7 ◆ | 7 | 3 | 6 | 6 | 3 | 3 ★ | 5 | 5 | 3 | 2 | 4 |
-| Code quality (×.15) | 9 | 9 | 9 | 8 | 8 | 8 | 8 | 7 | 5 | 5 | 5 | 4 |
-| Test depth (×.10) | 9 | 8 | 9 | 6 | 7 | 7 | 7 | 6 | 5 | 4 | 4 | 6 |
-| **Weighted total** | **8.45** | **7.75** | **7.40** | **7.00** | **6.70** | **6.18** | **5.80** | **4.40** | **3.60** | **3.60** | **3.20** | **3.20** |
-| Playable end-to-end? | ✅ | ⚠️ loses round 1 ¶ | ✅ | ✅ § | ✅ | ✅ | ✅ | ❌ online never renders ✦ | ⚠️ renders, desynced | ❌ crashes on connect | ⚠️ runs, but every bot suicides in ~3s ⊗ | ❌ crashes on load |
+| Dimension (0–10) | Fable 5 † | GPT-6 Astra ✚ | Opus 5 ¶ | Opus 4.8 ‡ | SOL xhigh ‡ | Kimi K3 | Grok 4.5 | Grok 4.6 ‡ | 0x alpha ‡ | GLM 5.2 | Kimi K2.7 | Muse Spark 1.3 ‡ | K2.6 swarm |
+| --- | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: |
+| Correctness (×.25) | 8 | 8 | 6 | 6.5 | 6 | 5 | 5 | 5 | 3 | 2 | 3 | 2 | 2 |
+| Spec fidelity (×.20) | 9 | 9 | 8.5 | 9 | 8 | 8 | 8 | 8 | 4 | 4 | 4 | 4 | 3 |
+| Netcode (×.15) | 9 | 9 | 9 | 8.5 | 8 | 7 | 6.5 | 4 | 3 | 2 | 3 | 3 | 2 |
+| Security (×.15) | 7 ◆ | 8 | 7 | 3 | 6 | 6 | 3 | 3 ★ | 5 | 5 | 3 | 2 | 4 |
+| Code quality (×.15) | 9 | 8 | 9 | 9 | 8 | 8 | 8 | 8 | 7 | 5 | 5 | 5 | 4 |
+| Test depth (×.10) | 9 | 8 | 8 | 9 | 6 | 7 | 7 | 7 | 6 | 5 | 4 | 4 | 6 |
+| **Weighted total** | **8.45** | **8.35** | **7.75** | **7.40** | **7.00** | **6.70** | **6.18** | **5.80** | **4.40** | **3.60** | **3.60** | **3.20** | **3.20** |
+| Playable end-to-end? | ✅ | ✅ | ⚠️ loses round 1 ¶ | ✅ | ✅ § | ✅ | ✅ | ✅ | ❌ online never renders ✦ | ⚠️ renders, desynced | ❌ crashes on connect | ⚠️ runs, but every bot suicides in ~3s ⊗ | ❌ crashes on load |
 
 ◆ Fable 5's Security was **corrected 8 → 7** after the Opus 5 audit's
 seed-recovery attack was turned on Fable 5's own code and broke it faster
@@ -93,7 +109,13 @@ independent fact-checker that re-verified every finding; the orchestrator also
 reproduced their critical findings firsthand. ★ Grok 4.6's auditor scored
 Security **2**; the orchestrator set it to **3** to match the identical
 seed-leak-plus-one-packet-crash profile of Opus 4.8 and Grok 4.5 (both 3) — a
-slightly *more* generous call, since 4.6 adds real input validation. ✦ 0x alpha's server runs the match (round_start → events → round_end stream on
+slightly *more* generous call, since 4.6 adds real input validation. ✚ GPT-6 Astra is the **first and only entry to satisfy the spec's anti-cheat
+requirement**: `rooms.ts:336-338` draws one `crypto.randomInt` secret per tile
+every round and `map.ts:42` rolls each castle's contents from `mulberry32(lootSeed
+[index])`, decoupling contents from the broadcast `mapSeed`. The orchestrator's
+attack (`harness/attack-astra-loot.mjs`) scores at chance (1.29 vs a 1.30 control).
+Security is held off a higher mark by a proven single-socket room-exhaustion
+process kill and no `uncaughtException` guard. ✦ 0x alpha's server runs the match (round_start → events → round_end stream on
 the wire) but **never sends `match_start`**, and the client mounts gameplay only
 on that message — so online play (practice/casual/ranked) freezes on the lobby
 while the match plays out invisibly (reproduced firsthand). Its offline tutorial
@@ -140,7 +162,49 @@ about half the time; (3) FFA bot matches drag to the `MAX_ROUNDS` draw cap.
 Nothing here is game-breaking — the distinction from the field is that its
 defects are quality/robustness gaps, not "the game doesn't work" gaps.
 
-### 🥈 2. Opus 5 — 7.75
+### 🥈 2. GPT-6 Astra — 8.35 *(the first entry to actually solve the anti-cheat requirement)*
+
+**The only entry of thirteen that satisfies the spec's "unguessable, unhackable"
+hidden-power-up requirement** — and it holds under the same attack that broke both
+Claude entries. Every round, the server draws one `crypto.randomInt(2^32)` secret
+per tile (`rooms.ts:336-338`, comment: "Independent secret streams prevent
+revealed drops from disclosing later castle contents") and rolls each castle's
+contents from that tile's own `mulberry32(lootSeed[index])` stream (`map.ts:42`).
+Layout still comes from the broadcast `mapSeed` — as the spec intends, the map is
+public — but contents no longer share that stream, so pinning the layout seed buys
+nothing. The orchestrator ran the exact attack that recovered Fable 5's loot in
+21.8s: holding the wire `mapSeed` + `castleGrid`, it scores **1.29 exact hits/map
+against a 1.30 independent-secret control over 400 trials** — statistically zero
+signal (`harness/attack-astra-loot.mjs`). The independent auditor added a
+conditional-independence check over 40,000 rounds (`P(tile B | tile A)` flat to
+three decimals) and a counting argument (≈10^47 castle configurations vs 2^32
+reachable by any single-seed guess), and confirmed the derivable `seed ^
+0x718b45da` default is unreachable on the one real server path. It is also near
+the top on everything else: the **cohort's strongest validator** (byte cap,
+array-rejecting `isObject`, `Number.isSafeInteger` bounds, UUID-regex before
+`hash()` so the non-string-token crash that killed 6 of 13 is double-guarded —
+survives 33 malformed frame classes), a **pure** shared sim, **genuine ack-based
+rewind-replay** with `serverTime − INTERPOLATION_MS` interpolation (both tested),
+a **real server-measured RTT ping**, round 1 that renders, a soak that actually
+asserts `selfSoaks === 0` and deterministic replay, a real end-to-end integration
+script (guest auth → 4p match → reconnect → forfeit → Elo → "secret masking"),
+and Docker/fly/railway/render deploy configs. **Genuine, serious weaknesses, held
+to the same bar as everyone's:** (P0) a proven **single-socket remote process
+kill** — one guest can create-and-abandon rooms to fill `MAX_ROOMS`, and the next
+ranked pairing makes the matchmaker's `Rooms.create` throw inside an unguarded
+`setInterval` with no `uncaughtException` handler, taking every live match down
+(reproduced independently twice); a **mangled `</option value="easy">`**
+(`lobby.ts:21`) that makes Easy bots unselectable in casual rooms — the spec's
+per-slot difficulty is one-third dead; a last-round disconnect that **permanently
+kills the rematch**; and Hard/Medium bots that are statistically indistinguishable
+(Hard still self-soaks ~5% of the time, so its soak's `selfSoaks === 0` is a
+fixture artifact of the non-production number seed). **It lands 0.10 behind
+Fable 5 entirely on the two softest dimensions** (code quality 8 vs 9, test depth
+8 vs 9) while **winning the hardest and most spec-central one** (security 8 vs 7).
+Read the conflict-of-interest note above: on the requirement this whole comparison
+is built around, the GPT entry is first and the Claude entries are not.
+
+### 🥉 3. Opus 5 — 7.75
 
 The strongest engineering in the field on almost every axis — and the entry that
 found a real hole in the #1. It is the **only submission whose client never
@@ -171,7 +235,7 @@ worst user-facing defect in the top tier. Secondary: soaked *bots* never drive
 their revenge ducks (`bots/bot.ts:330 ghostInput` is unreachable — dead bots keep
 a frozen stale input), and lobby GC evicts seated humans without notice.
 
-### 🥉 3. Opus 4.8 (ultracode) — 7.40
+### 4. Opus 4.8 (ultracode) — 7.40
 
 The strongest submission after Fable 5's, and the best of the non-frozen field:
 playable, a coherent multi-agent decomposition where **the swarm seams the other
@@ -194,7 +258,7 @@ no `uncaughtException` handler (I booted it and killed it with one packet). Thos
 two land it a Security 3 despite otherwise excellent fundamentals. Fix both and
 it's neck-and-neck with #1.
 
-### 4. GPT-5.6 SOL (xhigh) — 7.00
+### 5. GPT-5.6 SOL (xhigh) — 7.00
 
 Playable, cleanly typed (zero `any` in source), a pure sim, and — notably — the
 **only entry besides Fable 5 with no process-crash path**: its `isClientMessage`
@@ -216,7 +280,7 @@ client** — it needs `NODE_ENV=production` to serve on one port, missing the
 spec's single-port criterion as-shipped. Strong fundamentals, a couple of
 gameplay/robustness gaps its thin test suite let through.
 
-### 5. Kimi K3 — 6.70
+### 6. Kimi K3 — 6.70
 
 The most complete and cleanest of the *Kimi/Grok* field by the audit, and
 playable. Genuine
@@ -231,7 +295,7 @@ the *competitive-integrity core*: ranked duels can genuinely end in a draw
 remarkably — the default **Space key can't drop a balloon** (bound as
 `'Space'`, but the key set stores `' '`; only the `E` fallback works).
 
-### 6. Grok 4.5 — 6.18
+### 7. Grok 4.5 — 6.18
 
 Neck-and-neck with K3 on spec fidelity, architecture, and tests, and also
 playable end to end. Its netcode is real (rewind-replay + 100ms interpolation).
@@ -244,7 +308,7 @@ a win instead of the spec's draw, and Easy bots skip their escape-check 20% of
 the time and self-soak.
 
 
-### 7. Grok 4.6 — 5.80 *(a rare regression: below its own predecessor)*
+### 8. Grok 4.6 — 5.80 *(a rare regression: below its own predecessor)*
 
 The most interesting result in the late additions: **Grok 4.6 audits slightly
 *below* Grok 4.5**, and the per-dimension deltas show exactly why. It genuinely
@@ -266,7 +330,7 @@ worst tier); (3) it **still crashes on one malformed packet** (`hashToken(12345)
 (`ping = 40` pinned by `ping*0.95 + 40*0.05`, `net.pingMs` never assigned). Real
 correctness progress on the sim, no progress on the security/netcode fundamentals
 that the weighting rewards most.
-### 8. 0x alpha — 4.40 *(the sim works; one missing server message strands it)*
+### 9. 0x alpha — 4.40 *(the sim works; one missing server message strands it)*
 
 The best-engineered entry that still can't be played online — a textbook "so
 close" failure. Its **offline tutorial renders and plays a full arena** (frog,
@@ -294,7 +358,7 @@ updated); and ranked is unreachable (no nickname UI, and the client swallows the
 tests, typing and crash-hardening are genuinely strong — it is one emitted
 message away from being a real game.
 
-### 9. GLM 5.2 — 3.60 *(playable-but-broken)*
+### 10. GLM 5.2 — 3.60 *(playable-but-broken)*
 
 Renders a live match, which is why it edges K2.7 — but the audit shows that
 match is a **hologram**. Players phase straight through walls, castles, and
@@ -309,7 +373,7 @@ never persisted (dead code), and combo announcements can never fire
 positions, hashed tokens, parameterized SQL, a pure deterministic sim), but as
 a *game* it does not work. It also skipped the tutorial entirely.
 
-### 10. Kimi K2.7 — 3.60 *(doesn't boot)*
+### 11. Kimi K2.7 — 3.60 *(doesn't boot)*
 
 A genuinely deterministic sim and correct Elo math at the core, but the shipped
 artifact is 100% non-functional: the server crashes on the **first client
@@ -322,7 +386,7 @@ unreachable, and its signature mechanics (kick, revenge ducks, emotes) are dead
 code behind live config flags. Ranks just below GLM only because it never
 reaches a playable frame.
 
-### 11. Muse Spark 1.3 — 3.20 *(runs, but the bots kill themselves — and the soak says PASS)*
+### 12. Muse Spark 1.3 — 3.20 *(runs, but the bots kill themselves — and the soak says PASS)*
 
 The only bottom-tier entry that genuinely **plays end to end**: it boots, connects,
 sends `match_start`, renders round 1 (fact-checked 4/4 trials, and reproduced by
@@ -356,7 +420,7 @@ whole round after round 1 (`lastDecisionTick` never reset), a fake "Ping 0ms",
 and only 11 tests. A complete-looking scaffold whose one working loop is a match
 the bots refuse to contest.
 
-### 12. Kimi K2.6 agent swarm — 3.20
+### 13. Kimi K2.6 agent swarm — 3.20
 
 A textbook multi-agent integration failure. The individual modules are
 competent — a pure, well-tested sim (26 assertions), strict typing, a real
@@ -379,16 +443,19 @@ auditor's) are strong. The ranking is decided almost entirely at the
 event that's emitted to no one, a key bound as `'Space'` but read as `' '`. The
 three that fail (K2.7, GLM's netcode, K2.6) all pass their own unit tests
 because the bug lives *between* the tested units. And on the spec's "unguessable,
-unhackable" power-up requirement, **all twelve entries fail — just at different
-costs**, which is the most interesting result in the whole benchmark:
-**eight** (GLM, K2.7, K2.6, both Groks, K3, Opus 4.8, SOL) broadcast the real seed, so
-recovery is free and instant. **Opus 5** omits the seed entirely and **Fable 5**
-sends a decoy — but both still ship the castle grid, which pins the seed by brute
-force: ~76s for Opus 5 (2^32) and **21.8s for Fable 5** (2^31, verified by the
-orchestrator against its own code). Nobody rolled contents from an independently
-seeded PRNG, which is the one-line fix the threat model actually required. A second near-universal flaw: a **one-packet server crash** from an
-unvalidated message — four entries (K2.7, Grok, Opus 4.8, and K2.6's tableless-DB
-variant) die from a single malformed packet; only **Fable 5 and SOL** validate
-inputs defensively enough to survive it. The two most robust submissions
+unhackable" power-up requirement, **twelve of the thirteen entries fail — and the
+thirteenth is the most important result in the whole benchmark.** **Ten** (GLM,
+K2.7, K2.6, both Groks, K3, Opus 4.8, SOL, 0x alpha, Muse Spark) broadcast the
+real seed, so recovery is free and instant. **Opus 5** omits the seed entirely
+and **Fable 5** sends a decoy — but both still ship the castle grid, which pins
+the seed by brute force: ~76s for Opus 5 (2^32) and **21.8s for Fable 5** (2^31,
+verified by the orchestrator against its own code). **GPT-6 Astra is the sole
+entry that closes it**: it rolls each tile's contents from an independent per-tile
+CSPRNG stream (`rooms.ts:336-338`) — exactly the "independently seeded PRNG" fix
+the other twelve missed — and survives the derivation attack at chance. A second near-universal flaw: a **one-packet server crash** from an
+unvalidated message — six entries (K2.7, K2.6, Opus 4.8, both Groks, and Muse
+Spark) die from a single malformed packet; only **Fable 5, SOL, Opus 5, 0x alpha,
+and GPT-6 Astra** validate inputs defensively enough to survive it (Astra shrugged
+off 33 malformed frame classes). The two most robust submissions
 (Fable 5, SOL) and the two most *complete* (Fable 5, Opus 4.8) are a small
 overlapping set — nobody but Fable 5 got both right.

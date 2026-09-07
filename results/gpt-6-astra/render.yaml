@@ -1,0 +1,15 @@
+services:
+  - type: web
+    name: splash-critters
+    runtime: docker
+    plan: starter
+    healthCheckPath: /health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: DATA_DIR
+        value: /data
+    disk:
+      name: splash-data
+      mountPath: /data
+      sizeGB: 1

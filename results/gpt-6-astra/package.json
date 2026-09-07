@@ -1,0 +1,36 @@
+{
+  "name": "splash-critters",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=20"
+  },
+  "workspaces": [
+    "packages/shared",
+    "packages/server",
+    "packages/client"
+  ],
+  "overrides": {
+    "qs": "^6.16.0"
+  },
+  "scripts": {
+    "dev": "npm run build -w @splash/shared && concurrently -k -n shared,server,client -c yellow,blue,green \"npm run dev -w @splash/shared\" \"npm run dev -w @splash/server\" \"npm run dev -w @splash/client\"",
+    "build": "npm run build -w @splash/shared && npm run build -w @splash/server && npm run build -w @splash/client",
+    "start": "npm start -w @splash/server",
+    "typecheck": "tsc --noEmit -p packages/shared && tsc --noEmit -p packages/server && tsc --noEmit -p packages/client",
+    "test": "vitest run",
+    "test:soak": "tsx scripts/soak.ts",
+    "test:integration": "tsx scripts/integration.ts",
+    "test:browser": "tsx scripts/browser.ts",
+    "test:tutorial": "tsx scripts/tutorial.ts"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.51.0",
+    "@types/node": "^22.13.0",
+    "concurrently": "^9.1.2",
+    "tsx": "^4.19.2",
+    "typescript": "~5.7.3",
+    "vitest": "^3.2.7"
+  }
+}
