@@ -1,0 +1,22 @@
+{
+  "name": "splash-critters",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=20"
+  },
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "npm run build -w @splash/shared && concurrently -n shared,server,client -c blue,green,yellow \"npm run dev -w @splash/shared\" \"npm run dev -w @splash/server\" \"npm run dev -w @splash/client\"",
+    "build": "npm run build -w @splash/shared && npm run build -w @splash/client && npm run build -w @splash/server",
+    "start": "npm run start -w @splash/server",
+    "test": "npm run test -w @splash/shared",
+    "soak": "npm run build -w @splash/shared && npm run soak -w @splash/server"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.0"
+  }
+}

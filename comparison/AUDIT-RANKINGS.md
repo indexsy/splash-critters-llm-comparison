@@ -1,14 +1,14 @@
 # Code Audit & Rankings
 
-Fourteen codebases audited by independent Claude subagents, all against the
-**same six-dimension rubric**, every claim citing `file:line`. (Opus 5 got *three* passes — neutral, adversarial, steelman; Opus 4.8, SOL, Grok 4.6, 0x alpha, Muse Spark 1.3, GPT-6 Astra and Grok 4.7 each got a neutral pass plus an independent fact-checker.) Full per-model reports are in [`audits/`](audits/); this
+Fifteen codebases audited by independent Claude subagents, all against the
+**same six-dimension rubric**, every claim citing `file:line`. (Opus 5 got *three* passes — neutral, adversarial, steelman; Opus 4.8, SOL, Grok 4.6, 0x alpha, Muse Spark 1.3, GPT-6 Astra, Grok 4.7 default and Grok 4.7 xhigh each got a neutral pass plus an independent fact-checker.) Full per-model reports are in [`audits/`](audits/); this
 file synthesizes and ranks them. Every headline finding was independently
 re-verified against the source before publishing (the two most recent additions,
 Opus 4.8 and GPT-5.6 SOL, each also got a *second* independent fact-checker pass).
 
 > ## ⚠️ Conflict of interest — read this first
 >
-> **Three of the fourteen entries are Claude-family (Fable 5, Opus 4.8, Opus 5),
+> **Three of the fifteen entries are Claude-family (Fable 5, Opus 4.8, Opus 5),
 > and Fable 5 both wrote one of them AND ran this whole comparison — then
 > ranked its own entry #1.** Treat that with the skepticism it deserves. Here
 > is exactly what was done to keep it honest — including a correction that
@@ -84,16 +84,16 @@ means correctness and spec-coverage matter most:
 
 ## Scoreboard
 
-| Dimension (0–10) | Fable 5 † | GPT-6 Astra ✚ | Opus 5 ¶ | Opus 4.8 ‡ | SOL xhigh ‡ | Kimi K3 | Grok 4.7 ▲ | Grok 4.5 | Grok 4.6 ‡ | 0x alpha ‡ | GLM 5.2 | Kimi K2.7 | Muse Spark 1.3 ‡ | K2.6 swarm |
-| --- | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: |
-| Correctness (×.25) | 8 | 8 | 6 | 6.5 | 6 | 5 | 5 | 5 | 5 | 3 | 2 | 3 | 2 | 2 |
-| Spec fidelity (×.20) | 9 | 9 | 8.5 | 9 | 8 | 8 | 6 | 8 | 8 | 4 | 4 | 4 | 4 | 3 |
-| Netcode (×.15) | 9 | 9 | 9 | 8.5 | 8 | 7 | 8 | 6.5 | 4 | 3 | 2 | 3 | 3 | 2 |
-| Security (×.15) | 7 ◆ | 8 | 7 | 3 | 6 | 6 | 5 ▲ | 3 | 3 ★ | 5 | 5 | 3 | 2 | 4 |
-| Code quality (×.15) | 9 | 8 | 9 | 9 | 8 | 8 | 8 | 8 | 8 | 7 | 5 | 5 | 5 | 4 |
-| Test depth (×.10) | 9 | 8 | 8 | 9 | 6 | 7 | 7 | 7 | 7 | 6 | 5 | 4 | 4 | 6 |
-| **Weighted total** | **8.45** | **8.35** | **7.75** | **7.40** | **7.00** | **6.70** | **6.30** | **6.18** | **5.80** | **4.40** | **3.60** | **3.60** | **3.20** | **3.20** |
-| Playable end-to-end? | ✅ | ✅ | ⚠️ loses round 1 ¶ | ✅ | ✅ § | ✅ | ⚠️ runs, but no bot ever places a balloon ▲ | ✅ | ✅ | ❌ online never renders ✦ | ⚠️ renders, desynced | ❌ crashes on connect | ⚠️ runs, but every bot suicides in ~3s ⊗ | ❌ crashes on load |
+| Dimension (0–10) | Fable 5 † | GPT-6 Astra ✚ | Opus 5 ¶ | Opus 4.8 ‡ | SOL xhigh ‡ | Kimi K3 | Grok 4.7 dflt ▲ | Grok 4.5 | Grok 4.6 ‡ | Grok 4.7 xhi ◇ | 0x alpha ‡ | GLM 5.2 | Kimi K2.7 | Muse Spark 1.3 ‡ | K2.6 swarm |
+| --- | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: |
+| Correctness (×.25) | 8 | 8 | 6 | 6.5 | 6 | 5 | 5 | 5 | 5 | 5 | 3 | 2 | 3 | 2 | 2 |
+| Spec fidelity (×.20) | 9 | 9 | 8.5 | 9 | 8 | 8 | 6 | 8 | 8 | 7 | 4 | 4 | 4 | 4 | 3 |
+| Netcode (×.15) | 9 | 9 | 9 | 8.5 | 8 | 7 | 8 | 6.5 | 4 | 6 | 3 | 2 | 3 | 3 | 2 |
+| Security (×.15) | 7 ◆ | 8 | 7 | 3 | 6 | 6 | 5 ▲ | 3 | 3 ★ | 2 ◇ | 5 | 5 | 3 | 2 | 4 |
+| Code quality (×.15) | 9 | 8 | 9 | 9 | 8 | 8 | 8 | 8 | 8 | 7 | 7 | 5 | 5 | 5 | 4 |
+| Test depth (×.10) | 9 | 8 | 8 | 9 | 6 | 7 | 7 | 7 | 7 | 7 | 6 | 5 | 4 | 4 | 6 |
+| **Weighted total** | **8.45** | **8.35** | **7.75** | **7.40** | **7.00** | **6.70** | **6.30** | **6.18** | **5.80** | **5.60** | **4.40** | **3.60** | **3.60** | **3.20** | **3.20** |
+| Playable end-to-end? | ✅ | ✅ | ⚠️ loses round 1 ¶ | ✅ | ✅ § | ✅ | ⚠️ runs, but no bot ever places a balloon ▲ | ✅ | ✅ | ⚠️ plays, but any client crashes the server ◇ | ❌ online never renders ✦ | ⚠️ renders, desynced | ❌ crashes on connect | ⚠️ runs, but every bot suicides in ~3s ⊗ | ❌ crashes on load |
 
 ◆ Fable 5's Security was **corrected 8 → 7** after the Opus 5 audit's
 seed-recovery attack was turned on Fable 5's own code and broke it faster
@@ -115,7 +115,11 @@ every round and `map.ts:42` rolls each castle's contents from `mulberry32(lootSe
 [index])`, decoupling contents from the broadcast `mapSeed`. The orchestrator's
 attack (`harness/attack-astra-loot.mjs`) scores at chance (1.29 vs a 1.30 control).
 Security is held off a higher mark by a proven single-socket room-exhaustion
-process kill and no `uncaughtException` guard. ▲ Grok 4.7's auditor scored Security **4**; the orchestrator set it to **5** for
+process kill and no `uncaughtException` guard. ◇ **Grok 4.7 xhigh** is the SAME model and prompt as Grok 4.7 default at higher
+reasoning effort — a controlled A/B. The two share ZERO identical files (a full
+re-roll, not a patch). xhigh fixed default's dead-bot P0 but regressed security to
+a free seed leak plus four one-frame server crashes, landing it BELOW default
+(5.60 vs 6.30); see its section. ▲ Grok 4.7's auditor scored Security **4**; the orchestrator set it to **5** for
 anchor consistency. On the rubric's own line items Grok 4.7 is strictly better than
 0x alpha (Security 5): its hidden loot is brute-forceable rather than broadcast free,
 with equivalent validation, rate limiting, token hashing and SQL, so it cannot sit
@@ -123,7 +127,7 @@ below it. It is set at the conservative end (not 6) for its single-socket
 resource-exhaustion DoS and a concurrent-hello race crash. At the raw 4 its total is
 **6.15**, a statistical tie with Grok 4.5 (6.18); at 5 it is 6.30. This is the same
 rule as the Grok 4.6 nudge (2 to 3), and again the adjustment favors a rival, not a
-Claude entry. Separately, no Grok 4.7 bot ever places a balloon (see its section).
+Claude entry. Separately, no Grok 4.7 default bot ever places a balloon (see its section).
 ✦ 0x alpha's server runs the match (round_start → events → round_end stream on
 the wire) but **never sends `match_start`**, and the client mounts gameplay only
 on that message — so online play (practice/casual/ranked) freezes on the lobby
@@ -304,7 +308,7 @@ the *competitive-integrity core*: ranked duels can genuinely end in a draw
 remarkably — the default **Space key can't drop a balloon** (bound as
 `'Space'`, but the key set stores `' '`; only the `E` fallback works).
 
-### 7. Grok 4.7 — 6.30 *(the best-engineered Grok, undone by bots that never throw a balloon)*
+### 7. Grok 4.7 (default) — 6.30 *(the best-engineered Grok, undone by bots that never throw a balloon)*
 
 The biggest generational jump in the Grok line, and it **fixes every crash class
 that sank its predecessors**. The hello path regex-validates the token and falls
@@ -374,7 +378,41 @@ worst tier); (3) it **still crashes on one malformed packet** (`hashToken(12345)
 (`ping = 40` pinned by `ping*0.95 + 40*0.05`, `net.pingMs` never assigned). Real
 correctness progress on the sim, no progress on the security/netcode fundamentals
 that the weighting rewards most.
-### 10. 0x alpha — 4.40 *(the sim works; one missing server message strands it)*
+### 10. Grok 4.7 (xhigh) — 5.60 *(more reasoning effort, a worse game: fixed the bots, broke the server)*
+
+The most instructive result in the benchmark: the **same model and the same prompt
+as Grok 4.7 default, only the reasoning effort raised to xhigh** — and it produced
+an *entirely different codebase* (zero identical files) that lands **below** its
+default sibling. What went right: it **fixed default's headline P0** — its bots
+actually place balloons and fight. Its `escapeAfterPlace` (`shared/bot.ts:102-117`)
+models the placer's own-balloon phase-through via `me.passBalloonId`, the exact
+thing default's bot never did, and in a live match all three bots dropped balloons
+within seconds; Hard wins ~68% of first-to-3 matches. It also ships more tests (13
+vs 8), a genuine tutorial-vs-Easy-bot, and revenge ducks. What went badly, and
+sank it two ranks below default: (1) **anti-cheat regressed from brute-forceable to
+free.** Where default made you crack a PRNG (8-38s), xhigh broadcasts the exact
+`generateMap` seed as `round_start.mapSeed` (`rooms.ts:454,470,487`) and rolls
+castles and contents from one `mulberry32(seed)` stream (`map.ts:44-72`) — the
+orchestrator derived all hidden power-ups from the public seed and matched **6 of 6
+live in-match reveals** (auditor: 500/500 rounds, 9,081/9,081 drops, 0.03ms), and
+the bot RNG is derivable too (`rooms.ts:479`). (2) **The one-frame server crash is
+back, and multiplied.** Default had fixed it by regex-validating the token; xhigh's
+`parse()` (`net.ts:105-110`) checks only `msg.t`, so a numeric-token `hello` reaches
+`hashToken` unchecked (`net.ts:35`) with no try/catch and no `uncaughtException`
+guard — and the orchestrator confirmed **four** distinct one-frame kills any client
+can fire: numeric token, `join_room code:123` (`code.toUpperCase`), `set_nickname {}`
+(`raw.trim`), and `queue_join` with a bad mode after setting a nickname
+(`Cannot read 'rating'`). (3) **The HUD ping went fake again** — the client stopped
+replying `pong`, so every player reads a constant 0ms (default had a real RTT). (4)
+A firsthand-found defect the audit missed: on a first visit the **tutorial
+auto-launches and clicking Skip freezes the client** — the render thread wedges so
+hard that even a headless screenshot times out (returning visitors boot straight to
+a working menu, so it is specific to the tutorial-to-menu handoff). Net: higher
+effort re-rolled the whole build and traded a dead-bot bug for a free seed leak, a
+crashable server, and a frozen first-run — a worse game than default at default
+effort.
+
+### 11. 0x alpha — 4.40 *(the sim works; one missing server message strands it)*
 
 The best-engineered entry that still can't be played online — a textbook "so
 close" failure. Its **offline tutorial renders and plays a full arena** (frog,
@@ -402,7 +440,7 @@ updated); and ranked is unreachable (no nickname UI, and the client swallows the
 tests, typing and crash-hardening are genuinely strong — it is one emitted
 message away from being a real game.
 
-### 11. GLM 5.2 — 3.60 *(playable-but-broken)*
+### 12. GLM 5.2 — 3.60 *(playable-but-broken)*
 
 Renders a live match, which is why it edges K2.7 — but the audit shows that
 match is a **hologram**. Players phase straight through walls, castles, and
@@ -417,7 +455,7 @@ never persisted (dead code), and combo announcements can never fire
 positions, hashed tokens, parameterized SQL, a pure deterministic sim), but as
 a *game* it does not work. It also skipped the tutorial entirely.
 
-### 12. Kimi K2.7 — 3.60 *(doesn't boot)*
+### 13. Kimi K2.7 — 3.60 *(doesn't boot)*
 
 A genuinely deterministic sim and correct Elo math at the core, but the shipped
 artifact is 100% non-functional: the server crashes on the **first client
@@ -430,7 +468,7 @@ unreachable, and its signature mechanics (kick, revenge ducks, emotes) are dead
 code behind live config flags. Ranks just below GLM only because it never
 reaches a playable frame.
 
-### 13. Muse Spark 1.3 — 3.20 *(runs, but the bots kill themselves — and the soak says PASS)*
+### 14. Muse Spark 1.3 — 3.20 *(runs, but the bots kill themselves — and the soak says PASS)*
 
 The only bottom-tier entry that genuinely **plays end to end**: it boots, connects,
 sends `match_start`, renders round 1 (fact-checked 4/4 trials, and reproduced by
@@ -464,7 +502,7 @@ whole round after round 1 (`lastDecisionTick` never reset), a fake "Ping 0ms",
 and only 11 tests. A complete-looking scaffold whose one working loop is a match
 the bots refuse to contest.
 
-### 14. Kimi K2.6 agent swarm — 3.20
+### 15. Kimi K2.6 agent swarm — 3.20
 
 A textbook multi-agent integration failure. The individual modules are
 competent — a pure, well-tested sim (26 assertions), strict typing, a real
@@ -487,22 +525,25 @@ auditor's) are strong. The ranking is decided almost entirely at the
 event that's emitted to no one, a key bound as `'Space'` but read as `' '`. The
 three that fail (K2.7, GLM's netcode, K2.6) all pass their own unit tests
 because the bug lives *between* the tested units. And on the spec's "unguessable,
-unhackable" power-up requirement, **thirteen of the fourteen entries fail, and the
-fourteenth is the most important result in the whole benchmark.** **Ten** (GLM,
-K2.7, K2.6, Grok 4.5, Grok 4.6, K3, Opus 4.8, SOL, 0x alpha, Muse Spark) broadcast
-the real seed, so recovery is free and instant. **Three** more are brute-forceable:
+unhackable" power-up requirement, **fourteen of the fifteen entries fail, and the
+fifteenth is the most important result in the whole benchmark.** **Eleven** (GLM,
+K2.7, K2.6, Grok 4.5, Grok 4.6, K3, Opus 4.8, SOL, 0x alpha, Muse Spark, and
+**Grok 4.7 xhigh**) broadcast the real seed, so recovery is free and instant. **Three** more are brute-forceable:
 **Opus 5** omits the seed entirely and **Fable 5** sends a decoy, but both still ship
 the castle grid, which pins the seed: ~76s for Opus 5 (2^32) and **21.8s for Fable 5**
-(2^31, verified by the orchestrator against its own code). **Grok 4.7** separates
+(2^31, verified by the orchestrator against its own code). **Grok 4.7 default** separates
 its loot stream but draws the secret salt from the same 32-bit mulberry32 that emits
-the broadcast seed, so the seed pins the salt (8 to 38s on one thread, then a few
-public reveals to disambiguate). **GPT-6 Astra is the sole
+the broadcast seed, so the seed pins the salt (8 to 38s on one thread) — and, in a
+sharp illustration that more reasoning effort is not strictly better, its **xhigh
+sibling threw that stream away and broadcasts the generation seed directly (free,
+0.03ms, 100% derivation).** **GPT-6 Astra is the sole
 entry that closes it**: it rolls each tile's contents from an independent per-tile
 CSPRNG stream (`rooms.ts:336-338`) — exactly the "independently seeded PRNG" fix
-the other thirteen missed — and survives the derivation attack at chance. A second near-universal flaw: a **one-packet server crash** from an
-unvalidated message: six entries (K2.7, K2.6, Opus 4.8, Grok 4.5, Grok 4.6, and
-Muse Spark) die from a single malformed packet; only **Fable 5, SOL, Opus 5,
-0x alpha, GPT-6 Astra, and Grok 4.7** validate inputs defensively enough to survive
+the other fourteen missed — and survives the derivation attack at chance. A second near-universal flaw: a **one-packet server crash** from an
+unvalidated message: seven entries (K2.7, K2.6, Opus 4.8, Grok 4.5, Grok 4.6,
+Muse Spark, and Grok 4.7 xhigh) die from a single malformed packet; only **Fable 5,
+SOL, Opus 5, 0x alpha, GPT-6 Astra, and Grok 4.7 default** validate inputs
+defensively enough to survive
 it (Astra shrugged off 33 malformed frame classes; Grok 4.7 fixed the exact token
 crash that killed both of its predecessors). The two most robust submissions
 (Fable 5, SOL) and the two most *complete* (Fable 5, Opus 4.8) are a small
