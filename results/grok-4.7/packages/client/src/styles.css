@@ -1,0 +1,105 @@
+:root {
+  --bg: #14202b;
+  --bg2: #1c2c3a;
+  --ink: #f4f4f4;
+  --muted: #94b0c2;
+  --line: #f4f4f4;
+  --shadow: #070b10;
+  --blue: #3b5dc9;
+  --cyan: #73eff7;
+  --yellow: #ffcd75;
+  --green: #38b764;
+  --orange: #ef7d57;
+  --red: #b13e53;
+  color: var(--ink);
+  background: var(--bg);
+  font-family: "Courier New", ui-monospace, monospace;
+}
+
+* { box-sizing: border-box; }
+html, body, #app { margin: 0; height: 100%; }
+body { min-height: 100%; background: radial-gradient(circle at top, #1e3344, var(--bg) 55%); }
+button, input, select { font-family: inherit; color: inherit; }
+button {
+  background: var(--blue);
+  border: 4px solid var(--line);
+  box-shadow: 4px 4px 0 var(--shadow);
+  padding: 10px 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+}
+button:hover { transform: translate(1px, 1px); box-shadow: 3px 3px 0 var(--shadow); }
+button:active { transform: translate(4px, 4px); box-shadow: none; }
+button.alt { background: #257179; }
+button.ghost { background: transparent; }
+button.warn { background: var(--red); }
+button:disabled { opacity: 0.45; cursor: not-allowed; transform: none; }
+input, select {
+  background: #0f1922;
+  border: 4px solid var(--line);
+  padding: 8px 10px;
+  outline: none;
+}
+.shell { max-width: 920px; margin: 0 auto; padding: 28px 18px 48px; }
+.panel {
+  background: var(--bg2);
+  border: 4px solid var(--line);
+  box-shadow: 8px 8px 0 var(--shadow);
+  padding: 16px;
+}
+h1, h2, h3 { margin: 0 0 8px; letter-spacing: 1px; text-transform: uppercase; }
+.row { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+.grid { display: grid; gap: 10px; }
+.muted { color: var(--muted); }
+.toast {
+  position: fixed; bottom: 16px; left: 50%; transform: translateX(-50%);
+  background: var(--orange); color: #1a1c2c; border: 4px solid var(--line);
+  padding: 10px 14px; box-shadow: 4px 4px 0 var(--shadow); z-index: 9;
+}
+.topbar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
+.nameplate { color: var(--yellow); }
+.cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 10px; }
+.card { background: #243646; border: 4px solid #566c86; padding: 12px; }
+.card strong { display: block; margin-bottom: 6px; }
+.stage { position: relative; display: grid; place-items: center; }
+canvas.play {
+  image-rendering: pixelated;
+  background: #0d1117;
+  border: 4px solid var(--line);
+  box-shadow: 8px 8px 0 var(--shadow);
+}
+.announce, .countdown {
+  position: absolute; inset: 0; display: grid; place-items: center;
+  pointer-events: none; text-align: center;
+  font-size: 28px; letter-spacing: 1px; text-transform: uppercase;
+  text-shadow: 4px 4px 0 #000;
+}
+.killfeed {
+  position: absolute; top: 8px; right: 8px; display: flex; flex-direction: column; gap: 4px;
+  pointer-events: none; font-size: 12px;
+}
+.killfeed div { background: #000c; border: 2px solid var(--line); padding: 3px 6px; }
+.hud { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; margin-top: 10px; }
+.hud .card.me { border-color: var(--yellow); }
+.hud .card.dead { opacity: 0.55; }
+.bar { height: 10px; background: #0f1922; border: 2px solid var(--line); }
+.bar span { display: block; height: 100%; background: var(--cyan); }
+table { width: 100%; border-collapse: collapse; font-size: 14px; }
+th, td { text-align: left; padding: 6px 4px; border-bottom: 2px solid #33485a; }
+.preview { image-rendering: pixelated; background: #0f1922; border: 4px solid var(--line); }
+.locker-grid { display: flex; gap: 8px; flex-wrap: wrap; }
+.locker-grid button.pick { min-width: 92px; }
+.locker-grid button.on { outline: 4px solid var(--yellow); }
+.modal {
+  position: fixed; inset: 0; background: #000a; display: grid; place-items: center; z-index: 8;
+}
+.modal .panel { width: min(420px, 92vw); }
+label { display: grid; gap: 4px; font-size: 13px; }
+.scan {
+  pointer-events: none; position: absolute; inset: 4px;
+  background: repeating-linear-gradient(to bottom, transparent 0 2px, rgba(0,0,0,.12) 2px 3px);
+}
+@media (max-width: 800px) {
+  .hud { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
