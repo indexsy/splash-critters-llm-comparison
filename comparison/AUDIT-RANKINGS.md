@@ -387,7 +387,9 @@ default sibling. What went right: it **fixed default's headline P0** — its bot
 actually place balloons and fight. Its `escapeAfterPlace` (`shared/bot.ts:102-117`)
 models the placer's own-balloon phase-through via `me.passBalloonId`, the exact
 thing default's bot never did, and in a live match all three bots dropped balloons
-within seconds; Hard wins ~68% of first-to-3 matches. It also ships more tests (13
+within seconds. But Hard is barely better than a coin flip: the fact-checker
+measured **56% per round and 52% first-to-3** against Easy (the auditor's own run
+said 68%), with self-soaks in 15-18% of Hard/Easy rounds and 37% for Medium. It also ships more tests (13
 vs 8), a genuine tutorial-vs-Easy-bot, and revenge ducks. What went badly, and
 sank it two ranks below default: (1) **anti-cheat regressed from brute-forceable to
 free.** Where default made you crack a PRNG (8-38s), xhigh broadcasts the exact
@@ -399,13 +401,21 @@ the bot RNG is derivable too (`rooms.ts:479`). (2) **The one-frame server crash 
 back, and multiplied.** Default had fixed it by regex-validating the token; xhigh's
 `parse()` (`net.ts:105-110`) checks only `msg.t`, so a numeric-token `hello` reaches
 `hashToken` unchecked (`net.ts:35`) with no try/catch and no `uncaughtException`
-guard — and the orchestrator confirmed **four** distinct one-frame kills any client
-can fire: numeric token, `join_room code:123` (`code.toUpperCase`), `set_nickname {}`
-(`raw.trim`), and `queue_join` with a bad mode after setting a nickname
-(`Cannot read 'rating'`). (3) **The HUD ping went fake again** — the client stopped
+guard — and **five** distinct one-frame kills were confirmed: numeric token,
+`join_room code:123` (`code.toUpperCase`), `set_nickname {}` (`raw.trim`),
+`queue_join` with a bad mode after a nickname (`Cannot read 'rating'`), and worst of
+all an **in-match `input` with a non-integer `dir`** (e.g. 2.5): `rooms.ts:564` only
+range-checks it, so `DIR_VEC[2.5]` is `undefined` and `v.x` throws inside the
+unguarded `setInterval` tick, killing **every room on the server at once**. The
+orchestrator verified the first four over the network firsthand and proved the fifth
+directly against the sim (`simulateTick` with `dir:2.5` throws "Cannot read
+properties of undefined"); its first two network attempts at the fifth were a
+harness error, since `pushInput` (`rooms.ts:558-563`) silently drops frames whose
+`seq` is not greater than the last ack. (3) **The HUD ping went fake again** — the client stopped
 replying `pong`, so every player reads a constant 0ms (default had a real RTT). (4)
-A firsthand-found defect the audit missed: on a first visit the **tutorial
-auto-launches and clicking Skip freezes the client** — the render thread wedges so
+A defect the orchestrator found and the independent fact-checker then confirmed
+(the audit itself missed it): on a first visit the **tutorial auto-launches and
+clicking Skip freezes the client** — the render thread wedges so
 hard that even a headless screenshot times out (returning visitors boot straight to
 a working menu, so it is specific to the tutorial-to-menu handoff). Net: higher
 effort re-rolled the whole build and traded a dead-bot bug for a free seed leak, a

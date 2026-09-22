@@ -71,7 +71,7 @@ synthesis + methodology in
 | 7 | **Grok 4.7 (default)** ▲ | 6.30 | The best-engineered Grok: every predecessor crash fixed, real ping, real netcode, loot on a separate stream. But no bot ever places a balloon (every match is tide roulette), and the loot salt is derivable from the broadcast seed |
 | 8 | **Grok 4.5** | 6.18 | Real netcode, playable — but a malformed WS frame crashes the server, and the HUD ping is fake |
 | 9 | **Grok 4.6** ‡ | 5.80 | Fixes two of 4.5's bugs (draw handling, bot self-soak) but audits *below* it: weaker netcode, still leaks the seed, still one-packet-crashes, still fake ping |
-| 10 | **Grok 4.7 (xhigh)** ◇ | 5.60 | Same model + prompt as #7 at higher reasoning effort, an entirely different build: FIXED default's dead bots (they fight now), but regressed anti-cheat to a free seed leak and shipped a server any client can crash four ways. More effort, a worse game |
+| 10 | **Grok 4.7 (xhigh)** ◇ | 5.60 | Same model + prompt as #7 at higher reasoning effort, an entirely different build: FIXED default's dead bots (they fight now, though Hard wins only 52% of matches vs Easy), but regressed anti-cheat to a free seed leak and shipped a server any client can crash five ways. More effort, a worse game |
 | 11 | **0x alpha** ‡ | 4.40 | Strong sim + 26 tests + survives fuzzing + playable *offline* tutorial — but the server never sends `match_start`, so online play freezes on the lobby |
 | 12 | **GLM 5.2** | 3.60 | Renders a match, but it's a hologram: players phase through walls and the client is never sent the real map |
 | 13 | **Kimi K2.7** | 3.60 | Deterministic core, but the server crashes on the first connection and ranked never starts |
@@ -133,7 +133,8 @@ client served → headless browser probe.
 higher reasoning effort — an entirely different build (zero shared files). It fixed
 default's dead-bot P0 (bots place balloons and Hard wins ~68% of matches) but
 regressed: it broadcasts the map seed for free, reintroduces the one-frame token
-crash default had fixed plus three more one-frame kills any client can fire, fakes
+crash default had fixed plus four more one-frame kills (the worst an in-match
+`input` with a non-integer `dir`, which downs every room on the server at once), fakes
 the HUD ping again, and freezes the client if a first-time visitor clicks "Skip" on
 the auto-launched tutorial (returning visitors are fine). Its "npm test" passes, so
 its test column reads ✅. See AUDIT-RANKINGS for the full controlled comparison.

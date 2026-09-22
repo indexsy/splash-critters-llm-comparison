@@ -1,11 +1,11 @@
 <!-- Audit of the 'Grok 4.7 (xhigh)' submission by an independent Claude subagent, 2026-09-22, under the
-     SAME neutral rubric the fourteen rivals got. Controlled comparison with Grok 4.7 (default): same
-     model, same prompt, only reasoning effort changed; the two builds share ZERO identical files.
-     Orchestrator (running as Claude Fable 5.1) reproduced firsthand: the free seed leak (6/6 in-match
-     reveals predicted from the public mapSeed), FOUR one-frame process kills (hello numeric token;
-     join_room code:123; set_nickname {}; queue_join bad-mode after nickname), bots placing balloons,
-     round-1 rendering, AND a first-visit tutorial-Skip client freeze the audit did not catch.
-     Fact-checker (2nd subagent) pass was still running at write time; append when available. -->
+     SAME neutral rubric the fourteen rivals got, PLUS a second independent fact-checker. Controlled
+     comparison with Grok 4.7 (default): same model, same prompt, only reasoning effort changed; the two
+     builds share ZERO identical files. The orchestrator (Claude Opus 5) independently reproduced, side
+     by side against both builds: the free seed leak (6/6 live reveals from the public seed on xhigh;
+     0/200 rounds derivable on default), the one-frame crash regression (identical numeric-token frame
+     kills xhigh, default survives), bots placing balloons, round-1 rendering, AND a first-visit
+     tutorial-Skip client freeze the audit did not find. -->
 
 All measurements are complete. Final report follows.
 
@@ -68,3 +68,27 @@ xhigh fixed the default's dead bot and widened spec coverage and tests, but regr
 - **Bots: up.** Default placed 0 balloons in 420 rounds (98/110 Hard-vs-Easy rounds were tide draws); xhigh places 8-18 per round, finishes 100% of rounds, and Hard wins 68% of first-to-3 matches, but introduced pre-tide self-soaks (9-18% of rounds) and only a 58% edge over Medium.
 - **Security: down, hard.** Default drew a `lootSalt` from the seed PRNG (brute-force 8-38s) and typeof-guarded the token; xhigh broadcasts the exact `generateMap` seed (100% derivation in 0.03ms, bot RNG included), reintroduces the token crash, and adds four more one-frame process kills, one of them in-match from any player.
 - **Breadth vs plumbing: mixed.** xhigh adds tests (13 vs 8, hash-replay determinism, Elo tie fixtures), a working tutorial vs a real Easy bot, and revenge ducks, while dropping the client `pong` (HUD ping now a constant 0), leaving 8 dead exports, and keeping the same rewind-replay/15Hz netcode core.
+
+---
+
+## Independent fact-checker verdict (second subagent)
+
+All probes are complete and cleanup is done (no tracked files touched; probes live in `/private/tmp/claude-501/-Users-jackychou-dondi/e5f62f92-7103-4c27-b63a-21078977f6a7/scratchpad/`).
+
+1. **Free map/power-up leak: CONFIRMED.** `rooms.ts:454` draws `room.seed`, `:470` passes it unchanged to `createGameState` → `sim.ts:52` `generateMap({seed: opts.seed})`, `:487` broadcasts it as `mapSeed`, `:481` seeds bot memory from it; `map.ts:44/70/72` roll castles and `rollPowerup` from one `mulberry32` stream. My own probe: 500/500 castle grids and 500/500 hidden arrays exact, 9,038/9,038 hidden power-up cells, 1,500/1,500 bot RNG streams replayed, 0.013 ms per derivation; live over the wire, `generateMap(mapSeed)` reproduced `castleGrid` and predicted 8/8 `powerup_revealed` events. DEFAULT's `lootSalt` (`results/grok-4.7/packages/shared/src/map.ts:63-65`) is absent here, so "regression" is accurate.
+
+2. **One-frame process kill: CONFIRMED** (minor line drift). Fresh server per vector, 13/28 killed it with exit 1 and `/health` down: pre-auth `hello` with number/object/array/`true` token dies in `createHash().update` at `net.ts:35` (`:85` only checks truthiness); `join_room` non-string code throws at `rooms.ts:222` (`code.toUpperCase`, also `net.ts:247`); `set_nickname` non-string at `names.ts:15`; `queue_join` bogus mode at `matchmaker.ts:28` (needs `nickSet`, `:21`, so post-nickname only); in-match `dir` 2.5/`true`/`""`/`[]` pass `rooms.ts:564` and `sim.ts:673`, throw at `sim.ts:292` (`v.x`, `v = DIR_VEC[dir]` at `:282`). `index.ts` has no `uncaughtException` handler. Survived: raw `null`, non-JSON, 5 KB and 2 MB frames, pre-auth `queue_join`/`start_match`/`input`, `token:false/null`.
+
+3. **Bots place but self-soak, Hard not dominant: CONFIRMED.** Own sim (server wiring replicated): Hard 6.7-8, Easy 11-14.7, Medium 13-17.6 balloons/round, 0 zero-placement rounds; Hard beat Easy in 94/167 decided rounds (56%, 33 draws) and only 31/60 first-to-3 matches (52%, lower than the auditor's 68%); Hard vs Medium 62% per round, 53% first-to-3; self-soaks Hard 31 / Easy 35 per 200 rounds (HvE), Medium 74 per 200 (HvM). `danger.ts:143` `walkable()` ignores player bodies that `sim.ts:251` blocks on. The shipped test (`sim.test.ts:116`) asserting zero self-soaks passes only because it samples 6 seeds.
+
+4. **Fake HUD ping: CONFIRMED.** No `pong` anywhere in `packages/client/src`; `client/net.ts:31` only stores `msg.rtt`; server `rooms.ts:533` (auditor said :534) emits `session.rtt`, which stays 0. Live: every `ping` carried `rtt=0`, every snapshot `ping=0`, and the rendered HUD shows "0MS" on all four cards; a manual `pong` from my probe made the server report 38 ms, so the server path works and the omission is purely client-side. `prediction.ts:194` therefore ignores latency.
+
+5. **Ranked rooms/sessions leak: CONFIRMED, and worse than stated.** `rooms.ts:856-865` never leaves `results` for ranked; `net.ts:135-144` never clears `slot.connected`; `:878-879` refreshes `lastActivity` forever. Live: the surviving player got "Leave your room first." on re-queue immediately, 25 s later, and after reconnecting at 42 s (room still `phase: results`), until an explicit `leave_room`. Additionally, the forfeit path (`rooms.ts:262-266`) nulls the leaver's `roomCode` but never frees their slot, so it remains `human, connected=true` permanently and the room can never GC even if the other player clicks Continue.
+
+**Unlisted defect the auditor's numbered findings omit (their log mentions it but never pinned it):** first-visit clients freeze on tutorial Skip/complete. Root cause pinned with a paused debugger on an unminified build: `client/net.ts:33` iterates the `handlers` Set while `menu.ts:78-79` calls `showMenu` (which registers another handler via `net.on`) on every `profile` message; JS Set iteration visits entries added mid-loop, so the `profile` reply to `tutorial_complete` (`server/net.ts:209-210`) spins forever (`handlers.size` 161,924 at pause, 206,817 1.5 s later, stack `on → showMenu → emit`). Auto-tutorial fires on first visit (`main.ts:59-60`), so every new player who skips or finishes the tutorial gets a frozen tab; returning users and the menu "Tutorial" button hit the same path.
+
+- SEED VERDICT: leaks contents free (100% exact derivation of hidden power-ups and bot RNG from broadcast `mapSeed`, 0.013 ms)
+- CRASH VERDICT: triggerable pre-auth crash at server/src/net.ts:35 (via net.ts:85, non-string `hello.token`); plus post-auth kills at rooms.ts:222, names.ts:15, matchmaker.ts:28, sim.ts:292
+- BOT VERDICT: Hard beats Easy and bots place balloons, but bots self-soak (about 15-18% of rounds for Hard/Easy, 37% for Medium) and Hard's edge is only 56% per round / 52% first-to-3
+- ROUND-1 VERDICT: renders (with tutorial bypassed: painted canvas, 4-card HUD, tide timer ticking, bots placing); stuck for any first-visit player, because the tutorial→menu handoff freezes the tab
+- PING VERDICT: fake (client never sends `pong`; HUD hard-shows 0ms; server would compute RTT if it did)
