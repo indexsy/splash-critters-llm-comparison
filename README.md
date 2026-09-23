@@ -1,6 +1,6 @@
-# Splash Critters — one prompt, fifteen AI coding agents
+# Splash Critters — one prompt, sixteen AI coding agents
 
-An experiment: give fifteen frontier LLM coding setups the **same ~200-line spec** —
+An experiment: give sixteen frontier LLM coding setups the **same ~200-line spec** —
 build a complete, shippable 8-bit online multiplayer water-balloon battler
 (deterministic shared sim, server-authoritative netcode, bots, ranked Elo,
 SQLite, lobby browser, cosmetics, procedural pixel art) — and compare what
@@ -36,6 +36,7 @@ output, and database files were stripped).
 | [`results/gpt-6-astra/`](results/gpt-6-astra/) | **GPT-6 Astra** (OpenAI; added 2026-09-06) |
 | [`results/grok-4.7/`](results/grok-4.7/) | **Grok 4.7 (default)** (xAI; added 2026-09-21; successor to the Grok 4.5 and 4.6 entries) |
 | [`results/grok-4.7-xhigh/`](results/grok-4.7-xhigh/) | **Grok 4.7 (xhigh)** (xAI, same model at xhigh reasoning effort; added 2026-09-22; a controlled A/B against the default-effort build) |
+| [`results/opus-5.5/`](results/opus-5.5/) | **Claude Opus 5.5** (added 2026-09-23; **self-authored**: the orchestrator ran as Opus 5.5, so it got the adversarial audit. Built with multi-agent waves and with memory notes from two earlier Claude builds of this spec) |
 
 ## Code audit & rankings
 
@@ -45,62 +46,69 @@ Claude Fable 5 subagent each, same six-dimension rubric, every claim cites
 synthesis + methodology in
 [`comparison/AUDIT-RANKINGS.md`](comparison/AUDIT-RANKINGS.md).
 
-> **⚠️ Conflict of interest:** Three entries are Claude-family (Fable 5, Opus 5,
-> Opus 4.8), and a Claude model both wrote one of them and ran this comparison —
-> then ranked its own family #1. So the most important thing to say up front is
-> the thing that cuts *against* the house: **the single best result in this
-> benchmark belongs to a non-Claude entry.** GPT-6 Astra (#2, 8.35) is the only
-> one of fifteen to actually satisfy the spec's "unguessable, unhackable"
-> power-up rule — it rolls each castle's contents from an independent per-tile
-> CSPRNG stream, so the same attack that cracked Fable 5's loot in 21.8s scores
-> at pure chance against it. It trails Fable 5 by **0.10**, entirely on the two
-> softest dimensions (code quality, test depth); on the hardest and most
-> spec-central one — anti-cheat — Astra is first and Fable 5 is not. Weight that
-> above code polish and Astra is #1. Verify it yourself:
-> [`harness/attack-astra-loot.mjs`](comparison/harness/attack-astra-loot.mjs)
-> vs [`harness/attack-seed-recovery.mjs`](comparison/harness/attack-seed-recovery.mjs).
+> **⚠️ Conflict of interest:** Four entries are Claude-family (Fable 5, Opus 5.5,
+> Opus 5, Opus 4.8), every audit was run by Claude subagents, and the orchestrator is
+> a Claude model. The newest Claude entry, **Opus 5.5, was judged while the
+> orchestrator itself ran as Opus 5.5.** So it got this repo's self-authored
+> treatment: an adversarial audit, plus a "generosity check" that no rival received.
+> That check pulled it from a raw **8.50 (#1)** to a published **8.30 (#3)**; both
+> numbers are shown. The top three (8.45 / 8.35 / 8.30) are a statistical tie, and
+> every close call went *against* the Claude entries. Two findings cut hardest
+> against the house. **The single best anti-cheat result belongs to a non-Claude
+> entry:** GPT-6 Astra gives every tile its own crypto secret, and the attack that
+> cracked Fable 5's loot in 21.8s scores at pure chance against it. Only one other
+> entry, Opus 5.5, also closes the hole. And Opus 5.5 was built with advantages no
+> rival lab had: memory notes from two earlier Claude builds of this exact spec, and
+> many multi-agent verification waves. Verify the loot claims yourself:
+> [`harness/attack-astra-loot.mjs`](comparison/harness/attack-astra-loot.mjs),
+> [`harness/attack-opus55-content.ts`](comparison/harness/attack-opus55-content.ts),
+> [`harness/attack-seed-recovery.mjs`](comparison/harness/attack-seed-recovery.mjs).
 
 | Rank | Model | Weighted score /10 | One-line |
 | :-: | --- | :-: | --- |
 | 🥇 1 | **Fable 5** † | 8.45 | No fatal bug, working ranked-Elo path — but its "hidden" power-ups fall to a 21.8s brute force, plus a flaky Hard bot |
 | 🥈 2 | **GPT-6 Astra** ✚ | 8.35 | The **only** entry that actually makes hidden power-ups unguessable (per-tile CSPRNG loot, survives the derivation attack at chance) — best validator, real netcode, but one guest socket can crash the whole server by exhausting rooms |
-| 🥉 3 | **Opus 5** ¶ | 7.75 | Best engineering in the field (103 tests, 47 hostile frames survived, no seed on the wire) — but the client loses round 1 of every match |
-| 4 | **Opus 4.8 (ultracode)** ‡ | 7.40 | Excellent, playable, cleanly integrated — but leaks the real map seed AND one malformed packet crashes the whole server |
-| 5 | **GPT-5.6 SOL (xhigh)** ‡ | 7.00 | Playable, robust, clean — but leaks the seed, bots crawl in production, and `npm start` 404s without `NODE_ENV=production` |
-| 6 | **Kimi K3** | 6.70 | Playable — but ranked duels can draw (killing Elo), forfeit is dead code, and the default Space key can't drop a balloon |
-| 7 | **Grok 4.7 (default)** ▲ | 6.30 | The best-engineered Grok: every predecessor crash fixed, real ping, real netcode, loot on a separate stream. But no bot ever places a balloon (every match is tide roulette), and the loot salt is derivable from the broadcast seed |
-| 8 | **Grok 4.5** | 6.18 | Real netcode, playable — but a malformed WS frame crashes the server, and the HUD ping is fake |
-| 9 | **Grok 4.6** ‡ | 5.80 | Fixes two of 4.5's bugs (draw handling, bot self-soak) but audits *below* it: weaker netcode, still leaks the seed, still one-packet-crashes, still fake ping |
-| 10 | **Grok 4.7 (xhigh)** ◇ | 5.60 | Same model + prompt as #7 at higher reasoning effort, an entirely different build: FIXED default's dead bots (they fight now, though Hard wins only 52% of matches vs Easy), but regressed anti-cheat to a free seed leak and shipped a server any client can crash five ways. More effort, a worse game |
-| 11 | **0x alpha** ‡ | 4.40 | Strong sim + 26 tests + survives fuzzing + playable *offline* tutorial — but the server never sends `match_start`, so online play freezes on the lobby |
-| 12 | **GLM 5.2** | 3.60 | Renders a match, but it's a hologram: players phase through walls and the client is never sent the real map |
-| 13 | **Kimi K2.7** | 3.60 | Deterministic core, but the server crashes on the first connection and ranked never starts |
-| 14 | **Muse Spark 1.3** ‡ | 3.20 | Actually runs through round 2 — but every bot suicides in ~3s (the soak says PASS), five one-packet crashes, seed leaked, clients pick their own credentials, and the server rate-limits its own player's inputs |
-| 15 | **Kimi K2.6 swarm** | 3.20 | Textbook swarm failure: competent modules never wired together — crashes at boot, never sends snapshots, no mouse handling |
+| 🥉 3 | **Opus 5.5** ⚑ | 8.30 | Most complete and best-hardened build (774 tests, 14/14 e2e, survives every malformed frame) and one of only two that make loot unguessable. But a mid-round reconnect is stranded on the VS card, bots drift into tide draws, and ranked Elo can be farmed. Self-authored: raw 8.50 |
+| 4 | **Opus 5** ¶ | 7.75 | Best engineering in the field (103 tests, 47 hostile frames survived, no seed on the wire) — but the client loses round 1 of every match |
+| 5 | **Opus 4.8 (ultracode)** ‡ | 7.40 | Excellent, playable, cleanly integrated — but leaks the real map seed AND one malformed packet crashes the whole server |
+| 6 | **GPT-5.6 SOL (xhigh)** ‡ | 7.00 | Playable, robust, clean — but leaks the seed, bots crawl in production, and `npm start` 404s without `NODE_ENV=production` |
+| 7 | **Kimi K3** | 6.70 | Playable — but ranked duels can draw (killing Elo), forfeit is dead code, and the default Space key can't drop a balloon |
+| 8 | **Grok 4.7 (default)** ▲ | 6.30 | The best-engineered Grok: every predecessor crash fixed, real ping, real netcode, loot on a separate stream. But no bot ever places a balloon (every match is tide roulette), and the loot salt is derivable from the broadcast seed |
+| 9 | **Grok 4.5** | 6.18 | Real netcode, playable — but a malformed WS frame crashes the server, and the HUD ping is fake |
+| 10 | **Grok 4.6** ‡ | 5.80 | Fixes two of 4.5's bugs (draw handling, bot self-soak) but audits *below* it: weaker netcode, still leaks the seed, still one-packet-crashes, still fake ping |
+| 11 | **Grok 4.7 (xhigh)** ◇ | 5.60 | Same model + prompt as #7 at higher reasoning effort, an entirely different build: FIXED default's dead bots (they fight now, though Hard wins only 52% of matches vs Easy), but regressed anti-cheat to a free seed leak and shipped a server any client can crash five ways. More effort, a worse game |
+| 12 | **0x alpha** ‡ | 4.40 | Strong sim + 26 tests + survives fuzzing + playable *offline* tutorial — but the server never sends `match_start`, so online play freezes on the lobby |
+| 13 | **GLM 5.2** | 3.60 | Renders a match, but it's a hologram: players phase through walls and the client is never sent the real map |
+| 14 | **Kimi K2.7** | 3.60 | Deterministic core, but the server crashes on the first connection and ranked never starts |
+| 15 | **Muse Spark 1.3** ‡ | 3.20 | Actually runs through round 2 — but every bot suicides in ~3s (the soak says PASS), five one-packet crashes, seed leaked, clients pick their own credentials, and the server rate-limits its own player's inputs |
+| 16 | **Kimi K2.6 swarm** | 3.20 | Textbook swarm failure: competent modules never wired together — crashes at boot, never sends snapshots, no mouse handling |
 
 † Fable 5 audited under the harsher adversarial framing; ‡ Opus 4.8 and SOL under
 neutral framing + an extra verifier; ¶ Opus 5 under three passes (neutral,
 adversarial, steelman) — the neutral pass missed the round-1 bug the adversarial
-pass caught; ✚ GPT-6 Astra is the one entry that satisfies the anti-cheat
-requirement (verify with `harness/attack-astra-loot.mjs`); ▲ Grok 4.7's Security
+pass caught; ✚ GPT-6 Astra and ⚑ Opus 5.5 are the two entries that satisfy the anti-cheat
+requirement; ⚑ Opus 5.5 is self-authored and was cut from a raw 8.50 by an extra
+generosity check; ▲ Grok 4.7's Security
 was anchor-adjusted 4 to 5 (raw total 6.15, a tie with Grok 4.5), see AUDIT-RANKINGS. Scored on correctness (25%), spec fidelity (20%), netcode (15%),
 security (15%), code quality (15%), test depth (10%).
 
-**The headline finding: fourteen of the fifteen entries fail the spec's
-"unguessable, unhackable" power-up requirement, and the one that passes is the
+**The headline finding: fourteen of the sixteen entries fail the spec's
+"unguessable, unhackable" power-up requirement, and the two that pass are the
 whole story.** Eleven broadcast the real seed (free, instant recovery). Three more are
 brute-forceable: Opus 5 omits it and Fable 5 sends a decoy, but both still ship the
 castle grid, which pins the seed (~76s for Opus 5, **21.8s for Fable 5**); Grok 4.7
 rolls loot from a separate stream but draws its secret salt from the same PRNG that
 emits the public seed, so the seed pins the salt (8 to 38s on one thread).
-**GPT-6 Astra is the sole exception** — it rolls each tile's contents from an
-independent per-tile CSPRNG stream, exactly the "independently seeded PRNG" fix
-the other fourteen missed, and an attacker holding the entire wire scores at chance
-(1.29 hits/map vs a 1.30 control). **A second near-universal flaw:** one
+**Two entries close it.** **GPT-6 Astra** rolls each tile's contents from an
+independent per-tile CSPRNG stream, exactly the "independently seeded PRNG" fix the
+others missed, and an attacker holding the entire wire scores at chance (1.29 hits/map
+vs a 1.30 control). **Opus 5.5** uses one fresh 128-bit crypto key per round instead.
+A full round leaks at most ~72-100 bits of it, so it can never be pinned (1.56 vs a
+1.48 control). **A second near-universal flaw:** one
 malformed packet crashes the server for **seven** of them (K2.7, K2.6, Opus 4.8,
 Grok 4.5, Grok 4.6, Muse Spark, and Grok 4.7 xhigh — which reintroduced the exact
 crash the default build had fixed); Fable 5, SOL, Opus 5, 0x alpha, GPT-6 Astra and
-Grok 4.7 default validate inputs well enough to survive
+Grok 4.7 default and Opus 5.5 validate inputs well enough to survive
 it (Grok 4.7 fixed the exact token crash that killed both its predecessors; Astra
 shrugged off 33 malformed frame classes, though a *different* attack — room
 exhaustion — does take its server down). The common thread: every model's shared sim is
@@ -116,18 +124,28 @@ Same machine (macOS, Node 23), same gauntlet for everyone
 `npm install` → `npm test` → `npm run build` → `npm start` → `/health` →
 client served → headless browser probe.
 
-| Check | Fable 5 | GLM 5.2 | Kimi K2.7 | K2.6 swarm | Grok 4.5 | Kimi K3 | Opus 4.8 | SOL xhigh | Opus 5 | Grok 4.6 | 0x alpha | Muse Spark 1.3 | GPT-6 Astra | Grok 4.7 | Grok 4.7 xhi |
-| --- | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: |
-| `npm install` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
-| `npm test` (own suite) | ✅ 28 tests | ✅ 12 tests | ✅ 7 tests | ✅ 26 tests | ✅ 14 tests | ✅ 18 tests | ✅ 22 tests | ✅ 7 tests | ✅ 103 tests ¹ | ✅ 16 tests | ✅ 26 tests | ✅ 11 tests | ✅ 22 tests | ✅ 8 tests | ✅ 13 tests |
-| `npm run build` | ✅ | ✅ | ✅ ¹ | ✅ ¹ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
-| Server boots, `/health` OK | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
-| Built client served on one port | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ⚠️ needs NODE_ENV=prod ¹⁰ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
-| **Client loads in a browser** | ✅ | ✅ | ✅ | ❌ crashes on load ² | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ⚠️ freezes on tutorial Skip ¹⁷ |
-| **A player can actually connect** | ✅ | ✅ | ❌ server crashes ³ | ❌ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
-| **Full match playable vs bots** | ✅ | ✅ | ❌ | ❌ | ✅ | ✅ | ✅ | ✅ ¹¹ | ⚠️ round 1 invisible ¹² | ✅ | ❌ no match_start ¹³ | ⚠️ bots suicide ~3s ¹⁴ | ✅ | ⚠️ bots never place a balloon ¹⁶ | ✅ bots fight |
-| Bot-vs-bot soak script | ⚠️ flaky ⁴ | ✅ ⁵ | ✅ ⁵ | ❌ broken ⁶ | ✅ ⁵ | ✅ ⁵ | ✅ skill-asserting ⁹ | ⚠️ passes but masks a bug ¹¹ | ✅ 4 scenarios | ✅ skill-asserting | ❌ mis-wired ¹³ | ⚠️ passes, certifies broken bots ¹⁴ | ✅ asserts no self-soak ¹⁵ | ❌ fails its own Hard>Easy check ¹⁶ | ✅ completion-only ¹⁷ |
-| E2E acceptance script included | ✅ passes | — | — | — | — | ⚠️ ranked section fails ⁸ | — | — | — | — | — | — | ✅ real WS integration | — | — |
+| Check | Fable 5 | GLM 5.2 | Kimi K2.7 | K2.6 swarm | Grok 4.5 | Kimi K3 | Opus 4.8 | SOL xhigh | Opus 5 | Grok 4.6 | 0x alpha | Muse Spark 1.3 | GPT-6 Astra | Grok 4.7 | Grok 4.7 xhi | Opus 5.5 |
+| --- | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: |
+| `npm install` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
+| `npm test` (own suite) | ✅ 28 tests | ✅ 12 tests | ✅ 7 tests | ✅ 26 tests | ✅ 14 tests | ✅ 18 tests | ✅ 22 tests | ✅ 7 tests | ✅ 103 tests ¹ | ✅ 16 tests | ✅ 26 tests | ✅ 11 tests | ✅ 22 tests | ✅ 8 tests | ✅ 13 tests | ✅ 774 tests |
+| `npm run build` | ✅ | ✅ | ✅ ¹ | ✅ ¹ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
+| Server boots, `/health` OK | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
+| Built client served on one port | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ⚠️ needs NODE_ENV=prod ¹⁰ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
+| **Client loads in a browser** | ✅ | ✅ | ✅ | ❌ crashes on load ² | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ⚠️ freezes on tutorial Skip ¹⁷ | ✅ |
+| **A player can actually connect** | ✅ | ✅ | ❌ server crashes ³ | ❌ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
+| **Full match playable vs bots** | ✅ | ✅ | ❌ | ❌ | ✅ | ✅ | ✅ | ✅ ¹¹ | ⚠️ round 1 invisible ¹² | ✅ | ❌ no match_start ¹³ | ⚠️ bots suicide ~3s ¹⁴ | ✅ | ⚠️ bots never place a balloon ¹⁶ | ✅ bots fight | ✅ ¹⁸ |
+| Bot-vs-bot soak script | ⚠️ flaky ⁴ | ✅ ⁵ | ✅ ⁵ | ❌ broken ⁶ | ✅ ⁵ | ✅ ⁵ | ✅ skill-asserting ⁹ | ⚠️ passes but masks a bug ¹¹ | ✅ 4 scenarios | ✅ skill-asserting | ❌ mis-wired ¹³ | ⚠️ passes, certifies broken bots ¹⁴ | ✅ asserts no self-soak ¹⁵ | ❌ fails its own Hard>Easy check ¹⁶ | ✅ completion-only ¹⁷ | ✅ zero-tolerance on unforced ¹⁸ |
+| E2E acceptance script included | ✅ passes | — | — | — | — | ⚠️ ranked section fails ⁸ | — | — | — | — | — | — | ✅ real WS integration | — | — | ✅ 14/14 flows |
+
+¹⁸ **Opus 5.5** (self-authored; the orchestrator ran as Opus 5.5). A genuine
+mid-round reload or reconnect is stranded on the VS card for the rest of that round.
+`round_start` arrives before the game screen subscribes, because navigation goes
+through an async `location.hash` change; reproduced 6/6. Bots are cautious: Hard
+beats Easy in 200/200 matches, but 40% of those duel rounds are tide draws, and
+four-bot Medium/Easy FFA rooms hit the 15-round cap 95-98% of the time. Its soak
+gives unforced self-soaks zero tolerance and allows up to 6% "forced" ones (an
+opponent cut off the last escape), judged by a replay-based classifier. The strict
+Hard self-soak rate measured 0.27%.
 
 ¹⁷ **Grok 4.7 xhigh** is the same model and prompt as Grok 4.7 (default) at
 higher reasoning effort — an entirely different build (zero shared files). It fixed
@@ -254,13 +272,13 @@ not adjudicated further — either way its own gate reports 2 FAILURES.
 The spec's core acceptance test is a human one: open the game, reach the
 menu, play a full match against bots.
 
-| Stage | Fable 5 | GLM 5.2 | Kimi K2.7 | K2.6 swarm | Grok 4.5 | Kimi K3 | Opus 4.8 | SOL | Opus 5 | Grok 4.6 | 0x alpha | Muse Spark 1.3 | GPT-6 Astra | Grok 4.7 | Grok 4.7 xhi |
-| --- | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: |
-| Title screen renders | ✅ | ✅ | ✅ | ❌ blank page | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
-| Guest account created | ✅ | ✅ | ❌ (server dead) | ❌ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
-| Main menu | ✅ | ✅ | ❌ stuck on title | ❌ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ⚠️ frozen if you Skip tutorial ¹⁷ |
-| Lobby / practice setup | ✅ | ✅ | ❌ | ❌ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ (auto-starts) | ✅ | ✅ (auto-starts) | ✅ |
-| Live match vs bots | ✅ | ✅ | ❌ | ❌ | ✅ | ✅ | ✅ | ✅ (bots sluggish ¹¹) | ⚠️ round 2+ only ¹² | ✅ | ❌ never mounts ¹³ | ⚠️ runs, bots suicide ¹⁴ | ✅ round 1 renders | ⚠️ renders, bots idle ¹⁶ | ✅ round 1 renders |
+| Stage | Fable 5 | GLM 5.2 | Kimi K2.7 | K2.6 swarm | Grok 4.5 | Kimi K3 | Opus 4.8 | SOL | Opus 5 | Grok 4.6 | 0x alpha | Muse Spark 1.3 | GPT-6 Astra | Grok 4.7 | Grok 4.7 xhi | Opus 5.5 |
+| --- | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: |
+| Title screen renders | ✅ | ✅ | ✅ | ❌ blank page | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
+| Guest account created | ✅ | ✅ | ❌ (server dead) | ❌ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
+| Main menu | ✅ | ✅ | ❌ stuck on title | ❌ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ⚠️ frozen if you Skip tutorial ¹⁷ | ✅ |
+| Lobby / practice setup | ✅ | ✅ | ❌ | ❌ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ (auto-starts) | ✅ | ✅ (auto-starts) | ✅ | ✅ (setup dialog) |
+| Live match vs bots | ✅ | ✅ | ❌ | ❌ | ✅ | ✅ | ✅ | ✅ (bots sluggish ¹¹) | ⚠️ round 2+ only ¹² | ✅ | ❌ never mounts ¹³ | ⚠️ runs, bots suicide ¹⁴ | ✅ round 1 renders | ⚠️ renders, bots idle ¹⁶ | ✅ round 1 renders | ✅ round 1 renders; reconnect stranded ¹⁸ |
 
 ### Fable 5 — title / menu / live match
 
@@ -317,6 +335,18 @@ a pixel arena; a full lobby with per-slot bot difficulty, and a live FFA match
 with HUD plates + a splash burst. Playable end to end — caveats are the seed
 leak, sluggish production bots, and that `npm start` needs `NODE_ENV=production`
 to serve the client.*
+
+### Opus 5.5 (self-authored): the most polished build, and one bug it shares with Opus 5
+
+<p>
+<img src="comparison/screenshots/opus-5.5-game.png" width="45%"> <img src="comparison/screenshots/opus-5.5-reconnect-stuck.png" width="45%">
+</p>
+
+*Left: a live 4-player Beach match at Round 1. The HUD has real ping bars, bot
+balloons are on the board, and a soaked critter rides a revenge duck along the top
+border. Right: the same client after a genuine mid-round reload, stranded on the VS
+card while the round plays out on the server (6 of 6 reloads). It's Opus 5's round-1
+bug in narrower form.*
 
 ### Grok 4.7 xhigh vs default: the same model, higher effort, a worse game
 
@@ -430,13 +460,13 @@ renders unlabeled, and ranked Elo fails its own e2e gate (see ⁸).*
 
 ## Static metrics
 
-| Metric | Fable 5 | GLM 5.2 | Kimi K2.7 | K2.6 swarm | Grok 4.5 | Kimi K3 | Opus 4.8 | SOL | Opus 5 | Grok 4.6 | 0x alpha | Muse Spark 1.3 | GPT-6 Astra | Grok 4.7 | Grok 4.7 xhi |
-| --- | --: | --: | --: | --: | --: | --: | --: | --: | --: | --: | --: | --: | --: | --: | --: |
-| TypeScript lines | 7,934 | 4,450 | 4,540 | 8,944 | 6,581 | 6,536 | 8,842 | 7,392 | **20,510** | 5,394 | 6,358 | 4,828 | 6,896 | 6,071 | 6,450 |
-| TypeScript files | 53 | 30 | 40 | 39 | 43 | 45 | 89 | 42 | **136** | 45 | 39 | 42 | 50 | 46 | 47 |
-| Unit tests | 28 | 12 | 7 | 26 | 14 | 18 | 22 | 7 | **103** | 16 | 26 | 11 | 22 | 8 | 13 |
-| Client screen modules | 12 | 1 consolidated ⁷ | 11 | 12 | 12 | 12 | 12 | 12 | 17 | 12 | 10 | 11 | 11 | 12 | 12 |
-| Extra verification shipped | soak + WS e2e script | soak | soak | (broken soak) | soak | soak + e2e ⁸ | soak (skill-asserting) | soak ¹¹ | soak (4 scenarios) | soak (skill-asserting) | broken soak ¹³ | soak (completion-only ¹⁴) | soak + integration + browser + tutorial scripts | soak (asserts Hard>Easy + no self-soak ¹⁶) | soak (completion-only) |
+| Metric | Fable 5 | GLM 5.2 | Kimi K2.7 | K2.6 swarm | Grok 4.5 | Kimi K3 | Opus 4.8 | SOL | Opus 5 | Grok 4.6 | 0x alpha | Muse Spark 1.3 | GPT-6 Astra | Grok 4.7 | Grok 4.7 xhi | Opus 5.5 |
+| --- | --: | --: | --: | --: | --: | --: | --: | --: | --: | --: | --: | --: | --: | --: | --: | --: |
+| TypeScript lines | 7,934 | 4,450 | 4,540 | 8,944 | 6,581 | 6,536 | 8,842 | 7,392 | **20,510** | 5,394 | 6,358 | 4,828 | 6,896 | 6,071 | 6,450 | **33,382** |
+| TypeScript files | 53 | 30 | 40 | 39 | 43 | 45 | 89 | 42 | **136** | 45 | 39 | 42 | 50 | 46 | 47 | **339** |
+| Unit tests | 28 | 12 | 7 | 26 | 14 | 18 | 22 | 7 | **103** | 16 | 26 | 11 | 22 | 8 | 13 | **774** |
+| Client screen modules | 12 | 1 consolidated ⁷ | 11 | 12 | 12 | 12 | 12 | 12 | 17 | 12 | 10 | 11 | 11 | 12 | 12 | 13 |
+| Extra verification shipped | soak + WS e2e script | soak | soak | (broken soak) | soak | soak + e2e ⁸ | soak (skill-asserting) | soak ¹¹ | soak (4 scenarios) | soak (skill-asserting) | broken soak ¹³ | soak (completion-only ¹⁴) | soak + integration + browser + tutorial scripts | soak (asserts Hard>Easy + no self-soak ¹⁶) | soak (completion-only) | soak + 14-flow e2e (incl. lagged) |
 
 ⁷ GLM consolidated all screens into one 400-line file (every spec screen
 **except the tutorial, which GLM skipped entirely** — `grep -ri tutorial
@@ -445,16 +475,16 @@ packages/` → 0 hits). Every submission except GLM implements the tutorial.
 Feature-keyword footprint (case-insensitive grep hits across `packages/`,
 a *rough* proxy for how deeply a mechanic is wired through sim + bots + UI):
 
-| Keyword | Fable 5 | GLM 5.2 | Kimi K2.7 | K2.6 swarm | Grok 4.5 | Kimi K3 | Opus 4.8 | SOL | 0x alpha | Muse Spark 1.3 | GPT-6 Astra | Grok 4.7 | Grok 4.7 xhi |
-| --- | --: | --: | --: | --: | --: | --: | --: | --: | --: | --: | --: | --: | --: |
-| kick | 57 | 15 | 28 | 78 | 15 | 16 | 28 | 20 | 35 | 19 | 32 | 36 | 35 |
-| revenge (ducks) | 57 | 31 | 27 | 37 | 53 | 28 | 79 | 55 | 50 | 36 | 58 | 36 | 73 |
-| tide | 55 | 42 | 26 | 33 | 40 | 57 | 45 | 36 | 42 | 41 | 39 | 48 | 53 |
-| emote | 53 | 2 | 17 | 48 | 32 | 51 | 61 | 37 | 39 | 30 | 24 | 26 | 30 |
-| rematch | 22 | 12 | 13 | 21 | 32 | 33 | 16 | 22 | 28 | 17 | 18 | 14 | 20 |
-| tutorial | 28 | 0 | 15 | 11 | 31 | 30 | 21 | 35 | 7 | 14 | 72 | 44 | 34 |
-| colorblind | 11 | 0 | 0 | 11 | 10 | 11 | 46 | 8 (dead ¹¹) | 8 | 13 | 12 | 5 | 8 |
-| reconcil… (netcode) | 3 | 5 | 0 | 10 | 1 | 0 | 7 | 0 | 5 | 2 | 7 | 0 | 3 |
+| Keyword | Fable 5 | GLM 5.2 | Kimi K2.7 | K2.6 swarm | Grok 4.5 | Kimi K3 | Opus 4.8 | SOL | 0x alpha | Muse Spark 1.3 | GPT-6 Astra | Grok 4.7 | Grok 4.7 xhi | Opus 5.5 |
+| --- | --: | --: | --: | --: | --: | --: | --: | --: | --: | --: | --: | --: | --: | --: |
+| kick | 57 | 15 | 28 | 78 | 15 | 16 | 28 | 20 | 35 | 19 | 32 | 36 | 35 | 348 |
+| revenge (ducks) | 57 | 31 | 27 | 37 | 53 | 28 | 79 | 55 | 50 | 36 | 58 | 36 | 73 | 151 |
+| tide | 55 | 42 | 26 | 33 | 40 | 57 | 45 | 36 | 42 | 41 | 39 | 48 | 53 | 322 |
+| emote | 53 | 2 | 17 | 48 | 32 | 51 | 61 | 37 | 39 | 30 | 24 | 26 | 30 | 235 |
+| rematch | 22 | 12 | 13 | 21 | 32 | 33 | 16 | 22 | 28 | 17 | 18 | 14 | 20 | 100 |
+| tutorial | 28 | 0 | 15 | 11 | 31 | 30 | 21 | 35 | 7 | 14 | 72 | 44 | 34 | 325 |
+| colorblind | 11 | 0 | 0 | 11 | 10 | 11 | 46 | 8 (dead ¹¹) | 8 | 13 | 12 | 5 | 8 | 161 |
+| reconcil… (netcode) | 3 | 5 | 0 | 10 | 1 | 0 | 7 | 0 | 5 | 2 | 7 | 0 | 3 | 24 |
 
 ## Methodology & fairness notes
 

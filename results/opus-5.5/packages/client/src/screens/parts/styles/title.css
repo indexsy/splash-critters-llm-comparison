@@ -1,0 +1,30 @@
+/* Title screen overlay: the scene itself is drawn on the canvas; this only places the prompt. */
+
+.title-screen {
+  position: relative;
+  align-items: center;
+  cursor: pointer;
+}
+
+.title-prompt {
+  position: absolute;
+  top: calc(96 * var(--u));
+  left: 0;
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: calc(3 * var(--u));
+  text-shadow: var(--u) var(--u) 0 var(--c-ink);
+}
+
+.title-hint {
+  font-size: var(--fs-xs);
+  color: var(--c-text);
+  text-shadow: var(--u) var(--u) 0 var(--c-water-dark);
+}
+
+.title-offer {
+  gap: calc(4 * var(--u));
+  max-width: calc(190 * var(--u));
+}

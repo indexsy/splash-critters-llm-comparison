@@ -1,0 +1,81 @@
+/* Queue screen: searching view (critter scene + stats) and the MATCH FOUND flash. */
+
+.queue-wrap { flex: 1 1 auto; display: flex; flex-direction: column; min-height: 0; }
+
+.queue-body {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  gap: calc(4 * var(--u));
+}
+
+.queue-heading { color: var(--c-sky); font-size: var(--fs); }
+.queue-scene { border-bottom: var(--b) solid var(--c-sand-dark); }
+
+.queue-stats { display: flex; flex-direction: column; align-items: center; gap: calc(4 * var(--u)); width: 100%; }
+
+.qs-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: calc(3 * var(--u));
+  width: 100%;
+}
+
+.qs-cell {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: calc(2 * var(--u));
+  padding: calc(3 * var(--u)) calc(2 * var(--u));
+  background: var(--c-ink);
+  border: var(--u) solid var(--c-panel-hi);
+}
+
+.qs-label { font-size: var(--fs-xs); color: var(--c-muted); }
+.qs-value { display: flex; flex-direction: column; align-items: center; gap: calc(2 * var(--u)); color: var(--c-sand); font-size: var(--fs-l); text-transform: none; }
+.qs-value .bar { width: calc(34 * var(--u)); min-width: 0; height: calc(4 * var(--u)); }
+
+.qs-rating { display: flex; align-items: center; gap: calc(3 * var(--u)); font-size: var(--fs-s); color: var(--c-muted); }
+.qs-elo { color: var(--c-sand); }
+.qs-tier { color: var(--c-sky); }
+
+/* ---- match found ------------------------------------------------------------------------ */
+
+.found {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: calc(8 * var(--u));
+}
+
+.found-flash { animation: found-flash 280ms steps(2) 6, found-pop 200ms steps(3) both; }
+
+@keyframes found-flash { 50% { opacity: 0.2; } }
+@keyframes found-pop { from { transform: scale(0.6); } }
+
+.found-players { display: flex; align-items: center; justify-content: center; gap: calc(6 * var(--u)); }
+.found-ffa { gap: calc(4 * var(--u)); }
+.found-ffa .found-player { min-width: 0; width: calc(54 * var(--u)); padding: calc(4 * var(--u)) calc(2 * var(--u)); }
+
+.found-player {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: calc(2 * var(--u));
+  min-width: calc(50 * var(--u));
+  max-width: calc(64 * var(--u));
+  padding: calc(4 * var(--u));
+  background: var(--c-panel-hi);
+  border: var(--b) solid var(--c-ink);
+  animation: found-pop 240ms steps(3) both;
+}
+
+.found-player.is-you { box-shadow: 0 0 0 var(--u) var(--c-sand); }
+.found-name { font-size: var(--fs-xs); }
+.found-rating { display: flex; align-items: center; gap: calc(2 * var(--u)); color: var(--c-sand); font-size: var(--fs-s); }
+.found-vs { padding: 0 calc(4 * var(--u)); }
+.found-wait { color: var(--c-sky); }

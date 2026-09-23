@@ -1,0 +1,46 @@
+/* Menu dialogs: form grids, nickname / join-code fields, slot chooser, profile dialog. */
+
+.form-grid {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: center;
+  gap: calc(3 * var(--u)) calc(5 * var(--u));
+}
+
+.form-row { display: contents; }
+
+.form-label {
+  font-size: var(--fs-s);
+  color: var(--c-sand);
+  white-space: nowrap;
+}
+
+.form-control { display: flex; min-width: 0; }
+.form-control > .text-input { min-height: calc(12 * var(--u)); }
+.form-grid .seg-option { font-size: var(--fs-s); padding: calc(2 * var(--u)) calc(3 * var(--u)); }
+.form-grid .toggle { padding: 0; font-size: var(--fs-s); }
+.form-grid .error-line { grid-column: 1 / -1; }
+
+.nick-body,
+.join-body { gap: calc(3 * var(--u)); min-width: calc(170 * var(--u)); }
+
+.nick-reason { color: var(--c-sky); font-size: var(--fs-s); text-align: center; }
+
+.nick-field {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: calc(3 * var(--u));
+}
+
+.nick-counter { font-size: var(--fs-xs); color: var(--c-muted); }
+.nick-counter.danger { color: var(--c-coral-light); }
+
+.code-input {
+  font-size: var(--fs-xl);
+  letter-spacing: calc(3 * var(--u));
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.code-input::placeholder { color: var(--c-grey-dark); }

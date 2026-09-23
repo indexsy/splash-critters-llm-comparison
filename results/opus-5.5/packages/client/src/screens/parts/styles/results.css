@@ -1,0 +1,183 @@
+/* Results screen: tags, placements, XP + rating panels, fun stat cards, action bar. */
+
+.results .shell-body { gap: calc(4 * var(--u)); padding: calc(4 * var(--u)) calc(5 * var(--u)); }
+
+.results-grid {
+  flex: 1 1 auto;
+  min-height: 0;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) calc(108 * var(--u));
+  gap: calc(4 * var(--u));
+}
+
+.results-main,
+.results-side { display: flex; flex-direction: column; gap: calc(4 * var(--u)); min-height: 0; min-width: 0; }
+
+.results-panel {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: calc(2 * var(--u));
+  padding: calc(3 * var(--u)) calc(4 * var(--u));
+  background: var(--c-ink);
+  border: var(--u) solid var(--c-panel-hi);
+  min-height: 0;
+}
+
+/* ---- placements --------------------------------------------------------------------- */
+
+.place-list { display: flex; flex-direction: column; gap: calc(2 * var(--u)); margin: 0; padding: 0; list-style: none; }
+
+.place-row {
+  display: grid;
+  grid-template-columns: calc(13 * var(--u)) auto minmax(0, 1fr) auto auto;
+  align-items: center;
+  gap: calc(2 * var(--u));
+  padding: var(--u) calc(2 * var(--u));
+  background: var(--c-panel);
+  border-left: var(--b) solid var(--c-panel-hi);
+}
+
+.place-row.is-me { background: var(--c-water-dark); }
+.place-rank { font-size: var(--fs-s); color: var(--c-muted); }
+.place-row.is-gold { border-left-color: var(--c-focus); }
+.place-row.is-gold .place-rank { color: var(--c-focus); }
+.place-row.is-silver { border-left-color: var(--c-muted); }
+.place-row.is-silver .place-rank { color: var(--c-text); }
+.place-row.is-bronze { border-left-color: var(--c-sand-dark); }
+.place-row.is-bronze .place-rank { color: var(--c-sand-dark); }
+
+.place-name {
+  display: flex;
+  align-items: center;
+  gap: calc(2 * var(--u));
+  min-width: 0;
+  font-size: var(--fs-s);
+  text-transform: none;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.place-name-text { min-width: 0; overflow: hidden; text-overflow: ellipsis; }
+.place-row.is-me .place-name { color: var(--c-sand); }
+.place-row-big { grid-template-columns: calc(14 * var(--u)) auto minmax(0, 1fr); gap: calc(4 * var(--u)); padding: calc(2 * var(--u)) calc(3 * var(--u)); margin-bottom: calc(2 * var(--u)); }
+.place-row-big .place-rank { font-size: var(--fs); }
+.place-info { display: flex; flex-direction: column; gap: calc(2 * var(--u)); min-width: 0; }
+.place-row-big .place-name { font-size: var(--fs); }
+.place-row-big .place-name.is-long { font-size: var(--fs-s); }
+.place-stats { display: flex; gap: calc(6 * var(--u)); }
+.place-portrait { position: relative; display: block; }
+.place-portrait.is-left .sprite { opacity: 0.55; }
+.place-portrait .chip { position: absolute; left: 50%; bottom: calc(-1 * var(--u)); transform: translateX(-50%); }
+.place-stat { display: inline-flex; align-items: center; gap: var(--u); font-size: var(--fs-s); color: var(--c-sand); }
+
+/* ---- xp ------------------------------------------------------------------------------ */
+
+.xp-head { display: flex; align-items: center; gap: calc(3 * var(--u)); }
+.xp-gain { margin-left: auto; color: var(--c-sand); font-size: var(--fs); text-transform: none; white-space: nowrap; }
+.xp-count { font-size: var(--fs-xs); color: var(--c-muted); }
+
+.xp-lines {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: var(--fs-xs);
+  color: var(--c-muted);
+  text-transform: none;
+}
+
+.xp-lines li { display: flex; justify-content: space-between; gap: calc(2 * var(--u)); white-space: nowrap; }
+.xp-line-val { color: var(--c-aqua); }
+.xp-breakdown { display: flex; flex-direction: column; gap: var(--u); }
+.xp-practice { color: var(--c-sand); }
+
+.xp-unlocks { display: flex; flex-direction: column; gap: calc(2 * var(--u)); }
+.xp-unlock-grid { display: grid; grid-template-columns: 1fr 1fr; gap: calc(2 * var(--u)); }
+.xp-extra { display: flex; align-items: center; flex-wrap: wrap; gap: calc(3 * var(--u)); min-height: 0; }
+.xp-extra:empty { display: none; }
+.xp-new { font-size: var(--fs-s); color: var(--c-focus); }
+.unlock-tile { display: flex; flex-direction: column; align-items: center; justify-content: flex-end; gap: var(--u); min-width: 0; font-size: var(--fs-xs); color: var(--c-text); animation: xp-pop 300ms steps(3) both; }
+.unlock-tile span { max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.unlock-animal { margin-top: calc(4 * var(--u)); }
+
+.xp-levelup {
+  position: absolute;
+  left: 50%;
+  top: calc(12 * var(--u));
+  transform: translateX(-50%);
+  padding: calc(2 * var(--u)) calc(4 * var(--u));
+  background: var(--c-ink);
+  border: var(--u) solid var(--c-focus);
+  pointer-events: none;
+  opacity: 0;
+}
+
+.xp-levelup.is-popping { animation: level-pop 1500ms steps(6) both; }
+
+@keyframes level-pop {
+  0% { opacity: 0; transform: translateX(-50%) scale(0.5); }
+  15% { opacity: 1; transform: translateX(-50%) scale(1.2); }
+  30%, 80% { opacity: 1; transform: translateX(-50%) scale(1); }
+  100% { opacity: 0; transform: translateX(-50%) translateY(calc(-6 * var(--u))); }
+}
+
+@keyframes xp-pop { from { transform: scale(0.4); opacity: 0; } }
+
+/* ---- rating ---------------------------------------------------------------------------- */
+
+.rating-row { display: flex; align-items: center; gap: calc(4 * var(--u)); }
+.rating-badge { flex: none; }
+.rating-badge.is-up { animation: tier-bounce 500ms steps(4) 3; }
+.rating-badge.is-down { opacity: 0.8; }
+.rating-main { display: flex; flex-direction: column; gap: calc(2 * var(--u)); flex: 1 1 auto; min-width: 0; }
+.rating-line { display: flex; align-items: center; justify-content: space-between; gap: calc(3 * var(--u)); }
+.rating-value { color: var(--c-sand); font-size: var(--fs-l); }
+.rating-tier { font-size: var(--fs-s); color: var(--c-sky); }
+.rating-next { font-size: var(--fs-xs); color: var(--c-muted); white-space: nowrap; text-transform: none; }
+/* In the panel's flow under the tier bar: pinned to the top edge it covered the RATING label. */
+.rating-banner {
+  align-self: center;
+  max-width: 100%;
+  padding: var(--u) calc(3 * var(--u));
+  text-align: center;
+  background: var(--c-ink);
+  border: var(--u) solid var(--c-focus);
+  animation: xp-pop 300ms steps(3) both;
+}
+
+.rating-banner .muted-note { color: var(--c-coral-light); }
+
+@keyframes tier-bounce { 50% { transform: translateY(calc(-3 * var(--u))); } }
+
+/* ---- fun stats ------------------------------------------------------------------------ */
+
+.fun-stats { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: calc(3 * var(--u)); flex: none; }
+
+.fun-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--u);
+  min-width: 0;
+  padding: calc(2 * var(--u));
+  background: var(--c-panel-hi);
+  border: var(--u) solid var(--c-ink);
+}
+
+.fun-label { font-size: var(--fs-xs); color: var(--c-focus); white-space: nowrap; }
+.fun-who { display: flex; align-items: center; gap: var(--u); min-width: 0; }
+.fun-text { display: flex; flex-direction: column; min-width: 0; line-height: 1.15; }
+.fun-name { font-size: var(--fs-xs); text-transform: none; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0; }
+.fun-value { font-size: var(--fs-xs); color: var(--c-sand); text-transform: none; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0; }
+
+/* ---- actions -------------------------------------------------------------------------- */
+
+.results-actions { display: flex; align-items: center; justify-content: flex-end; gap: calc(5 * var(--u)); flex: none; min-height: calc(14 * var(--u)); }
+.results-note { flex: 1 1 auto; font-size: var(--fs-s); color: var(--c-sky); }
+.vote-tally { display: flex; flex-direction: column; gap: var(--u); flex: 1 1 auto; font-size: var(--fs-xs); color: var(--c-muted); }
+.vote-clock { font-size: var(--fs-l); color: var(--c-sand); min-width: calc(24 * var(--u)); text-align: center; }
+
+.results-empty { flex: 1 1 auto; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: calc(6 * var(--u)); }

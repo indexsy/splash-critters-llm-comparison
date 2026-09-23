@@ -1,0 +1,198 @@
+/* Splash Critters UI: chunky 8-bit look. Every size is written in backbuffer pixels via --u
+   (1 backbuffer px = --px CSS px, set by frame.ts), so the overlay lines up with the 256x224
+   canvas at every integer scale. Colours are palette tokens set by ui/theme.ts. */
+
+@import './ui/styles/controls.css';
+@import './ui/styles/overlays.css';
+
+:root {
+  --px: 1;
+  --u: calc(var(--px) * 1px);
+  --b: calc(2 * var(--u));
+  --gap: calc(4 * var(--u));
+  --pad: calc(6 * var(--u));
+  --fs-xs: calc(5 * var(--u));
+  --fs-s: calc(6 * var(--u));
+  --fs: calc(7 * var(--u));
+  --fs-l: calc(9 * var(--u));
+  --fs-xl: calc(12 * var(--u));
+  --font: Menlo, Consolas, 'DejaVu Sans Mono', 'Liberation Mono', 'Courier New', monospace;
+  color-scheme: dark;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+[hidden] {
+  display: none !important;
+}
+
+html,
+body {
+  margin: 0;
+  height: 100%;
+  overflow: hidden;
+  background: var(--c-letterbox);
+}
+
+.noscript {
+  margin: 2rem;
+  color: #fcfcfc;
+  font-family: var(--font);
+  text-align: center;
+}
+
+/* ---- stage: canvas + overlay ------------------------------------------------ */
+
+#stage {
+  position: absolute;
+  overflow: hidden;
+  background: var(--c-bg);
+}
+
+#screen {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  image-rendering: crisp-edges;
+  image-rendering: pixelated;
+}
+
+#ui {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  font-family: var(--font);
+  font-size: var(--fs);
+  font-weight: 700;
+  line-height: 1.3;
+  letter-spacing: calc(0.3 * var(--u));
+  text-transform: uppercase;
+  color: var(--c-text);
+  -webkit-font-smoothing: none;
+  -moz-osx-font-smoothing: auto;
+  font-smooth: never;
+  text-rendering: optimizeSpeed;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+/* Zero-specificity resets so every component class can override them. */
+:where(#ui) :where(h1, h2, h3, p) {
+  margin: 0;
+  font-size: inherit;
+}
+
+:where(#ui) :where(button, input, output) {
+  font: inherit;
+  letter-spacing: inherit;
+  text-transform: inherit;
+  color: inherit;
+}
+
+.screen-root,
+.layer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+:where(.screen-root, .layer) > * {
+  pointer-events: auto;
+}
+
+.screen-root {
+  z-index: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--gap);
+  padding: var(--pad);
+}
+
+.layer-badges { z-index: 10; }
+.layer-banner { z-index: 20; display: flex; align-items: flex-end; }
+/* --toast-top: bottom of the mounted screen's title bar, in backbuffer pixels (ui/toast.ts). */
+.layer-toasts { z-index: 30; display: flex; flex-direction: column; align-items: center; gap: calc(2 * var(--u)); padding-top: calc((var(--toast-top, 0) + 4) * var(--u)); }
+.layer-modals { z-index: 40; }
+.layer-modals:empty { display: none; }
+
+/* ---- utilities ----------------------------------------------------------------- */
+
+.screen-fill { align-self: stretch; flex: 1 1 auto; min-height: 0; display: flex; flex-direction: column; gap: var(--gap); }
+.row { display: flex; align-items: center; gap: var(--gap); }
+.col { display: flex; flex-direction: column; gap: var(--gap); }
+.wrap { flex-wrap: wrap; }
+.grow { flex: 1 1 auto; min-width: 0; min-height: 0; }
+.center { align-items: center; justify-content: center; text-align: center; }
+.spread { justify-content: space-between; }
+.muted { color: var(--c-muted); }
+.accent { color: var(--c-sand); }
+.water { color: var(--c-sky); }
+.danger { color: var(--c-coral-light); }
+.tiny { font-size: var(--fs-xs); }
+.small { font-size: var(--fs-s); }
+.big { font-size: var(--fs-l); }
+.huge { font-size: var(--fs-xl); }
+.selectable { user-select: text; -webkit-user-select: text; text-transform: none; }
+
+.scroll {
+  overflow: auto;
+  min-height: 0;
+  scrollbar-width: thin;
+  scrollbar-color: var(--c-sand) var(--c-ink);
+}
+
+#ui ::-webkit-scrollbar { width: calc(4 * var(--u)); height: calc(4 * var(--u)); }
+#ui ::-webkit-scrollbar-track { background: var(--c-ink); }
+#ui ::-webkit-scrollbar-thumb { background: var(--c-sand); border: var(--u) solid var(--c-ink); }
+#ui ::-webkit-scrollbar-corner { background: var(--c-ink); }
+
+/* ---- panels & pixel titles --------------------------------------------------- */
+
+.panel {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap);
+  min-width: calc(120 * var(--u));
+  max-width: 100%;
+  max-height: 100%;
+  min-height: 0;
+  padding: var(--pad);
+  background: var(--c-panel);
+  border: var(--b) solid var(--c-ink);
+  box-shadow: inset 0 0 0 var(--u) var(--c-panel-edge), 0 var(--b) 0 0 var(--c-ink);
+}
+
+.panel-title {
+  font-size: var(--fs-l);
+  color: var(--c-sand);
+  text-align: center;
+  text-shadow: var(--u) var(--u) 0 var(--c-ink);
+  padding-bottom: calc(2 * var(--u));
+  border-bottom: var(--u) dashed var(--c-panel-hi);
+}
+
+.panel-body {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  gap: var(--gap);
+  min-height: 0;
+}
+
+.pixel-title {
+  display: block;
+  flex: none;
+  width: calc(var(--w) * var(--u));
+  height: calc(var(--h) * var(--u));
+  image-rendering: crisp-edges;
+  image-rendering: pixelated;
+}

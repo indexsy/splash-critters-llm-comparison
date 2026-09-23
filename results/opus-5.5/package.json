@@ -1,0 +1,32 @@
+{
+  "name": "splash-critters",
+  "private": true,
+  "type": "module",
+  "version": "1.0.0",
+  "description": "Splash Critters: an 8-bit online water-balloon arena battler",
+  "workspaces": [
+    "packages/shared",
+    "packages/server",
+    "packages/client"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "dev": "concurrently -k -n server,client -c blue,magenta \"npm run dev -w @splash/server\" \"npm run dev -w @splash/client\"",
+    "build": "npm run build -w @splash/client && npm run build -w @splash/server",
+    "start": "node packages/server/dist/index.js",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "typecheck": "tsc -p packages/shared --noEmit && tsc -p packages/server --noEmit && tsc -p packages/client --noEmit",
+    "soak": "tsx packages/server/scripts/soak.ts",
+    "e2e": "tsx packages/server/scripts/e2e.ts"
+  },
+  "devDependencies": {
+    "@types/node": "^20.14.0",
+    "concurrently": "^9.0.0",
+    "tsx": "^4.19.0",
+    "typescript": "^5.6.0",
+    "vitest": "^2.1.0"
+  }
+}

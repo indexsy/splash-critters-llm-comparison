@@ -1,0 +1,123 @@
+/* Lists, tables, toasts, banner, badges and modals. */
+
+/* ---- lists & tables ---------------------------------------------------------------- */
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--u);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  background: var(--c-ink);
+  border: var(--b) solid var(--c-ink);
+}
+
+.list-item { padding: calc(3 * var(--u)) calc(4 * var(--u)); background: var(--c-panel); }
+.list-item-selectable { cursor: pointer; }
+.list-item-selectable:hover { background: var(--c-panel-hi); }
+#ui .list-item-selectable:focus-visible { background: var(--c-panel-hi); outline-offset: calc(-1 * var(--u)); }
+
+.list-empty {
+  padding: calc(8 * var(--u)) var(--pad);
+  color: var(--c-muted);
+  text-align: center;
+  border: var(--u) dashed var(--c-panel-hi);
+}
+
+.table-wrap { background: var(--c-panel); border: var(--b) solid var(--c-ink); }
+.table { width: 100%; border-collapse: collapse; }
+.table th { position: sticky; top: 0; padding: calc(2 * var(--u)) calc(3 * var(--u)); background: var(--c-panel-hi); color: var(--c-sand); font-size: var(--fs-s); font-weight: inherit; }
+.table td { padding: calc(2 * var(--u)) calc(3 * var(--u)); border-top: var(--u) solid var(--c-ink); }
+.table tr.is-me td { background: var(--c-water-dark); color: var(--c-sand); }
+.cell-left { text-align: left; }
+.cell-center { text-align: center; }
+.cell-right { text-align: right; }
+
+/* ---- toasts, banner, badges ------------------------------------------------------- */
+
+.toast {
+  max-width: calc(220 * var(--u));
+  padding: calc(3 * var(--u)) calc(6 * var(--u));
+  background: var(--c-ink);
+  border: var(--b) solid var(--c-sky);
+  box-shadow: 0 var(--b) 0 0 rgba(0, 0, 0, 0.45);
+  text-align: center;
+  cursor: pointer;
+  animation: toast-in 150ms steps(3) both;
+}
+
+.toast-success { border-color: var(--c-success); }
+.toast-warn { border-color: var(--c-warn); }
+.toast-error { border-color: var(--c-error); color: var(--c-coral-light); }
+.toast-bump { animation: toast-bump 180ms steps(2); }
+.toast-leaving { animation: toast-out 160ms steps(3) both; pointer-events: none; }
+
+@keyframes toast-in { from { opacity: 0; transform: translateY(calc(-6 * var(--u))); } }
+@keyframes toast-out { to { opacity: 0; transform: translateY(calc(-6 * var(--u))); } }
+@keyframes toast-bump { 50% { transform: translateY(var(--u)); } }
+
+.banner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: calc(6 * var(--u));
+  width: 100%;
+  padding: calc(2 * var(--u)) var(--pad);
+  background: var(--c-coral-dark);
+  border-top: var(--b) solid var(--c-ink);
+  text-shadow: var(--u) var(--u) 0 var(--c-ink);
+}
+
+.lag-badge {
+  position: absolute;
+  left: calc(2 * var(--u));
+  bottom: calc(2 * var(--u));
+  padding: 0 calc(2 * var(--u));
+  font-size: var(--fs-xs);
+  background: var(--c-coral-dark);
+  opacity: 0.85;
+  pointer-events: none;
+}
+
+/* ---- modals ------------------------------------------------------------------------ */
+
+.modal-backdrop {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: calc(8 * var(--u));
+  background: rgba(20, 16, 32, 0.72);
+}
+
+.modal {
+  display: flex;
+  flex-direction: column;
+  gap: calc(5 * var(--u));
+  min-width: calc(140 * var(--u));
+  max-width: calc(224 * var(--u));
+  max-height: 100%;
+  padding: calc(6 * var(--u)) calc(8 * var(--u));
+  background: var(--c-panel);
+  border: var(--b) solid var(--c-ink);
+  box-shadow: inset 0 0 0 var(--u) var(--c-panel-edge), 0 calc(3 * var(--u)) 0 0 var(--c-ink);
+  outline: none;
+  animation: modal-in 140ms steps(3) both;
+}
+
+.modal-title { font-size: var(--fs-l); color: var(--c-sand); text-align: center; text-shadow: var(--u) var(--u) 0 var(--c-ink); }
+.modal-body { min-height: 0; overflow: auto; line-height: 1.45; }
+.modal-actions { display: flex; flex-wrap: wrap; justify-content: center; gap: var(--gap); }
+
+@keyframes modal-in { from { opacity: 0; transform: scale(0.9); } }
+
+@media (prefers-reduced-motion: reduce) {
+  #ui *,
+  #ui *::before,
+  #ui *::after {
+    animation-duration: 1ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}

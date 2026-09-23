@@ -1,0 +1,23 @@
+{
+  "name": "@splash/server",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "main": "dist/index.js",
+  "scripts": {
+    "dev": "tsx watch src/index.ts",
+    "build": "node build.mjs"
+  },
+  "dependencies": {
+    "@splash/shared": "*",
+    "better-sqlite3": "^11.3.0",
+    "express": "^4.21.0",
+    "ws": "^8.18.0"
+  },
+  "devDependencies": {
+    "@types/better-sqlite3": "^7.6.11",
+    "@types/express": "^4.17.21",
+    "@types/ws": "^8.5.12",
+    "esbuild": "^0.24.0"
+  }
+}

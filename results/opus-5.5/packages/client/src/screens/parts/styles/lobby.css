@@ -1,0 +1,156 @@
+/* Lobby: info bar with the room code, slot cards, action bar, joining card, slot chooser. */
+
+.lobby-body {
+  flex: 1 1 auto;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  gap: calc(4 * var(--u));
+}
+
+.lobby-info {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: calc(6 * var(--u));
+  flex: none;
+}
+
+.lobby-chips { display: flex; flex-wrap: wrap; align-items: center; gap: calc(3 * var(--u)); min-width: 0; }
+
+.lobby-code {
+  display: grid;
+  grid-template-columns: auto auto;
+  align-items: center;
+  gap: calc(2 * var(--u)) calc(4 * var(--u));
+  padding: calc(3 * var(--u)) calc(4 * var(--u));
+  background: var(--c-ink);
+  border: var(--u) solid var(--c-panel-hi);
+  flex: none;
+}
+
+.lobby-code-label { grid-column: 1 / -1; font-size: var(--fs-xs); color: var(--c-muted); }
+
+/* ---- slots -------------------------------------------------------------------------- */
+
+.lobby-slots {
+  flex: 1 1 auto;
+  min-height: 0;
+  display: grid;
+  gap: calc(4 * var(--u));
+}
+
+.lobby-slots.size-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); padding: 0 calc(20 * var(--u)); }
+.lobby-slots.size-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+
+.slot-card {
+  --slot-main: var(--c-sky);
+  --slot-dark: var(--c-water-dark);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: calc(2 * var(--u));
+  min-width: 0;
+  padding: 0 calc(3 * var(--u)) calc(4 * var(--u));
+  background: var(--c-panel-hi);
+  border: var(--b) solid var(--c-ink);
+  box-shadow: inset 0 calc(-2 * var(--u)) 0 rgba(0, 0, 0, 0.25);
+}
+
+.slot-card.is-you { box-shadow: 0 0 0 var(--u) var(--c-sand), inset 0 calc(-2 * var(--u)) 0 rgba(0, 0, 0, 0.25); }
+.slot-card.kind-open { background: var(--c-panel); border-style: dashed; border-color: var(--c-panel-hi); }
+.slot-card.kind-closed { background: var(--c-ink); opacity: 0.8; }
+
+.slot-top {
+  align-self: stretch;
+  display: flex;
+  align-items: center;
+  gap: calc(2 * var(--u));
+  margin: 0 calc(-3 * var(--u));
+  padding: var(--u) calc(3 * var(--u));
+  min-height: calc(10 * var(--u));
+  background: var(--slot-main);
+  border-bottom: var(--u) solid var(--slot-dark);
+}
+
+.slot-label { font-size: var(--fs-s); color: var(--c-ink); text-shadow: none; flex: 1 1 auto; }
+.slot-top .chip { min-height: calc(7 * var(--u)); padding: 0 calc(2 * var(--u)); }
+.slot-crown { margin-left: auto; }
+
+.slot-figure {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  width: calc(36 * var(--u));
+  height: calc(42 * var(--u));
+  margin-top: calc(2 * var(--u));
+  background: radial-gradient(ellipse at 50% 92%, rgba(0, 0, 0, 0.35) 0 28%, transparent 30%);
+}
+
+.slot-figure-open,
+.slot-figure-closed { align-items: center; background: none; }
+.slot-q { font-size: var(--fs-xl); color: var(--c-panel-hi); }
+
+.slot-name {
+  max-width: 100%;
+  font-size: var(--fs-s);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-transform: none;
+}
+
+/* 4-player cards are narrow: a long name drops a font step instead of losing its end. */
+.lobby-slots.size-4 .slot-name.is-long { font-size: var(--fs-xs); }
+
+.slot-sub { font-size: var(--fs-xs); color: var(--c-muted); white-space: nowrap; }
+
+.slot-status {
+  display: inline-flex;
+  align-items: center;
+  gap: calc(2 * var(--u));
+  min-height: calc(9 * var(--u));
+  padding: 0 calc(3 * var(--u));
+  font-size: var(--fs-xs);
+  background: var(--c-ink);
+  color: var(--c-muted);
+}
+
+.slot-status.is-ready { background: var(--c-teal-dark); color: var(--c-success); }
+.slot-status.is-host { color: var(--c-focus); }
+.slot-status.is-bot { color: var(--c-sky); }
+.slot-status.is-offline { color: var(--c-warn); }
+.slot-card .btn-sm { margin-top: auto; min-width: calc(28 * var(--u)); }
+
+/* ---- action bar ------------------------------------------------------------------------ */
+
+.lobby-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: calc(6 * var(--u));
+  flex: none;
+}
+
+.lobby-note {
+  flex: 1 1 auto;
+  display: flex;
+  align-items: center;
+  gap: calc(4 * var(--u));
+  font-size: var(--fs-s);
+  color: var(--c-sky);
+}
+
+.lobby-joining {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: calc(6 * var(--u));
+  padding: calc(12 * var(--u));
+  background: var(--c-panel);
+  border: var(--b) solid var(--c-ink);
+  box-shadow: inset 0 0 0 var(--u) var(--c-panel-edge);
+}
+
+.slot-choices { display: flex; flex-direction: column; gap: calc(3 * var(--u)); padding-left: calc(8 * var(--u)); min-width: calc(120 * var(--u)); }
+.slot-choice { width: 100%; }
