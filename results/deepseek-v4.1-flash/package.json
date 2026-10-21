@@ -1,0 +1,33 @@
+{
+  "name": "splash-critters",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "workspaces": [
+    "packages/shared",
+    "packages/server",
+    "packages/client"
+  ],
+  "scripts": {
+    "dev": "concurrently -k -n server,client -c cyan,magenta \"npm:dev:server\" \"npm:dev:client\"",
+    "dev:server": "npm run dev -w @splash/server",
+    "dev:client": "npm run dev -w @splash/client",
+    "typecheck": "tsc -p packages/shared/tsconfig.json && tsc -p packages/server/tsconfig.json && tsc -p packages/client/tsconfig.json",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "soak": "tsx scripts/soak.ts",
+    "build": "npm run typecheck && npm run build -w @splash/client && npm run build -w @splash/server",
+    "start": "node packages/server/dist/index.js"
+  },
+  "devDependencies": {
+    "@types/better-sqlite3": "^7.6.13",
+    "@types/express": "^5.0.1",
+    "@types/node": "^22.15.0",
+    "@types/ws": "^8.18.1",
+    "concurrently": "^9.1.2",
+    "esbuild": "^0.25.0",
+    "tsx": "^4.19.3",
+    "typescript": "^5.8.3",
+    "vitest": "^3.2.4"
+  }
+}

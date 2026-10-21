@@ -1,0 +1,436 @@
+[
+  {
+    "name": "opus-5",
+    "errors": [],
+    "normal": {
+      "counts": {
+        "welcome": 1,
+        "room_created": 1,
+        "lobby_state": 3,
+        "match_start": 1,
+        "round_start": 1,
+        "snapshot": 180,
+        "ping": 6,
+        "event": 32
+      },
+      "trace": [
+        {
+          "event": "wire_match_start",
+          "at": 1116.9000000357628
+        },
+        {
+          "event": "wire_round_start",
+          "at": 1117
+        },
+        {
+          "event": "handlers_get",
+          "size": null,
+          "at": 1117
+        },
+        {
+          "event": "handlers_get",
+          "size": null,
+          "at": 1118.6000000238419
+        },
+        {
+          "event": "handlers_set",
+          "size": 0,
+          "at": 1118.6000000238419
+        }
+      ],
+      "snapshot": {
+        "tick": 360,
+        "phase": "playing"
+      },
+      "text": ""
+    }
+  },
+  {
+    "name": "opus-5.5",
+    "errors": [],
+    "normal": {
+      "counts": {
+        "welcome": 1,
+        "ping": 7,
+        "profile": 1,
+        "room_created": 1,
+        "lobby_state": 1,
+        "match_start": 1,
+        "round_start": 1,
+        "snapshot": 82,
+        "event": 3
+      },
+      "trace": [
+        {
+          "event": "wire_match_start",
+          "at": 959.3000000119209
+        },
+        {
+          "event": "handlers_get",
+          "size": null,
+          "at": 960.5
+        },
+        {
+          "event": "handlers_set",
+          "size": 0,
+          "at": 960.5
+        },
+        {
+          "event": "wire_round_start",
+          "at": 4460.800000011921
+        },
+        {
+          "event": "handlers_get",
+          "size": 1,
+          "at": 4460.900000035763
+        }
+      ],
+      "snapshot": {
+        "tick": 164
+      },
+      "text": ""
+    },
+    "reopenTrials": [
+      {
+        "route": "/",
+        "counts": {
+          "welcome": 1,
+          "lobby_state": 1,
+          "match_start": 1,
+          "round_start": 1,
+          "player_status": 1,
+          "ping": 1,
+          "snapshot": 18
+        },
+        "trace": [
+          {
+            "event": "wire_match_start",
+            "at": 27.19999998807907
+          },
+          {
+            "event": "wire_round_start",
+            "at": 27.30000001192093
+          },
+          {
+            "event": "handlers_get",
+            "size": null,
+            "at": 27.399999976158142
+          },
+          {
+            "event": "handlers_get",
+            "size": null,
+            "at": 27.599999964237213
+          },
+          {
+            "event": "handlers_set",
+            "size": 0,
+            "at": 27.599999964237213
+          }
+        ],
+        "snapshot": {
+          "tick": 202
+        },
+        "text": "",
+        "screen": "game"
+      },
+      {
+        "route": "#/menu",
+        "counts": {
+          "welcome": 1,
+          "lobby_state": 1,
+          "match_start": 1,
+          "round_start": 1,
+          "player_status": 1,
+          "ping": 1,
+          "snapshot": 18,
+          "event": 1
+        },
+        "trace": [
+          {
+            "event": "wire_match_start",
+            "at": 23.600000023841858
+          },
+          {
+            "event": "wire_round_start",
+            "at": 23.69999998807907
+          },
+          {
+            "event": "handlers_get",
+            "size": null,
+            "at": 23.80000001192093
+          },
+          {
+            "event": "handlers_get",
+            "size": null,
+            "at": 24.30000001192093
+          },
+          {
+            "event": "handlers_set",
+            "size": 0,
+            "at": 24.30000001192093
+          }
+        ],
+        "snapshot": {
+          "tick": 238
+        },
+        "text": "",
+        "screen": "game"
+      },
+      {
+        "route": "/",
+        "counts": {
+          "welcome": 1,
+          "lobby_state": 1,
+          "match_start": 1,
+          "round_start": 1,
+          "player_status": 1,
+          "snapshot": 18,
+          "ping": 1,
+          "event": 2
+        },
+        "trace": [
+          {
+            "event": "wire_match_start",
+            "at": 20.899999976158142
+          },
+          {
+            "event": "handlers_get",
+            "size": null,
+            "at": 21.399999976158142
+          },
+          {
+            "event": "handlers_set",
+            "size": 0,
+            "at": 21.399999976158142
+          },
+          {
+            "event": "wire_round_start",
+            "at": 21.5
+          },
+          {
+            "event": "handlers_get",
+            "size": 1,
+            "at": 21.5
+          }
+        ],
+        "snapshot": {
+          "tick": 274
+        },
+        "text": "",
+        "screen": "game"
+      },
+      {
+        "route": "#/menu",
+        "counts": {
+          "welcome": 1,
+          "lobby_state": 1,
+          "match_start": 1,
+          "round_start": 1,
+          "player_status": 1,
+          "ping": 1,
+          "snapshot": 18
+        },
+        "trace": [
+          {
+            "event": "wire_match_start",
+            "at": 14.600000023841858
+          },
+          {
+            "event": "wire_round_start",
+            "at": 14.800000011920929
+          },
+          {
+            "event": "handlers_get",
+            "size": null,
+            "at": 14.800000011920929
+          },
+          {
+            "event": "handlers_get",
+            "size": null,
+            "at": 15.5
+          },
+          {
+            "event": "handlers_set",
+            "size": 0,
+            "at": 15.5
+          }
+        ],
+        "snapshot": {
+          "tick": 312
+        },
+        "text": "",
+        "screen": "game"
+      },
+      {
+        "route": "/",
+        "counts": {
+          "welcome": 1,
+          "lobby_state": 1,
+          "match_start": 1,
+          "round_start": 1,
+          "player_status": 1,
+          "ping": 1,
+          "snapshot": 18
+        },
+        "trace": [
+          {
+            "event": "wire_match_start",
+            "at": 19.600000023841858
+          },
+          {
+            "event": "wire_round_start",
+            "at": 19.899999976158142
+          },
+          {
+            "event": "handlers_get",
+            "size": null,
+            "at": 19.899999976158142
+          },
+          {
+            "event": "handlers_get",
+            "size": null,
+            "at": 20.100000023841858
+          },
+          {
+            "event": "handlers_set",
+            "size": 0,
+            "at": 20.100000023841858
+          }
+        ],
+        "snapshot": {
+          "tick": 348
+        },
+        "text": "",
+        "screen": "game"
+      },
+      {
+        "route": "#/menu",
+        "counts": {
+          "welcome": 1,
+          "lobby_state": 1,
+          "match_start": 1,
+          "round_start": 1,
+          "player_status": 1,
+          "event": 2,
+          "snapshot": 18,
+          "ping": 1
+        },
+        "trace": [
+          {
+            "event": "wire_match_start",
+            "at": 16.80000001192093
+          },
+          {
+            "event": "wire_round_start",
+            "at": 17
+          },
+          {
+            "event": "handlers_get",
+            "size": null,
+            "at": 17
+          },
+          {
+            "event": "handlers_get",
+            "size": null,
+            "at": 17.5
+          },
+          {
+            "event": "handlers_set",
+            "size": 0,
+            "at": 17.599999964237213
+          }
+        ],
+        "snapshot": {
+          "tick": 384
+        },
+        "text": "",
+        "screen": "game"
+      },
+      {
+        "route": "/",
+        "counts": {
+          "welcome": 1,
+          "lobby_state": 1,
+          "match_start": 1,
+          "round_start": 1,
+          "player_status": 1,
+          "snapshot": 18,
+          "ping": 1
+        },
+        "trace": [
+          {
+            "event": "wire_match_start",
+            "at": 19.30000001192093
+          },
+          {
+            "event": "handlers_get",
+            "size": null,
+            "at": 19.600000023841858
+          },
+          {
+            "event": "handlers_set",
+            "size": 0,
+            "at": 19.600000023841858
+          },
+          {
+            "event": "wire_round_start",
+            "at": 19.80000001192093
+          },
+          {
+            "event": "handlers_get",
+            "size": 1,
+            "at": 19.80000001192093
+          }
+        ],
+        "snapshot": {
+          "tick": 420
+        },
+        "text": "",
+        "screen": "game"
+      },
+      {
+        "route": "#/menu",
+        "counts": {
+          "welcome": 1,
+          "lobby_state": 1,
+          "match_start": 1,
+          "round_start": 1,
+          "player_status": 1,
+          "ping": 1,
+          "snapshot": 18,
+          "event": 2
+        },
+        "trace": [
+          {
+            "event": "wire_match_start",
+            "at": 17.299999952316284
+          },
+          {
+            "event": "wire_round_start",
+            "at": 17.599999964237213
+          },
+          {
+            "event": "handlers_get",
+            "size": null,
+            "at": 17.599999964237213
+          },
+          {
+            "event": "handlers_get",
+            "size": null,
+            "at": 18.19999998807907
+          },
+          {
+            "event": "handlers_set",
+            "size": 0,
+            "at": 18.19999998807907
+          }
+        ],
+        "snapshot": {
+          "tick": 458
+        },
+        "text": "",
+        "screen": "game"
+      }
+    ]
+  }
+]

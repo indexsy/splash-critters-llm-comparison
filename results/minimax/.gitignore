@@ -1,0 +1,14 @@
+node_modules/
+dist/
+*.log
+.DS_Store
+data/
+*.db
+*.db-wal
+*.db-shm
+.env
+.vite/
+coverage/
+
+# foreign workspace that is not part of this project
+deepseekv4.1flash/

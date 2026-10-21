@@ -1,0 +1,5 @@
+
+> splash-critters@0.1.0 start
+> node packages/server/dist/server/src/index.js
+
+[splash-critters] listening on :4410 (ws path /ws)

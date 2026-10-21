@@ -1,0 +1,231 @@
+[
+  {
+    "name": "minimax",
+    "elapsedSeconds": 156.066,
+    "timedOut": false,
+    "counts": {
+      "welcome": 1,
+      "ping": 79,
+      "room_created": 1,
+      "lobby_state": 1,
+      "match_start": 1,
+      "round_start": 3,
+      "snapshot": 2186,
+      "round_end": 3,
+      "match_end": 1
+    },
+    "end": {
+      "t": "match_end",
+      "mode": "duel",
+      "ranked": false,
+      "placements": [
+        {
+          "slot": 0,
+          "playerId": "c3973d04-edbb-4b3c-9e08-00b13b223d93",
+          "nickname": "SplashyPup",
+          "tag": "4239",
+          "placement": 2,
+          "roundWins": 1,
+          "soaks": 0,
+          "castlesWashed": 0,
+          "biggestChain": 0,
+          "survivedTicks": 4107
+        },
+        {
+          "slot": 1,
+          "playerId": null,
+          "nickname": "medium bot",
+          "tag": "",
+          "placement": 1,
+          "roundWins": 3,
+          "soaks": 3,
+          "castlesWashed": 14,
+          "biggestChain": 1,
+          "survivedTicks": 4107
+        }
+      ],
+      "ratingDeltas": [
+        {
+          "playerId": "c3973d04-edbb-4b3c-9e08-00b13b223d93",
+          "ratingBefore": 1000,
+          "ratingAfter": 1000,
+          "delta": 0,
+          "tier": "Pond",
+          "tierBefore": "Pond"
+        }
+      ],
+      "xp": [
+        {
+          "playerId": "c3973d04-edbb-4b3c-9e08-00b13b223d93",
+          "xp": 35,
+          "totalXp": 35,
+          "level": 1,
+          "levelUp": false
+        }
+      ],
+      "stats": {
+        "mostSoaks": "",
+        "castleCrusher": "",
+        "longestSurvivor": "SplashyPup",
+        "biggestChain": ""
+      }
+    },
+    "rounds": [
+      {
+        "t": "round_end",
+        "roundNo": 1,
+        "winners": [
+          1
+        ],
+        "draw": false,
+        "scores": [
+          {
+            "id": 0,
+            "nickname": "SplashyPup",
+            "tag": "4239",
+            "roundWins": 0
+          },
+          {
+            "id": 1,
+            "nickname": "medium bot",
+            "tag": "",
+            "roundWins": 1
+          }
+        ],
+        "nextInMs": 3600
+      },
+      {
+        "t": "round_end",
+        "roundNo": 2,
+        "winners": [],
+        "draw": true,
+        "scores": [
+          {
+            "id": 0,
+            "nickname": "SplashyPup",
+            "tag": "4239",
+            "roundWins": 1
+          },
+          {
+            "id": 1,
+            "nickname": "medium bot",
+            "tag": "",
+            "roundWins": 2
+          }
+        ],
+        "nextInMs": 3600
+      },
+      {
+        "t": "round_end",
+        "roundNo": 3,
+        "winners": [
+          1
+        ],
+        "draw": false,
+        "scores": [
+          {
+            "id": 0,
+            "nickname": "SplashyPup",
+            "tag": "4239",
+            "roundWins": 1
+          },
+          {
+            "id": 1,
+            "nickname": "medium bot",
+            "tag": "",
+            "roundWins": 3
+          }
+        ],
+        "nextInMs": 3600
+      }
+    ],
+    "text": "MATCH RESULTS\n#\tPLAYER\tROUNDS\tSOAKS\tCASTLES\tCHAIN\n1\tmedium bot\t3\t3\t14\t1\n2\tSplashyPup#4239\t1\t0\t0\t0\nEXPERIENCE\n+35 XP\nLEVEL 1 - 35/125\nAWARDS\nMOST SOAKS\n-\nCASTLE CRUSHER\n-\nLONGEST SURVIVOR\nSplashyPup\nBIGGEST CHAIN\n-\nVOTE FOR A REMATCH\nCONTINUE\n\nLEVEL 1 - 0 XP TOTAL"
+  },
+  {
+    "name": "deepseek-v4.1-flash",
+    "elapsedSeconds": 181.044,
+    "timedOut": true,
+    "counts": {
+      "welcome": 1,
+      "room_list": 5,
+      "ping": 91,
+      "profile_update": 1,
+      "notice": 1,
+      "lobby_state": 3,
+      "room_created": 1,
+      "match_start": 1,
+      "round_start": 5,
+      "snapshot": 2296,
+      "event": 86,
+      "round_end": 4
+    },
+    "end": null,
+    "rounds": [
+      {
+        "t": "round_end",
+        "data": {
+          "roundNo": 1,
+          "draw": false,
+          "winnerId": "bot:64VF9L:2:2",
+          "winnerName": "MochiBot#7954",
+          "scores": {
+            "161a1508-e800-4df9-9024-9703a72e54f4": 0,
+            "bot:64VF9L:1:1": 0,
+            "bot:64VF9L:2:2": 1,
+            "bot:64VF9L:3:3": 0
+          },
+          "nextRoundInMs": 2800
+        }
+      },
+      {
+        "t": "round_end",
+        "data": {
+          "roundNo": 2,
+          "draw": true,
+          "winnerId": null,
+          "winnerName": null,
+          "scores": {
+            "161a1508-e800-4df9-9024-9703a72e54f4": 0,
+            "bot:64VF9L:1:1": 0,
+            "bot:64VF9L:2:2": 1,
+            "bot:64VF9L:3:3": 0
+          },
+          "nextRoundInMs": 2800
+        }
+      },
+      {
+        "t": "round_end",
+        "data": {
+          "roundNo": 3,
+          "draw": true,
+          "winnerId": null,
+          "winnerName": null,
+          "scores": {
+            "161a1508-e800-4df9-9024-9703a72e54f4": 0,
+            "bot:64VF9L:1:1": 0,
+            "bot:64VF9L:2:2": 1,
+            "bot:64VF9L:3:3": 0
+          },
+          "nextRoundInMs": 2800
+        }
+      },
+      {
+        "t": "round_end",
+        "data": {
+          "roundNo": 4,
+          "draw": false,
+          "winnerId": "bot:64VF9L:2:2",
+          "winnerName": "MochiBot#7954",
+          "scores": {
+            "161a1508-e800-4df9-9024-9703a72e54f4": 0,
+            "bot:64VF9L:1:1": 0,
+            "bot:64VF9L:2:2": 2,
+            "bot:64VF9L:3:3": 0
+          },
+          "nextRoundInMs": 2800
+        }
+      }
+    ],
+    "text": ""
+  }
+]

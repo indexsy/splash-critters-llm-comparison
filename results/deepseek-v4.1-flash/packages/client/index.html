@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+    <meta name="theme-color" content="#061726" />
+    <title>Splash Critters</title>
+    <style>
+      :root {
+        color-scheme: dark;
+        background: #020b11;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html,
+      body {
+        width: 100%;
+        min-height: 100%;
+        margin: 0;
+        overflow: hidden;
+        background:
+          radial-gradient(circle at 50% 38%, rgba(19, 73, 93, 0.38), transparent 62%),
+          #020b11;
+      }
+
+      body {
+        display: grid;
+        place-items: center;
+        min-height: 100dvh;
+        padding: 12px;
+      }
+
+      canvas {
+        display: block;
+        image-rendering: pixelated;
+        image-rendering: crisp-edges;
+        border: 1px solid #1d5364;
+        box-shadow:
+          0 0 0 4px #04141d,
+          0 0 0 5px #0e3a4a,
+          0 22px 80px rgba(0, 0, 0, 0.65);
+        background: #061726;
+        outline: none;
+        touch-action: none;
+      }
+
+      noscript {
+        color: #d9fff8;
+        font: 16px monospace;
+      }
+    </style>
+  </head>
+  <body>
+    <canvas id="game" width="256" height="224" aria-label="Splash Critters game screen"></canvas>
+    <noscript>Splash Critters needs JavaScript enabled.</noscript>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>

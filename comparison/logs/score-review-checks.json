@@ -1,0 +1,27 @@
+[
+  {
+    "name": "fable-5",
+    "build": 0,
+    "test": 0
+  },
+  {
+    "name": "gpt-6-astra",
+    "build": 0,
+    "test": 0
+  },
+  {
+    "name": "opus-5.5",
+    "build": 0,
+    "test": 0
+  },
+  {
+    "name": "opus-5",
+    "build": 0,
+    "test": 0
+  },
+  {
+    "name": "grok-4.7",
+    "build": 0,
+    "test": 0
+  }
+]

@@ -1,0 +1,7 @@
+
+> splash-critters@1.0.0 start
+> node packages/server/dist/index.js
+
+[splash] listening on http://localhost:4413 (development)
+[splash] data /var/folders/7v/dtpvhs8x0n1d3_7vfccbrbvw0000gn/T/opencode/splash-score-review/opus-5
+[splash] SIGTERM received, shutting down

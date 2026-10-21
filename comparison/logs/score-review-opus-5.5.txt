@@ -1,0 +1,142 @@
+2026-10-21 score review. Existing installed dependencies; build then test.
+
+--- ['npm', 'run', 'build']
+
+> splash-critters@1.0.0 build
+> npm run build -w @splash/client && npm run build -w @splash/server
+
+
+> @splash/client@1.0.0 build
+> vite build
+
+vite v5.4.21 building for production...
+transforming...
+✓ 183 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                   1.43 kB │ gzip:  0.73 kB
+dist/assets/index-CpcFlMkj.css   44.24 kB │ gzip:  7.62 kB
+dist/assets/index-DQsv78nf.js   254.70 kB │ gzip: 88.72 kB
+✓ built in 1.58s
+
+> @splash/server@1.0.0 build
+> node build.mjs
+
+
+  dist/index.js      265.2kb
+  dist/index.js.map  666.7kb
+
+⚡ Done in 36ms
+RESULT build=0
+
+--- ['npm', 'run', 'test']
+
+> splash-critters@1.0.0 test
+> vitest run
+
+
+ RUN  v2.1.9 /Users/jackychou/splash-critters-llm-comparison/results/opus-5.5
+
+ ✓ packages/server/test/results.test.ts (11 tests) 43ms
+ ✓ packages/server/test/accounts.test.ts (117 tests) 146ms
+ ✓ packages/server/test/net.test.ts (45 tests) 289ms
+ ✓ packages/server/test/rooms-settled.test.ts (10 tests) 62ms
+ ✓ packages/server/test/bots-soak.test.ts (11 tests) 85ms
+ ✓ packages/server/test/rooms.test.ts (19 tests) 97ms
+ ✓ packages/client/test/game.test.ts (35 tests) 20ms
+ ✓ packages/shared/test/sim.test.ts (17 tests) 38ms
+ ✓ packages/server/test/db.test.ts (14 tests) 40ms
+ ✓ packages/client/test/audio-notes.test.ts (21 tests) 255ms
+ ✓ packages/shared/test/ducks.test.ts (16 tests) 11ms
+ ✓ packages/shared/test/burst.test.ts (15 tests) 21ms
+ ✓ packages/server/test/tutorial.test.ts (6 tests) 41ms
+ ✓ packages/server/test/matchmaker.test.ts (15 tests) 25ms
+ ✓ packages/client/test/remoteRender.test.ts (5 tests) 74ms
+stderr | packages/server/test/net-limits.test.ts > outbound backpressure > drops a peer that stopped reading instead of buffering forever
+[ws] dropping a peer that stopped reading (1048577 bytes unsent)
+
+ ✓ packages/shared/test/map.test.ts (16 tests) 238ms
+ ✓ packages/server/test/net-limits.test.ts (13 tests) 25ms
+ ✓ packages/client/test/prediction-kick.test.ts (6 tests) 121ms
+ ✓ packages/server/test/bots-escape.test.ts (8 tests) 110ms
+ ✓ packages/client/test/prediction.test.ts (11 tests) 113ms
+ ✓ packages/client/test/menus-replies.test.ts (12 tests) 7ms
+ ✓ packages/shared/test/movement.test.ts (11 tests) 88ms
+ ✓ packages/shared/test/elo.test.ts (29 tests) 6ms
+ ✓ packages/client/test/audio-graph.test.ts (8 tests) 544ms
+ ✓ packages/client/test/audio-lifecycle.test.ts (8 tests) 427ms
+ ✓ packages/shared/test/snapshot.test.ts (7 tests) 25ms
+ ✓ packages/client/test/menus-live.test.ts (14 tests) 5ms
+ ✓ packages/client/test/menus-queue.test.ts (13 tests) 9ms
+ ✓ packages/server/test/bots-endgame.test.ts (5 tests) 221ms
+ ✓ packages/shared/test/kick.test.ts (7 tests) 78ms
+ ✓ packages/server/test/bots-danger.test.ts (9 tests) 916ms
+   ✓ DangerMap predictions match the simulation > predicts exactly when every tile is wet (chains, castle washing, fizzles, tide) 479ms
+   ✓ DangerMap predictions match the simulation > never misses a wet tick when balloons are sliding after kicks 432ms
+ ✓ packages/client/test/goLive.test.ts (5 tests) 402ms
+   ✓ round go-live > a balloon pressed at SPLASH! rides the first input and is accepted (no vanishing ghost) 312ms
+ ✓ packages/server/test/bots.test.ts (14 tests) 1366ms
+   ✓ bots > is deterministic: same seed and state give the same inputs, with increasing seq numbers 653ms
+ ✓ packages/client/test/interp.test.ts (13 tests) 4ms
+ ✓ packages/client/test/menus-progress.test.ts (14 tests) 5ms
+ ✓ packages/server/test/bots-tutorial.test.ts (3 tests) 491ms
+ ✓ packages/client/test/menus-rules.test.ts (10 tests) 4ms
+ ✓ packages/client/test/game-results.test.ts (7 tests) 10ms
+ ✓ packages/client/test/input.test.ts (8 tests) 460ms
+ ✓ packages/shared/test/progression.test.ts (14 tests) 8ms
+ ✓ packages/client/test/menus-forfeit.test.ts (5 tests) 16ms
+ ✓ packages/shared/test/tide.test.ts (8 tests) 91ms
+ ✓ packages/client/test/menus-format.test.ts (13 tests) 5ms
+ ✓ packages/client/test/inputClock.test.ts (5 tests) 4ms
+ ✓ packages/client/test/settings.test.ts (5 tests) 276ms
+ ✓ packages/client/test/render-splash.test.ts (3 tests) 16ms
+ ✓ packages/client/test/netStats.test.ts (3 tests) 156ms
+ ✓ packages/client/test/matchResync.test.ts (4 tests) 9ms
+ ✓ packages/client/test/render-hats.test.ts (3 tests) 117ms
+ ✓ packages/shared/test/determinism.test.ts (5 tests) 641ms
+   ✓ determinism > two runs with identical inputs produce identical hashes and events every tick 373ms
+ ✓ packages/server/test/inputs.test.ts (4 tests) 3ms
+ ✓ packages/server/test/bots-steer.test.ts (3 tests) 4ms
+ ✓ packages/client/test/keyFallback.test.ts (4 tests) 2ms
+ ✓ packages/server/test/server-ticker.test.ts (4 tests) 8ms
+ ✓ packages/server/test/bots-kick.test.ts (3 tests) 76ms
+ ✓ packages/server/test/moderation.test.ts (44 tests) 14ms
+ ✓ packages/shared/test/rng.test.ts (9 tests) 887ms
+   ✓ sfc32 (128-bit content stream) > returns floats in [0, 1) with a sane mean 756ms
+stderr | packages/server/test/gameLoop.test.ts > MatchRunner > keeps running when a bot throws (the slot idles) instead of taking the match down
+[match m-dgezwqf4tgv] bot in slot 0 failed Error: bot bug
+    at Object.nextInput (/Users/jackychou/splash-critters-llm-comparison/results/opus-5.5/packages/server/test/gameLoop.test.ts:412:15)
+    at /Users/jackychou/splash-critters-llm-comparison/results/opus-5.5/packages/server/src/gameLoop.ts:295:59
+    at MatchRunner.guardBot (/Users/jackychou/splash-critters-llm-comparison/results/opus-5.5/packages/server/src/gameLoop.ts:303:14)
+    at /Users/jackychou/splash-critters-llm-comparison/results/opus-5.5/packages/server/src/gameLoop.ts:295:30
+    at Array.map (<anonymous>)
+    at MatchRunner.collectInputs (/Users/jackychou/splash-critters-llm-comparison/results/opus-5.5/packages/server/src/gameLoop.ts:292:26)
+    at MatchRunner.step (/Users/jackychou/splash-critters-llm-comparison/results/opus-5.5/packages/server/src/gameLoop.ts:281:45)
+    at MatchRunner.tick (/Users/jackychou/splash-critters-llm-comparison/results/opus-5.5/packages/server/src/gameLoop.ts:129:16)
+    at Clock.step (/Users/jackychou/splash-critters-llm-comparison/results/opus-5.5/packages/server/test/gameLoop.test.ts:93:17)
+    at Clock.until (/Users/jackychou/splash-critters-llm-comparison/results/opus-5.5/packages/server/test/gameLoop.test.ts:99:12)
+[match m-dgezwqf4tgv] bot in slot 1 failed Error: bot bug
+    at Object.nextInput (/Users/jackychou/splash-critters-llm-comparison/results/opus-5.5/packages/server/test/gameLoop.test.ts:412:15)
+    at /Users/jackychou/splash-critters-llm-comparison/results/opus-5.5/packages/server/src/gameLoop.ts:295:59
+    at MatchRunner.guardBot (/Users/jackychou/splash-critters-llm-comparison/results/opus-5.5/packages/server/src/gameLoop.ts:303:14)
+    at /Users/jackychou/splash-critters-llm-comparison/results/opus-5.5/packages/server/src/gameLoop.ts:295:30
+    at Array.map (<anonymous>)
+    at MatchRunner.collectInputs (/Users/jackychou/splash-critters-llm-comparison/results/opus-5.5/packages/server/src/gameLoop.ts:292:26)
+    at MatchRunner.step (/Users/jackychou/splash-critters-llm-comparison/results/opus-5.5/packages/server/src/gameLoop.ts:281:45)
+    at MatchRunner.tick (/Users/jackychou/splash-critters-llm-comparison/results/opus-5.5/packages/server/src/gameLoop.ts:129:16)
+    at Clock.step (/Users/jackychou/splash-critters-llm-comparison/results/opus-5.5/packages/server/test/gameLoop.test.ts:93:17)
+    at Clock.until (/Users/jackychou/splash-critters-llm-comparison/results/opus-5.5/packages/server/test/gameLoop.test.ts:99:12)
+
+ ✓ packages/server/test/gameLoop.test.ts (16 tests) 5345ms
+   ✓ MatchRunner > plays a full practice match with the real bots (Hard vs Easy) to match_end 5281ms
+ ✓ packages/server/test/server.test.ts (11 tests) 10928ms
+   ✓ game server over real sockets > requires a nickname for ranked, then matches two queued players into a ranked duel 1961ms
+   ✓ game server over real sockets > re-attaches a reconnecting player mid-match with lobby_state, match_start and the live round 6593ms
+   ✓ ranked matchmaking with RANKED_SEPARATE_ADDRESSES on (behind a proxy on loopback) > never matches two accounts queued from one address, but matches each with someone else 2069ms
+
+ Test Files  59 passed (59)
+      Tests  774 passed (774)
+   Start at  17:53:05
+   Duration  12.44s (transform 3.62s, setup 0ms, collect 11.89s, tests 25.52s, environment 11ms, prepare 6.91s)
+
+RESULT test=0

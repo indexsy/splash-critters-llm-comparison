@@ -7,3 +7,6 @@ data/
 *.db-shm
 .DS_Store
 *.log
+!comparison/logs/minimax*.log
+!comparison/logs/deepseek-v4.1-flash*.log
+!comparison/logs/glm-oct21*.log

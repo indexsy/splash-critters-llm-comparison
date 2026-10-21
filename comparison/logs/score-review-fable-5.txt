@@ -1,0 +1,50 @@
+2026-10-21 score review. Existing installed dependencies; build then test.
+
+--- ['npm', 'run', 'build']
+
+> splash-critters@0.1.0 build
+> npm run build -w @splash/shared && npm run build -w @splash/server && npm run build -w @splash/client
+
+
+> @splash/shared@0.1.0 build
+> tsc -p tsconfig.json
+
+
+> @splash/server@0.1.0 build
+> tsc -p tsconfig.json
+
+
+> @splash/client@0.1.0 build
+> vite build
+
+vite v5.4.21 building for production...
+transforming...
+✓ 38 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                 0.70 kB │ gzip:  0.40 kB
+dist/assets/index-C_JgEcnq.js  71.18 kB │ gzip: 24.99 kB
+✓ built in 453ms
+RESULT build=0
+
+--- ['npm', 'run', 'test']
+
+> splash-critters@0.1.0 test
+> npm run test -w @splash/shared
+
+
+> @splash/shared@0.1.0 test
+> vitest run
+
+
+ RUN  v2.1.9 /Users/jackychou/splash-critters-llm-comparison/results/fable-5/packages/shared
+
+ ✓ test/elo.test.ts (11 tests) 5ms
+ ✓ test/sim.test.ts (17 tests) 28ms
+
+ Test Files  2 passed (2)
+      Tests  28 passed (28)
+   Start at  17:53:01
+   Duration  488ms (transform 154ms, setup 0ms, collect 208ms, tests 33ms, environment 0ms, prepare 174ms)
+
+RESULT test=0

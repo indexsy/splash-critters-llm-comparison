@@ -1,0 +1,15 @@
+
+> splash-critters@0.1.0 dev:client
+> npm run dev -w packages/client --host 127.0.0.1 --port 4320
+
+
+> @splash/client@0.1.0 dev
+> vite 127.0.0.1 4320
+
+(!) Could not auto-determine entry point from rollupOptions or html files and there are no explicit optimizeDeps.include patterns. Skipping dependency pre-bundling.
+Port 5173 is in use, trying another one...
+
+  VITE v5.4.21  ready in 156 ms
+
+  ➜  Local:   http://localhost:5174/
+  ➜  Network: use --host to expose

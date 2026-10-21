@@ -1,5 +1,15 @@
 # Code Audit & Rankings
 
+> **October 21 supplement:** [DeepSeek v4.1 Flash, MiniMax, and the new GLM
+> submission](OCT21-EVALUATION.md), scored **5.65 / 5.00 / 3.00** using this rubric
+> by GPT-6.1 SOL through OpenCode. The historical sixteen-entry audit below was
+> not re-run. The new GLM archive's exact model version was unspecified.
+>
+> **Independent score review:** [SCORE-REVIEW.md](SCORE-REVIEW.md) assesses all
+> sixteen published scores and independently reproduces selected critical findings.
+> It challenges the calibration and notes that the Grok 4.7 concurrent-hello
+> crash claimed below was refuted by the original fact-check and the new review.
+
 Sixteen codebases audited by independent Claude subagents, all against the
 **same six-dimension rubric**, every claim citing `file:line`. (Opus 5 got *three* passes — neutral, adversarial, steelman; Opus 4.8, SOL, Grok 4.6, 0x alpha, Muse Spark 1.3, GPT-6 Astra, Grok 4.7 default and Grok 4.7 xhigh each got a neutral pass plus an independent fact-checker; Opus 5.5, self-authored like Fable 5, got the adversarial framing plus an adversarial fact-checker with a generosity check.) Full per-model reports are in [`audits/`](audits/); this
 file synthesizes and ranks them. Every headline finding was independently

@@ -1,0 +1,23 @@
+[
+  {
+    "name": "grok-4.7-same-token",
+    "trials": 10,
+    "welcomes": 60,
+    "sameAccountGroups": 10,
+    "health": {
+      "ok": true,
+      "service": "splash-critters"
+    }
+  },
+  {
+    "name": "astra-room-limit",
+    "created": 200,
+    "before": {
+      "ok": true,
+      "rooms": 200,
+      "players": 1,
+      "version": "1.0.0"
+    },
+    "after": "TypeError: fetch failed"
+  }
+]

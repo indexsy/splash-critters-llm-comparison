@@ -1,0 +1,949 @@
+{
+  "miniReconcile": {
+    "authoritativeX": 9,
+    "actualPredictedX": 1,
+    "authoritativeY": 7,
+    "actualPredictedY": 1
+  },
+  "miniRoundSequence": {
+    "newRound": 2,
+    "serverSlotLastSeq": 600,
+    "freshSeqOneAccepted": false
+  },
+  "miniStatsAcrossRounds": {
+    "speed": 7,
+    "range": 10,
+    "count": 8
+  },
+  "miniLingeringSplash": {
+    "alive": true,
+    "splashTicksRemaining": 9
+  },
+  "loot": {
+    "miniNonempty": 20,
+    "miniCastles": 29,
+    "deepNonempty": 12,
+    "deepCastles": 36
+  },
+  "miniBotRooms": {
+    "matches": 12,
+    "completed": 12,
+    "hardWins": 12,
+    "easyWins": 0,
+    "ties": 0,
+    "placed": 422,
+    "selfSoaks": 11,
+    "rounds": 41,
+    "runs": [
+      {
+        "wins": [
+          3,
+          0
+        ],
+        "round": 3,
+        "phase": "matchEnd",
+        "firstDecisionAtRound2": 601
+      },
+      {
+        "wins": [
+          3,
+          0
+        ],
+        "round": 3,
+        "phase": "matchEnd",
+        "firstDecisionAtRound2": 433
+      },
+      {
+        "wins": [
+          3,
+          0
+        ],
+        "round": 3,
+        "phase": "matchEnd",
+        "firstDecisionAtRound2": 221
+      },
+      {
+        "wins": [
+          3,
+          0
+        ],
+        "round": 3,
+        "phase": "matchEnd",
+        "firstDecisionAtRound2": 573
+      },
+      {
+        "wins": [
+          3,
+          2
+        ],
+        "round": 5,
+        "phase": "matchEnd",
+        "firstDecisionAtRound2": 989
+      },
+      {
+        "wins": [
+          3,
+          0
+        ],
+        "round": 3,
+        "phase": "matchEnd",
+        "firstDecisionAtRound2": 609
+      },
+      {
+        "wins": [
+          3,
+          0
+        ],
+        "round": 3,
+        "phase": "matchEnd",
+        "firstDecisionAtRound2": 845
+      },
+      {
+        "wins": [
+          3,
+          1
+        ],
+        "round": 4,
+        "phase": "matchEnd",
+        "firstDecisionAtRound2": 1237
+      },
+      {
+        "wins": [
+          3,
+          1
+        ],
+        "round": 4,
+        "phase": "matchEnd",
+        "firstDecisionAtRound2": 1135
+      },
+      {
+        "wins": [
+          3,
+          1
+        ],
+        "round": 4,
+        "phase": "matchEnd",
+        "firstDecisionAtRound2": 301
+      },
+      {
+        "wins": [
+          3,
+          0
+        ],
+        "round": 3,
+        "phase": "matchEnd",
+        "firstDecisionAtRound2": 1881
+      },
+      {
+        "wins": [
+          3,
+          0
+        ],
+        "round": 3,
+        "phase": "matchEnd",
+        "firstDecisionAtRound2": 209
+      }
+    ]
+  },
+  "deepBotRounds": {
+    "rounds": 24,
+    "hardWins": 1,
+    "easyWins": 23,
+    "draws": 0,
+    "placed": 48,
+    "selfSoaks": 24,
+    "runs": [
+      {
+        "seed": 1,
+        "winner": "easy",
+        "tick": 103,
+        "ended": true
+      },
+      {
+        "seed": 2,
+        "winner": "easy",
+        "tick": 103,
+        "ended": true
+      },
+      {
+        "seed": 3,
+        "winner": "easy",
+        "tick": 103,
+        "ended": true
+      },
+      {
+        "seed": 4,
+        "winner": "easy",
+        "tick": 103,
+        "ended": true
+      },
+      {
+        "seed": 5,
+        "winner": "easy",
+        "tick": 103,
+        "ended": true
+      },
+      {
+        "seed": 6,
+        "winner": "easy",
+        "tick": 103,
+        "ended": true
+      },
+      {
+        "seed": 7,
+        "winner": "easy",
+        "tick": 103,
+        "ended": true
+      },
+      {
+        "seed": 8,
+        "winner": "easy",
+        "tick": 103,
+        "ended": true
+      },
+      {
+        "seed": 9,
+        "winner": "easy",
+        "tick": 103,
+        "ended": true
+      },
+      {
+        "seed": 10,
+        "winner": "easy",
+        "tick": 103,
+        "ended": true
+      },
+      {
+        "seed": 11,
+        "winner": "easy",
+        "tick": 103,
+        "ended": true
+      },
+      {
+        "seed": 12,
+        "winner": "easy",
+        "tick": 103,
+        "ended": true
+      },
+      {
+        "seed": 13,
+        "winner": "easy",
+        "tick": 103,
+        "ended": true
+      },
+      {
+        "seed": 14,
+        "winner": "easy",
+        "tick": 103,
+        "ended": true
+      },
+      {
+        "seed": 15,
+        "winner": "easy",
+        "tick": 103,
+        "ended": true
+      },
+      {
+        "seed": 16,
+        "winner": "easy",
+        "tick": 103,
+        "ended": true
+      },
+      {
+        "seed": 17,
+        "winner": "easy",
+        "tick": 103,
+        "ended": true
+      },
+      {
+        "seed": 18,
+        "winner": "easy",
+        "tick": 103,
+        "ended": true
+      },
+      {
+        "seed": 19,
+        "winner": "easy",
+        "tick": 103,
+        "ended": true
+      },
+      {
+        "seed": 20,
+        "winner": "easy",
+        "tick": 103,
+        "ended": true
+      },
+      {
+        "seed": 21,
+        "winner": "easy",
+        "tick": 103,
+        "ended": true
+      },
+      {
+        "seed": 22,
+        "winner": "easy",
+        "tick": 103,
+        "ended": true
+      },
+      {
+        "seed": 23,
+        "winner": "hard",
+        "tick": 161,
+        "ended": true
+      },
+      {
+        "seed": 24,
+        "winner": "easy",
+        "tick": 103,
+        "ended": true
+      }
+    ]
+  },
+  "deepEscapeTrace": [
+    {
+      "tick": 10,
+      "hard": {
+        "x": 1.5,
+        "y": 2.833333333333333,
+        "input": {
+          "seq": 10,
+          "tick": 10,
+          "dir": "down",
+          "balloonPressed": false
+        }
+      },
+      "balloons": [],
+      "events": []
+    },
+    {
+      "tick": 20,
+      "hard": {
+        "x": 1.5,
+        "y": 2.1666666666666665,
+        "input": {
+          "seq": 20,
+          "tick": 20,
+          "dir": "up",
+          "balloonPressed": false
+        }
+      },
+      "balloons": [
+        {
+          "id": 1,
+          "ownerId": "hard",
+          "x": 1,
+          "y": 3,
+          "range": 2,
+          "placedTick": 13,
+          "burstTick": 103,
+          "kickedDir": "none",
+          "slideCooldown": 0,
+          "source": "balloon"
+        }
+      ],
+      "events": []
+    },
+    {
+      "tick": 30,
+      "hard": {
+        "x": 1.6333333333333333,
+        "y": 1.9,
+        "input": {
+          "seq": 30,
+          "tick": 30,
+          "dir": "right",
+          "balloonPressed": false
+        }
+      },
+      "balloons": [
+        {
+          "id": 1,
+          "ownerId": "hard",
+          "x": 1,
+          "y": 3,
+          "range": 2,
+          "placedTick": 13,
+          "burstTick": 103,
+          "kickedDir": "none",
+          "slideCooldown": 0,
+          "source": "balloon"
+        }
+      ],
+      "events": []
+    },
+    {
+      "tick": 40,
+      "hard": {
+        "x": 1.6333333333333333,
+        "y": 1.9,
+        "input": {
+          "seq": 40,
+          "tick": 40,
+          "dir": "right",
+          "balloonPressed": false
+        }
+      },
+      "balloons": [
+        {
+          "id": 1,
+          "ownerId": "hard",
+          "x": 1,
+          "y": 3,
+          "range": 2,
+          "placedTick": 13,
+          "burstTick": 103,
+          "kickedDir": "none",
+          "slideCooldown": 0,
+          "source": "balloon"
+        }
+      ],
+      "events": []
+    },
+    {
+      "tick": 50,
+      "hard": {
+        "x": 1.6333333333333333,
+        "y": 1.9,
+        "input": {
+          "seq": 50,
+          "tick": 50,
+          "dir": "right",
+          "balloonPressed": false
+        }
+      },
+      "balloons": [
+        {
+          "id": 1,
+          "ownerId": "hard",
+          "x": 1,
+          "y": 3,
+          "range": 2,
+          "placedTick": 13,
+          "burstTick": 103,
+          "kickedDir": "none",
+          "slideCooldown": 0,
+          "source": "balloon"
+        },
+        {
+          "id": 2,
+          "ownerId": "easy",
+          "x": 11,
+          "y": 7,
+          "range": 2,
+          "placedTick": 43,
+          "burstTick": 133,
+          "kickedDir": "none",
+          "slideCooldown": 0,
+          "source": "balloon"
+        }
+      ],
+      "events": []
+    },
+    {
+      "tick": 60,
+      "hard": {
+        "x": 1.6333333333333333,
+        "y": 1.9,
+        "input": {
+          "seq": 60,
+          "tick": 60,
+          "dir": "right",
+          "balloonPressed": false
+        }
+      },
+      "balloons": [
+        {
+          "id": 1,
+          "ownerId": "hard",
+          "x": 1,
+          "y": 3,
+          "range": 2,
+          "placedTick": 13,
+          "burstTick": 103,
+          "kickedDir": "none",
+          "slideCooldown": 0,
+          "source": "balloon"
+        },
+        {
+          "id": 2,
+          "ownerId": "easy",
+          "x": 11,
+          "y": 7,
+          "range": 2,
+          "placedTick": 43,
+          "burstTick": 133,
+          "kickedDir": "none",
+          "slideCooldown": 0,
+          "source": "balloon"
+        }
+      ],
+      "events": []
+    },
+    {
+      "tick": 70,
+      "hard": {
+        "x": 1.6333333333333333,
+        "y": 1.9,
+        "input": {
+          "seq": 70,
+          "tick": 70,
+          "dir": "right",
+          "balloonPressed": false
+        }
+      },
+      "balloons": [
+        {
+          "id": 1,
+          "ownerId": "hard",
+          "x": 1,
+          "y": 3,
+          "range": 2,
+          "placedTick": 13,
+          "burstTick": 103,
+          "kickedDir": "none",
+          "slideCooldown": 0,
+          "source": "balloon"
+        },
+        {
+          "id": 2,
+          "ownerId": "easy",
+          "x": 11,
+          "y": 7,
+          "range": 2,
+          "placedTick": 43,
+          "burstTick": 133,
+          "kickedDir": "none",
+          "slideCooldown": 0,
+          "source": "balloon"
+        }
+      ],
+      "events": []
+    },
+    {
+      "tick": 80,
+      "hard": {
+        "x": 1.6333333333333333,
+        "y": 1.9,
+        "input": {
+          "seq": 80,
+          "tick": 80,
+          "dir": "right",
+          "balloonPressed": false
+        }
+      },
+      "balloons": [
+        {
+          "id": 1,
+          "ownerId": "hard",
+          "x": 1,
+          "y": 3,
+          "range": 2,
+          "placedTick": 13,
+          "burstTick": 103,
+          "kickedDir": "none",
+          "slideCooldown": 0,
+          "source": "balloon"
+        },
+        {
+          "id": 2,
+          "ownerId": "easy",
+          "x": 11,
+          "y": 7,
+          "range": 2,
+          "placedTick": 43,
+          "burstTick": 133,
+          "kickedDir": "none",
+          "slideCooldown": 0,
+          "source": "balloon"
+        }
+      ],
+      "events": []
+    },
+    {
+      "tick": 90,
+      "hard": {
+        "x": 1.6333333333333333,
+        "y": 1.9,
+        "input": {
+          "seq": 90,
+          "tick": 90,
+          "dir": "right",
+          "balloonPressed": false
+        }
+      },
+      "balloons": [
+        {
+          "id": 1,
+          "ownerId": "hard",
+          "x": 1,
+          "y": 3,
+          "range": 2,
+          "placedTick": 13,
+          "burstTick": 103,
+          "kickedDir": "none",
+          "slideCooldown": 0,
+          "source": "balloon"
+        },
+        {
+          "id": 2,
+          "ownerId": "easy",
+          "x": 11,
+          "y": 7,
+          "range": 2,
+          "placedTick": 43,
+          "burstTick": 133,
+          "kickedDir": "none",
+          "slideCooldown": 0,
+          "source": "balloon"
+        }
+      ],
+      "events": []
+    },
+    {
+      "tick": 100,
+      "hard": {
+        "x": 1.6333333333333333,
+        "y": 1.9,
+        "input": {
+          "seq": 100,
+          "tick": 100,
+          "dir": "right",
+          "balloonPressed": false
+        }
+      },
+      "balloons": [
+        {
+          "id": 1,
+          "ownerId": "hard",
+          "x": 1,
+          "y": 3,
+          "range": 2,
+          "placedTick": 13,
+          "burstTick": 103,
+          "kickedDir": "none",
+          "slideCooldown": 0,
+          "source": "balloon"
+        },
+        {
+          "id": 2,
+          "ownerId": "easy",
+          "x": 11,
+          "y": 7,
+          "range": 2,
+          "placedTick": 43,
+          "burstTick": 133,
+          "kickedDir": "none",
+          "slideCooldown": 0,
+          "source": "balloon"
+        }
+      ],
+      "events": []
+    },
+    {
+      "tick": 103,
+      "hard": {
+        "x": 1.6333333333333333,
+        "y": 1.9,
+        "input": {
+          "seq": 103,
+          "tick": 103,
+          "dir": "right",
+          "balloonPressed": false
+        }
+      },
+      "balloons": [
+        {
+          "id": 2,
+          "ownerId": "easy",
+          "x": 11,
+          "y": 7,
+          "range": 2,
+          "placedTick": 43,
+          "burstTick": 133,
+          "kickedDir": "none",
+          "slideCooldown": 0,
+          "source": "balloon"
+        }
+      ],
+      "events": [
+        {
+          "type": "castle_washed",
+          "x": 2,
+          "y": 3,
+          "ownerId": "hard"
+        },
+        {
+          "type": "powerup_revealed",
+          "powerup": {
+            "id": 9,
+            "x": 2,
+            "y": 3,
+            "kind": "flippers",
+            "revealedTick": 103
+          }
+        },
+        {
+          "type": "player_soaked",
+          "playerId": "hard",
+          "byId": null,
+          "cause": "splash",
+          "x": 1,
+          "y": 1
+        },
+        {
+          "type": "round_ended",
+          "draw": false,
+          "winnerId": "easy"
+        }
+      ]
+    }
+  ],
+  "deepIdleHumanPractice": [
+    {
+      "seed": 1,
+      "winner": "2",
+      "tick": 326,
+      "ended": true
+    },
+    {
+      "seed": 2,
+      "winner": "0",
+      "tick": 107,
+      "ended": true
+    },
+    {
+      "seed": 3,
+      "winner": "2",
+      "tick": 231,
+      "ended": true
+    },
+    {
+      "seed": 4,
+      "winner": null,
+      "tick": 3645,
+      "ended": true
+    },
+    {
+      "seed": 5,
+      "winner": null,
+      "tick": 3645,
+      "ended": true
+    },
+    {
+      "seed": 6,
+      "winner": null,
+      "tick": 3645,
+      "ended": true
+    },
+    {
+      "seed": 7,
+      "winner": null,
+      "tick": 231,
+      "ended": true
+    },
+    {
+      "seed": 8,
+      "winner": "2",
+      "tick": 231,
+      "ended": true
+    }
+  ],
+  "deepReversedSlots": {
+    "hardWins": 17,
+    "easyWins": 7,
+    "draws": 0,
+    "runs": [
+      {
+        "seed": 1,
+        "winner": "easy",
+        "tick": 103
+      },
+      {
+        "seed": 2,
+        "winner": "easy",
+        "tick": 103
+      },
+      {
+        "seed": 3,
+        "winner": "hard",
+        "tick": 119
+      },
+      {
+        "seed": 4,
+        "winner": "hard",
+        "tick": 105
+      },
+      {
+        "seed": 5,
+        "winner": "hard",
+        "tick": 161
+      },
+      {
+        "seed": 6,
+        "winner": "hard",
+        "tick": 105
+      },
+      {
+        "seed": 7,
+        "winner": "hard",
+        "tick": 105
+      },
+      {
+        "seed": 8,
+        "winner": "easy",
+        "tick": 103
+      },
+      {
+        "seed": 9,
+        "winner": "hard",
+        "tick": 119
+      },
+      {
+        "seed": 10,
+        "winner": "easy",
+        "tick": 103
+      },
+      {
+        "seed": 11,
+        "winner": "hard",
+        "tick": 119
+      },
+      {
+        "seed": 12,
+        "winner": "hard",
+        "tick": 119
+      },
+      {
+        "seed": 13,
+        "winner": "easy",
+        "tick": 103
+      },
+      {
+        "seed": 14,
+        "winner": "easy",
+        "tick": 103
+      },
+      {
+        "seed": 15,
+        "winner": "hard",
+        "tick": 119
+      },
+      {
+        "seed": 16,
+        "winner": "hard",
+        "tick": 147
+      },
+      {
+        "seed": 17,
+        "winner": "easy",
+        "tick": 103
+      },
+      {
+        "seed": 18,
+        "winner": "hard",
+        "tick": 105
+      },
+      {
+        "seed": 19,
+        "winner": "hard",
+        "tick": 133
+      },
+      {
+        "seed": 20,
+        "winner": "hard",
+        "tick": 133
+      },
+      {
+        "seed": 21,
+        "winner": "hard",
+        "tick": 133
+      },
+      {
+        "seed": 22,
+        "winner": "hard",
+        "tick": 161
+      },
+      {
+        "seed": 23,
+        "winner": "hard",
+        "tick": 147
+      },
+      {
+        "seed": 24,
+        "winner": "hard",
+        "tick": 119
+      }
+    ]
+  },
+  "deepExposedPowerup": {
+    "survived": true,
+    "splashesOnPowerup": [
+      {
+        "id": 2,
+        "ownerId": "a",
+        "x": 3,
+        "y": 3,
+        "createdTick": 1,
+        "endTick": 13,
+        "kind": "splash"
+      }
+    ],
+    "events": []
+  },
+  "deepCompleteRoom": {
+    "status": "match_end",
+    "round": 3,
+    "scores": {
+      "bot:PROBE2:0:1": 0,
+      "bot:PROBE2:1:2": 3
+    },
+    "results": {
+      "roomCode": "PROBE2",
+      "mode": "duel",
+      "ranked": false,
+      "placements": [
+        {
+          "playerId": "bot:PROBE2:1:2",
+          "name": "CaptainBot#1596",
+          "animal": "penguin",
+          "hat": "bandana",
+          "placement": 1,
+          "roundsWon": 3,
+          "soaks": 0,
+          "castles": 0,
+          "biggestChain": 0,
+          "survivedTicks": 309,
+          "ratingBefore": null,
+          "ratingAfter": null,
+          "xpEarned": 0,
+          "level": null
+        },
+        {
+          "playerId": "bot:PROBE2:0:1",
+          "name": "SplashyBot#8406",
+          "animal": "frog",
+          "hat": "propeller",
+          "placement": 2,
+          "roundsWon": 0,
+          "soaks": 0,
+          "castles": 3,
+          "biggestChain": 0,
+          "survivedTicks": 309,
+          "ratingBefore": null,
+          "ratingAfter": null,
+          "xpEarned": 0,
+          "level": null
+        }
+      ],
+      "ratingDeltas": {},
+      "xp": {},
+      "awards": {
+        "mostSoaks": null,
+        "castleCrusher": "bot:PROBE2:0:1",
+        "longestSurvivor": "bot:PROBE2:1:2",
+        "biggestChain": null
+      },
+      "rematchAllowed": true
+    }
+  }
+}

@@ -1,0 +1,580 @@
+[
+  {
+    "name": "glm-oct21",
+    "health": {
+      "ok": true,
+      "rooms": 0,
+      "players": 4,
+      "tick": "roomTick"
+    },
+    "rankedStarts": {
+      "matchStarts": 1,
+      "roundStarts": 1,
+      "found": [
+        {
+          "t": "match_found",
+          "roomId": "rmvhx6xsj1"
+        }
+      ]
+    },
+    "forfeit": {
+      "t": "match_end",
+      "placements": [
+        {
+          "id": 0,
+          "nickname": "AuditAlpha",
+          "placement": 1,
+          "roundsWon": 0,
+          "soaks": 0,
+          "castlesWashed": 0,
+          "isBot": false
+        },
+        {
+          "id": 1,
+          "nickname": "AuditBravo",
+          "placement": 2,
+          "roundsWon": 0,
+          "soaks": 0,
+          "castlesWashed": 0,
+          "isBot": false,
+          "award": "Longest Survivor"
+        }
+      ],
+      "xp": {
+        "gained": 25,
+        "total": 25,
+        "leveledUp": false
+      },
+      "rating": {
+        "before": 1000,
+        "after": 1032,
+        "delta": 32,
+        "tier": "Pond",
+        "peak": 1032
+      },
+      "matchId": "4"
+    },
+    "leaderboard": {
+      "entries": [
+        {
+          "rank": 1,
+          "nickname": "AuditAlpha#3526",
+          "rating": 1032,
+          "tier": "Pond",
+          "games": 1,
+          "winrate": 100
+        },
+        {
+          "rank": 2,
+          "nickname": "AuditAlpha#4653",
+          "rating": 1032,
+          "tier": "Pond",
+          "games": 1,
+          "winrate": 100
+        },
+        {
+          "rank": 3,
+          "nickname": "AuditBravo#5305",
+          "rating": 968,
+          "tier": "Puddle",
+          "games": 1,
+          "winrate": 0
+        },
+        {
+          "rank": 4,
+          "nickname": "AuditBravo#9400",
+          "rating": 968,
+          "tier": "Puddle",
+          "games": 1,
+          "winrate": 0
+        }
+      ]
+    },
+    "profile": {
+      "profile": {
+        "id": "4dd9a646-7b73-427b-8145-ccbd391d1180",
+        "nickname": "AuditAlpha",
+        "tag": "4653",
+        "xp": 25,
+        "level": 1,
+        "animal": "frog",
+        "hat": "none",
+        "ratings": {
+          "duel": {
+            "rating": 1032,
+            "games": 1,
+            "wins": 1,
+            "peak": 1032
+          },
+          "ffa": {
+            "rating": 1000,
+            "games": 0,
+            "wins": 0,
+            "peak": 1000
+          }
+        }
+      },
+      "matches": [
+        {
+          "id": 4,
+          "mode": "duel",
+          "ranked": 1,
+          "ended_at": 1792575554608,
+          "placement": 1,
+          "soaks": 0,
+          "rounds_won": 0,
+          "rating_before": null,
+          "rating_after": null,
+          "xp_earned": 25
+        }
+      ],
+      "unlocks": [],
+      "online": true
+    },
+    "malformed": {
+      "cases": 20,
+      "healthSurvived": 20
+    }
+  },
+  {
+    "name": "deepseek-v4.1-flash",
+    "health": {
+      "ok": true,
+      "uptime": 609,
+      "rooms": 3
+    },
+    "rankedStarts": {
+      "matchStarts": 1,
+      "roundStarts": 1,
+      "found": [
+        {
+          "t": "match_found",
+          "mode": "duel",
+          "ranked": true,
+          "players": [
+            {
+              "id": "090b60ae-7af7-449e-969c-e76c8d571806",
+              "name": "AuditAlpha#4014",
+              "animal": "frog",
+              "hat": "none",
+              "isBot": false,
+              "difficulty": null,
+              "rating": 1000,
+              "tier": "POND",
+              "level": 1
+            },
+            {
+              "id": "d8a4f35d-e10d-4f5f-a100-40d84353ddda",
+              "name": "AuditBravo#2274",
+              "animal": "frog",
+              "hat": "none",
+              "isBot": false,
+              "difficulty": null,
+              "rating": 1000,
+              "tier": "POND",
+              "level": 1
+            }
+          ],
+          "roomCode": "Z95M3Z"
+        }
+      ]
+    },
+    "forfeit": {
+      "t": "match_end",
+      "data": {
+        "roomCode": "Z95M3Z",
+        "mode": "duel",
+        "ranked": true,
+        "placements": [
+          {
+            "playerId": "090b60ae-7af7-449e-969c-e76c8d571806",
+            "name": "AuditAlpha#4014",
+            "animal": "frog",
+            "hat": "none",
+            "placement": 1,
+            "roundsWon": 0,
+            "soaks": 0,
+            "castles": 0,
+            "biggestChain": 0,
+            "survivedTicks": 413,
+            "ratingBefore": 1000,
+            "ratingAfter": 1032,
+            "xpEarned": 60,
+            "level": 1
+          },
+          {
+            "playerId": "d8a4f35d-e10d-4f5f-a100-40d84353ddda",
+            "name": "AuditBravo#2274",
+            "animal": "frog",
+            "hat": "none",
+            "placement": 2,
+            "roundsWon": 0,
+            "soaks": 0,
+            "castles": 0,
+            "biggestChain": 0,
+            "survivedTicks": 413,
+            "ratingBefore": 1000,
+            "ratingAfter": 968,
+            "xpEarned": 40,
+            "level": 1
+          }
+        ],
+        "ratingDeltas": {
+          "090b60ae-7af7-449e-969c-e76c8d571806": 32,
+          "d8a4f35d-e10d-4f5f-a100-40d84353ddda": -32
+        },
+        "xp": {
+          "090b60ae-7af7-449e-969c-e76c8d571806": {
+            "earned": 60,
+            "total": 60,
+            "level": 1,
+            "levelBefore": 1
+          },
+          "d8a4f35d-e10d-4f5f-a100-40d84353ddda": {
+            "earned": 40,
+            "total": 40,
+            "level": 1,
+            "levelBefore": 1
+          }
+        },
+        "awards": {
+          "mostSoaks": null,
+          "castleCrusher": null,
+          "longestSurvivor": "090b60ae-7af7-449e-969c-e76c8d571806",
+          "biggestChain": null
+        },
+        "rematchAllowed": false
+      }
+    },
+    "leaderboard": {
+      "mode": "duel",
+      "entries": [
+        {
+          "rank": 1,
+          "playerId": "6f71f2e8-d118-4fa0-98ad-ee16605c93b2",
+          "displayName": "AuditAlpha#9964",
+          "rating": 1032,
+          "tier": "POND",
+          "games": 1,
+          "winrate": 1
+        },
+        {
+          "rank": 2,
+          "playerId": "090b60ae-7af7-449e-969c-e76c8d571806",
+          "displayName": "AuditAlpha#4014",
+          "rating": 1032,
+          "tier": "POND",
+          "games": 1,
+          "winrate": 1
+        },
+        {
+          "rank": 3,
+          "playerId": "77ecc650-1815-4b41-983a-47e8b62c1b11",
+          "displayName": "AuditBravo#4116",
+          "rating": 968,
+          "tier": "PUDDLE",
+          "games": 1,
+          "winrate": 0
+        },
+        {
+          "rank": 4,
+          "playerId": "d8a4f35d-e10d-4f5f-a100-40d84353ddda",
+          "displayName": "AuditBravo#2274",
+          "rating": 968,
+          "tier": "PUDDLE",
+          "games": 1,
+          "winrate": 0
+        }
+      ]
+    },
+    "profile": {
+      "profile": {
+        "id": "090b60ae-7af7-449e-969c-e76c8d571806",
+        "nickname": "AuditAlpha",
+        "tag": "4014",
+        "displayName": "AuditAlpha#4014",
+        "xp": 60,
+        "level": 1,
+        "selectedAnimal": "frog",
+        "selectedHat": "none",
+        "needsNickname": false,
+        "tutorialDone": false,
+        "unlocks": [
+          "duck",
+          "frog",
+          "none"
+        ],
+        "ratings": {
+          "duel": {
+            "rating": 1032,
+            "games": 1,
+            "wins": 1,
+            "peak": 1032
+          },
+          "ffa": {
+            "rating": 1000,
+            "games": 0,
+            "wins": 0,
+            "peak": 1000
+          }
+        }
+      },
+      "ratings": {
+        "duel": {
+          "rating": 1032,
+          "games": 1,
+          "wins": 1,
+          "peak": 1032
+        },
+        "ffa": {
+          "rating": 1000,
+          "games": 0,
+          "wins": 0,
+          "peak": 1000
+        }
+      },
+      "recentMatches": [
+        {
+          "matchId": 4,
+          "mode": "duel",
+          "ranked": true,
+          "endedAt": 1792575557528,
+          "placement": 1,
+          "soaks": 0,
+          "roundsWon": 0,
+          "ratingBefore": 1000,
+          "ratingAfter": 1032
+        }
+      ],
+      "unlocks": [
+        "duck",
+        "frog",
+        "none"
+      ]
+    },
+    "malformed": {
+      "cases": 20,
+      "healthSurvived": 20
+    }
+  },
+  {
+    "name": "minimax",
+    "health": {
+      "ok": true,
+      "uptimeSeconds": 609,
+      "rooms": 7,
+      "connections": 0,
+      "tickRate": 30
+    },
+    "rankedStarts": {
+      "matchStarts": 2,
+      "roundStarts": 2,
+      "found": [
+        {
+          "t": "match_found",
+          "roomId": "7460d347-ac72-4c88-b360-b7449f649bfb",
+          "code": "RFKE4R",
+          "mode": "duel"
+        },
+        {
+          "t": "match_found",
+          "roomId": "397e4766-cd00-4248-b345-c9a52d8988ec",
+          "code": "R9TYLJ",
+          "mode": "duel"
+        }
+      ]
+    },
+    "reconnectMessages": [
+      "welcome",
+      "ping"
+    ],
+    "forfeitError": "Error: :4317 timed out: match_end; recent=[{\"t\":\"ping\",\"ts\":1792575548343},{\"t\":\"ping\",\"ts\":1792575550344},{\"t\":\"ping\",\"ts\":1792575552346},{\"t\":\"ping\",\"ts\":1792575554348},{\"t\":\"ping\",\"ts\":1792575556348},{\"t\":\"ping\",\"ts\":1792575558348},{\"t\":\"ping\",\"ts\":1792575560350},{\"t\":\"ping\",\"ts\":1792575562351}]",
+    "normalForfeit": {
+      "t": "match_end",
+      "mode": "duel",
+      "ranked": true,
+      "placements": [
+        {
+          "slot": 0,
+          "playerId": "22b572f7-b02b-46be-bb39-2b372771a205",
+          "nickname": "SoakyKit",
+          "tag": "8005",
+          "placement": 1,
+          "roundWins": 0,
+          "soaks": 0,
+          "castlesWashed": 0,
+          "biggestChain": 0,
+          "survivedTicks": 356
+        },
+        {
+          "slot": 1,
+          "playerId": "a1787434-1145-4eea-8f01-b92b945c316a",
+          "nickname": "BubblyPuffin",
+          "tag": "3353",
+          "placement": 2,
+          "roundWins": -1,
+          "soaks": 0,
+          "castlesWashed": 0,
+          "biggestChain": 0,
+          "survivedTicks": 356
+        }
+      ],
+      "ratingDeltas": [
+        {
+          "playerId": "22b572f7-b02b-46be-bb39-2b372771a205",
+          "ratingBefore": 1000,
+          "ratingAfter": 1032,
+          "delta": 32,
+          "tier": "Pond",
+          "tierBefore": "Pond"
+        },
+        {
+          "playerId": "a1787434-1145-4eea-8f01-b92b945c316a",
+          "ratingBefore": 1000,
+          "ratingAfter": 968,
+          "delta": -32,
+          "tier": "Puddle",
+          "tierBefore": "Pond"
+        }
+      ],
+      "xp": [
+        {
+          "playerId": "22b572f7-b02b-46be-bb39-2b372771a205",
+          "xp": 80,
+          "totalXp": 80,
+          "level": 1,
+          "levelUp": false
+        },
+        {
+          "playerId": "a1787434-1145-4eea-8f01-b92b945c316a",
+          "xp": 35,
+          "totalXp": 35,
+          "level": 1,
+          "levelUp": false
+        }
+      ],
+      "stats": {
+        "mostSoaks": "SoakyKit",
+        "castleCrusher": "SoakyKit",
+        "longestSurvivor": "SoakyKit",
+        "biggestChain": "SoakyKit"
+      }
+    },
+    "twoHumanRankedFfa": [
+      {
+        "t": "match_start",
+        "config": {
+          "mode": "ffa",
+          "roundsToWin": 3,
+          "theme": "random",
+          "ranked": true,
+          "enableRevengeDucks": false,
+          "enableKick": true,
+          "players": [
+            {
+              "id": 0,
+              "playerId": "ed62f49b-d067-450f-8863-89bbeea84ae6",
+              "nickname": "SplashingCapybara",
+              "tag": "7683",
+              "animal": "frog",
+              "hat": "none",
+              "isBot": false,
+              "rating": 1000,
+              "tier": "Pond"
+            },
+            {
+              "id": 1,
+              "playerId": "3ca17454-8e3c-45fc-994c-3550e96631c3",
+              "nickname": "JellyOtter",
+              "tag": "2095",
+              "animal": "frog",
+              "hat": "none",
+              "isBot": false,
+              "rating": 1000,
+              "tier": "Pond"
+            },
+            {
+              "id": 2,
+              "nickname": "",
+              "tag": "",
+              "animal": "frog",
+              "hat": "none",
+              "isBot": false,
+              "rating": 1000,
+              "tier": "Pond"
+            },
+            {
+              "id": 3,
+              "nickname": "",
+              "tag": "",
+              "animal": "frog",
+              "hat": "none",
+              "isBot": false,
+              "rating": 1000,
+              "tier": "Pond"
+            }
+          ]
+        }
+      },
+      {
+        "t": "match_start",
+        "config": {
+          "mode": "ffa",
+          "roundsToWin": 3,
+          "theme": "random",
+          "ranked": true,
+          "enableRevengeDucks": false,
+          "enableKick": true,
+          "players": [
+            {
+              "id": 0,
+              "playerId": "ed62f49b-d067-450f-8863-89bbeea84ae6",
+              "nickname": "SplashingCapybara",
+              "tag": "7683",
+              "animal": "frog",
+              "hat": "none",
+              "isBot": false,
+              "rating": 1000,
+              "tier": "Pond"
+            },
+            {
+              "id": 1,
+              "playerId": "3ca17454-8e3c-45fc-994c-3550e96631c3",
+              "nickname": "JellyOtter",
+              "tag": "2095",
+              "animal": "frog",
+              "hat": "none",
+              "isBot": false,
+              "rating": 1000,
+              "tier": "Pond"
+            },
+            {
+              "id": 2,
+              "nickname": "",
+              "tag": "",
+              "animal": "frog",
+              "hat": "none",
+              "isBot": false,
+              "rating": 1000,
+              "tier": "Pond"
+            },
+            {
+              "id": 3,
+              "nickname": "",
+              "tag": "",
+              "animal": "frog",
+              "hat": "none",
+              "isBot": false,
+              "rating": 1000,
+              "tier": "Pond"
+            }
+          ]
+        }
+      }
+    ],
+    "malformed": {
+      "cases": 20,
+      "healthSurvived": 20
+    }
+  }
+]

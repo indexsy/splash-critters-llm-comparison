@@ -1,0 +1,8 @@
+
+> splash-critters@1.0.0 start
+> node packages/server/dist/index.js
+
+[splash-critters] listening on http://localhost:4317
+[splash-critters] data dir: /var/folders/7v/dtpvhs8x0n1d3_7vfccbrbvw0000gn/T/opencode/splash-oct21/minimax
+[splash-critters] client bundle: /Users/jackychou/splash-critters-llm-comparison/results/minimax/packages/client/dist
+[splash-critters] shutting down

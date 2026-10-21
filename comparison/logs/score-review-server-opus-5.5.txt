@@ -1,0 +1,6 @@
+
+> splash-critters@1.0.0 start
+> node packages/server/dist/index.js
+
+[splash] Splash Critters server on http://localhost:4412 (data /var/folders/7v/dtpvhs8x0n1d3_7vfccbrbvw0000gn/T/opencode/splash-score-review/opus-5.5, client /Users/jackychou/splash-critters-llm-comparison/results/opus-5.5/packages/client/dist)
+[splash] SIGTERM: shutting down

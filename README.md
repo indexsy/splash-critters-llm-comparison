@@ -1,5 +1,15 @@
 # Splash Critters — one prompt, sixteen AI coding agents
 
+> **2026-10-21 — three new submissions evaluated:**
+> [DeepSeek v4.1 Flash **5.65**, MiniMax **5.00**, GLM **3.00**](comparison/OCT21-EVALUATION.md).
+> The dated supplement contains the score breakdown, reproduced defects, browser
+> evidence and source imports. It was evaluated by GPT-6.1 SOL through OpenCode;
+> the sixteen-entry tables below retain their original evaluation and authorship.
+>
+> **Score review:** [Independent review of the historical scores](comparison/SCORE-REVIEW.md)
+> agrees with the broad tiers but challenges several scores, reproduces key
+> failures, and identifies refuted findings still present in the ranking.
+
 An experiment: give sixteen frontier LLM coding setups the **same ~200-line spec** —
 build a complete, shippable 8-bit online multiplayer water-balloon battler
 (deterministic shared sim, server-authoritative netcode, bots, ranked Elo,

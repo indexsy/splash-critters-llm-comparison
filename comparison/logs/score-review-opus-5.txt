@@ -1,0 +1,73 @@
+2026-10-21 score review. Existing installed dependencies; build then test.
+
+--- ['npm', 'run', 'build']
+
+> splash-critters@1.0.0 build
+> npm run build:shared && npm run build:server && npm run build:client
+
+
+> splash-critters@1.0.0 build:shared
+> npm run build -w @splash/shared
+
+
+> @splash/shared@1.0.0 build
+> tsc -p tsconfig.json
+
+
+> splash-critters@1.0.0 build:server
+> npm run build -w @splash/server
+
+
+> @splash/server@1.0.0 build
+> tsc -p tsconfig.json
+
+
+> splash-critters@1.0.0 build:client
+> npm run build -w @splash/client
+
+
+> @splash/client@1.0.0 build
+> vite build
+
+vite v5.4.21 building for production...
+transforming...
+✓ 60 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                   0.99 kB │ gzip:  0.56 kB
+dist/assets/index-Cu2I0qnd.css    5.24 kB │ gzip:  1.75 kB
+dist/assets/index-BcV8KRRe.js   118.62 kB │ gzip: 42.36 kB │ map: 526.42 kB
+✓ built in 1.44s
+RESULT build=0
+
+--- ['npm', 'run', 'test']
+
+> splash-critters@1.0.0 test
+> vitest run
+
+
+ RUN  v2.1.9 /Users/jackychou/splash-critters-llm-comparison/results/opus-5
+
+ ✓ packages/shared/test/elo.test.ts (15 tests) 4ms
+ ✓ packages/shared/test/map.test.ts (12 tests) 19ms
+ ✓ packages/shared/test/regressions.test.ts (5 tests) 15ms
+ ✓ packages/shared/test/sim.test.ts (24 tests) 44ms
+ ✓ packages/server/test/hostile.test.ts (6 tests) 15ms
+ ✓ packages/server/test/players.test.ts (18 tests) 181ms
+ ✓ packages/server/test/roomAuthority.test.ts (3 tests) 92ms
+ ✓ packages/server/test/e2e.test.ts (11 tests) 2598ms
+   ✓ pairs two queued players into one ranked duel 1797ms
+   ✓ persists ratings, XP and history from a finished ranked duel, and surfaces them 556ms
+ ✓ packages/server/test/bots.test.ts (9 tests) 10113ms
+   ✓ bots in a live round > never soaks a hard bot on its own splash 1375ms
+   ✓ bots in a live round > only ever soaks a hard bot on its own splash when it was walled in 4125ms
+   ✓ bots in a live round > replays a round identically from the same seed 1830ms
+   ✓ bots in a live round > always finishes the round 1887ms
+   ✓ bots in a live round > lets hard beat easy in a clear majority of decisive duels 891ms
+
+ Test Files  9 passed (9)
+      Tests  103 passed (103)
+   Start at  17:53:10
+   Duration  11.16s (transform 1.00s, setup 0ms, collect 4.23s, tests 13.08s, environment 3ms, prepare 1.56s)
+
+RESULT test=0

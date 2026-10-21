@@ -1,0 +1,32 @@
+
+> splash-critters@0.1.0 start
+> npm run start -w packages/server
+
+
+> @splash/server@0.1.0 start
+> node dist/index.js
+
+[db] applied 1 migration(s)
+splash-critters master on :4319 (tick 30Hz)
+uncaught TypeError: (msg.opts.name ?? "").slice is not a function
+    at onMessage (file:///Users/jackychou/splash-critters-llm-comparison/results/glm-oct21/packages/server/dist/index.js:2355:172)
+    at WebSocket.<anonymous> (file:///Users/jackychou/splash-critters-llm-comparison/results/glm-oct21/packages/server/dist/index.js:2278:7)
+    at WebSocket.emit (node:events:507:28)
+    at Receiver.receiverOnMessage (/Users/jackychou/splash-critters-llm-comparison/results/glm-oct21/node_modules/ws/lib/websocket.js:1253:20)
+    at Receiver.emit (node:events:507:28)
+    at Receiver.dataMessage (/Users/jackychou/splash-critters-llm-comparison/results/glm-oct21/node_modules/ws/lib/receiver.js:633:14)
+    at Receiver.getData (/Users/jackychou/splash-critters-llm-comparison/results/glm-oct21/node_modules/ws/lib/receiver.js:532:10)
+    at Receiver.startLoop (/Users/jackychou/splash-critters-llm-comparison/results/glm-oct21/node_modules/ws/lib/receiver.js:190:16)
+    at Receiver._write (/Users/jackychou/splash-critters-llm-comparison/results/glm-oct21/node_modules/ws/lib/receiver.js:117:10)
+    at writeOrBuffer (node:internal/streams/writable:570:12)
+uncaught TypeError: (msg.opts.name ?? "").slice is not a function
+    at onMessage (file:///Users/jackychou/splash-critters-llm-comparison/results/glm-oct21/packages/server/dist/index.js:2355:172)
+    at WebSocket.<anonymous> (file:///Users/jackychou/splash-critters-llm-comparison/results/glm-oct21/packages/server/dist/index.js:2278:7)
+    at WebSocket.emit (node:events:507:28)
+    at Receiver.receiverOnMessage (/Users/jackychou/splash-critters-llm-comparison/results/glm-oct21/node_modules/ws/lib/websocket.js:1253:20)
+    at Receiver.emit (node:events:507:28)
+    at Receiver.dataMessage (/Users/jackychou/splash-critters-llm-comparison/results/glm-oct21/node_modules/ws/lib/receiver.js:633:14)
+    at Receiver.getData (/Users/jackychou/splash-critters-llm-comparison/results/glm-oct21/node_modules/ws/lib/receiver.js:532:10)
+    at Receiver.startLoop (/Users/jackychou/splash-critters-llm-comparison/results/glm-oct21/node_modules/ws/lib/receiver.js:190:16)
+    at Receiver._write (/Users/jackychou/splash-critters-llm-comparison/results/glm-oct21/node_modules/ws/lib/receiver.js:117:10)
+    at writeOrBuffer (node:internal/streams/writable:570:12)

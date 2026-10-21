@@ -1,0 +1,31 @@
+{
+  "date": "2026-10-21",
+  "fable": {
+    "harness": "comparison/harness/attack-seed-recovery.mjs",
+    "constraintPositions": 93,
+    "trueSeed": 82488203,
+    "recoveredSeed": 82488203,
+    "seconds": 5.5,
+    "hiddenContentsMatch": true,
+    "hiddenItems": 26,
+    "note": "Random seed happened to be small; elapsed time is not an average or worst-case benchmark."
+  },
+  "astra": {
+    "harness": "comparison/harness/attack-astra-loot.mjs",
+    "mapSeed": 992231780,
+    "sameLayout": true,
+    "independentSecretsProduceDifferentContents": true,
+    "realHiddenItems": 18,
+    "guessedItems": 18,
+    "locationHits": 9,
+    "kindAndLocationHits": 2
+  },
+  "opus55": {
+    "harness": "comparison/harness/attack-opus55-content.ts",
+    "maps": 400,
+    "attackerHitsPerMap": 1.55,
+    "controlHitsPerMap": 1.48,
+    "reportedAverageRevealEntropyBits": 73,
+    "note": "Independent layout-seed guesses fail. This test is not a general state-recovery attack, and average entropy is not a worst-case information bound."
+  }
+}

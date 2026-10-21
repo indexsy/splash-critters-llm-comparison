@@ -1,0 +1,50 @@
+2026-10-21 score review. Existing installed dependencies; build then test.
+
+--- ['npm', 'run', 'build']
+
+> splash-critters@1.0.0 build
+> npm run build -w @splash/client && npm run build -w @splash/server
+
+
+> @splash/client@1.0.0 build
+> vite build
+
+vite v5.4.21 building for production...
+transforming...
+✓ 34 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                  0.62 kB │ gzip:  0.41 kB
+dist/assets/index-CpJ6HC7c.css   3.51 kB │ gzip:  1.33 kB
+dist/assets/index-CNkPXy0x.js   55.73 kB │ gzip: 19.18 kB
+✓ built in 259ms
+
+> @splash/server@1.0.0 build
+> esbuild src/index.ts --bundle --platform=node --format=esm --outfile=dist/index.js --external:better-sqlite3 --external:express --external:ws
+
+
+  dist/index.js  94.4kb
+
+⚡ Done in 9ms
+RESULT build=0
+
+--- ['npm', 'run', 'test']
+
+> splash-critters@1.0.0 test
+> npm run test -w @splash/shared
+
+
+> @splash/shared@1.0.0 test
+> vitest run
+
+
+ RUN  v2.1.9 /Users/jackychou/splash-critters-llm-comparison/results/grok-4.7/packages/shared
+
+ ✓ test/sim.test.ts (8 tests) 6ms
+
+ Test Files  1 passed (1)
+      Tests  8 passed (8)
+   Start at  17:53:19
+   Duration  397ms (transform 103ms, setup 0ms, collect 112ms, tests 6ms, environment 0ms, prepare 71ms)
+
+RESULT test=0

@@ -1,0 +1,5 @@
+
+> splash-critters@1.0.0 start
+> node packages/server/dist/index.js
+
+Splash Critters listening on :4414

@@ -1,0 +1,2123 @@
+[
+  {
+    "name": "minimax",
+    "status": 200,
+    "errors": [],
+    "game": {
+      "counts": {
+        "welcome": 1,
+        "ping": 8,
+        "room_created": 1,
+        "lobby_state": 1,
+        "match_start": 1,
+        "round_start": 2,
+        "snapshot": 161,
+        "round_end": 1
+      },
+      "last": {
+        "welcome": {
+          "t": "welcome",
+          "playerId": "91bde6c3-9828-46e1-8465-659b4b0256fd",
+          "profile": {
+            "id": "91bde6c3-9828-46e1-8465-659b4b0256fd",
+            "nickname": "SplashingToad",
+            "tag": "4297",
+            "animal": "frog",
+            "hat": "none",
+            "xp": 0,
+            "level": 1,
+            "tier": "Pond",
+            "ratingDuel": 1000,
+            "ratingFfa": 1000,
+            "gamesDuel": 0,
+            "gamesFfa": 0,
+            "unlocks": [
+              "duck",
+              "frog",
+              "none"
+            ],
+            "hasNickname": true
+          },
+          "token": "[REDACTED]"
+        },
+        "ping": {
+          "t": "ping",
+          "ts": 1792575088949
+        },
+        "room_created": {
+          "t": "room_created",
+          "room": {
+            "id": "38c1c1a7-37c4-4240-8a27-c32cd00c8598",
+            "code": "N68TXE",
+            "name": "Practice",
+            "maxPlayers": 2,
+            "players": 1,
+            "theme": "random",
+            "roundsToWin": 3,
+            "host": "SplashingToad",
+            "isPublic": false,
+            "inProgress": false,
+            "slots": [
+              {
+                "index": 0,
+                "kind": "human",
+                "nickname": "SplashingToad",
+                "tag": "4297",
+                "animal": "frog",
+                "hat": "none",
+                "playerId": "91bde6c3-9828-46e1-8465-659b4b0256fd",
+                "connected": true,
+                "ready": false,
+                "isHost": true,
+                "rating": 1000
+              },
+              {
+                "index": 1,
+                "kind": "empty",
+                "nickname": "",
+                "tag": "",
+                "animal": "frog",
+                "hat": "none",
+                "connected": false,
+                "ready": false,
+                "isHost": false,
+                "rating": 1000
+              }
+            ],
+            "phase": "lobby",
+            "ranked": false,
+            "rematchVotes": [],
+            "countdown": 0
+          }
+        },
+        "lobby_state": {
+          "t": "lobby_state",
+          "room": {
+            "id": "38c1c1a7-37c4-4240-8a27-c32cd00c8598",
+            "code": "N68TXE",
+            "name": "Practice",
+            "maxPlayers": 2,
+            "players": 1,
+            "theme": "random",
+            "roundsToWin": 3,
+            "host": "SplashingToad",
+            "isPublic": false,
+            "inProgress": false,
+            "slots": [
+              {
+                "index": 0,
+                "kind": "human",
+                "nickname": "SplashingToad",
+                "tag": "4297",
+                "animal": "frog",
+                "hat": "none",
+                "playerId": "91bde6c3-9828-46e1-8465-659b4b0256fd",
+                "connected": true,
+                "ready": false,
+                "isHost": true,
+                "rating": 1000
+              },
+              {
+                "index": 1,
+                "kind": "empty",
+                "nickname": "",
+                "tag": "",
+                "animal": "frog",
+                "hat": "none",
+                "connected": false,
+                "ready": false,
+                "isHost": false,
+                "rating": 1000
+              }
+            ],
+            "phase": "lobby",
+            "ranked": false,
+            "rematchVotes": [],
+            "countdown": 0
+          }
+        },
+        "match_start": {
+          "t": "match_start",
+          "config": {
+            "mode": "duel",
+            "roundsToWin": 3,
+            "theme": "random",
+            "ranked": false,
+            "enableRevengeDucks": true,
+            "enableKick": true,
+            "players": [
+              {
+                "id": 0,
+                "playerId": "91bde6c3-9828-46e1-8465-659b4b0256fd",
+                "nickname": "SplashingToad",
+                "tag": "4297",
+                "animal": "frog",
+                "hat": "none",
+                "isBot": false,
+                "rating": 1000,
+                "tier": "Pond"
+              },
+              {
+                "id": 1,
+                "nickname": "medium bot",
+                "tag": "",
+                "animal": "duck",
+                "hat": "none",
+                "isBot": true,
+                "rating": 1000,
+                "tier": "Pond"
+              }
+            ]
+          }
+        },
+        "round_start": {
+          "t": "round_start",
+          "roundNo": 2,
+          "mapSeed": 2311876490,
+          "castleGrid": "00000000000000000111010110000001000001000111010001000001000100000000110010010000010000000000010001010100000100000000000000000000000000000000000",
+          "theme": "backyard",
+          "config": {
+            "mode": "duel",
+            "roundsToWin": 3,
+            "theme": "random",
+            "ranked": false,
+            "enableRevengeDucks": true,
+            "enableKick": true,
+            "players": [
+              {
+                "id": 0,
+                "playerId": "91bde6c3-9828-46e1-8465-659b4b0256fd",
+                "nickname": "SplashingToad",
+                "tag": "4297",
+                "animal": "frog",
+                "hat": "none",
+                "isBot": false,
+                "rating": 1000,
+                "tier": "Pond"
+              },
+              {
+                "id": 1,
+                "nickname": "medium bot",
+                "tag": "",
+                "animal": "duck",
+                "hat": "none",
+                "isBot": true,
+                "rating": 1000,
+                "tier": "Pond"
+              }
+            ]
+          }
+        },
+        "snapshot": {
+          "t": "snapshot",
+          "snapshot": {
+            "tick": 13,
+            "phase": "countdown",
+            "roundNo": 2,
+            "countdown": 77,
+            "timeLeft": 3992,
+            "tideRing": -1,
+            "castles": "00000000000000000111010110000001000001000111010001000001000100000000110010010000010000000000010001010100000100000000000000000000000000000000000",
+            "players": [
+              {
+                "id": 0,
+                "animal": "frog",
+                "hat": "none",
+                "nickname": "SplashingToad",
+                "tag": "4297",
+                "x": 1,
+                "y": 1,
+                "facing": 0,
+                "moving": false,
+                "alive": true,
+                "speed": 4,
+                "balloonCount": 1,
+                "splashRange": 2,
+                "hasBoots": false,
+                "roundWins": 0,
+                "soaks": 0,
+                "castlesWashed": 1,
+                "biggestChain": 1,
+                "duck": null,
+                "isBot": false,
+                "lastSeq": 309
+              },
+              {
+                "id": 1,
+                "animal": "duck",
+                "hat": "none",
+                "nickname": "medium bot",
+                "tag": "",
+                "x": 11,
+                "y": 9,
+                "facing": 0,
+                "moving": false,
+                "alive": true,
+                "speed": 4,
+                "balloonCount": 1,
+                "splashRange": 3,
+                "hasBoots": false,
+                "roundWins": 1,
+                "soaks": 0,
+                "castlesWashed": 1,
+                "biggestChain": 1,
+                "duck": null,
+                "isBot": true,
+                "lastSeq": 0
+              }
+            ],
+            "balloons": [],
+            "splashes": [],
+            "exposed": [],
+            "events": [],
+            "serverTime": 1792575090228
+          }
+        },
+        "round_end": {
+          "t": "round_end",
+          "roundNo": 1,
+          "winners": [
+            1
+          ],
+          "draw": false,
+          "scores": [
+            {
+              "id": 0,
+              "nickname": "SplashingToad",
+              "tag": "4297",
+              "roundWins": 0
+            },
+            {
+              "id": 1,
+              "nickname": "medium bot",
+              "tag": "",
+              "roundWins": 1
+            }
+          ],
+          "nextInMs": 3600
+        }
+      },
+      "sockets": 1,
+      "sent": [
+        {
+          "t": "hello"
+        },
+        {
+          "t": "pong",
+          "ts": 1792575074942
+        },
+        {
+          "t": "create_room",
+          "opts": {
+            "name": "Practice",
+            "maxPlayers": 2,
+            "isPublic": false,
+            "theme": "random",
+            "roundsToWin": 3,
+            "botFill": true,
+            "autoStart": true
+          }
+        },
+        {
+          "t": "pong",
+          "ts": 1792575076943
+        },
+        {
+          "t": "pong",
+          "ts": 1792575078945
+        },
+        {
+          "t": "pong",
+          "ts": 1792575080946
+        },
+        {
+          "t": "pong",
+          "ts": 1792575082947
+        },
+        {
+          "t": "pong",
+          "ts": 1792575084948
+        },
+        {
+          "t": "pong",
+          "ts": 1792575086948
+        },
+        {
+          "t": "pong",
+          "ts": 1792575088950
+        }
+      ],
+      "text": ""
+    },
+    "reconnect": {
+      "counts": {
+        "welcome": 1,
+        "ping": 2
+      },
+      "last": {
+        "welcome": {
+          "t": "welcome",
+          "playerId": "91bde6c3-9828-46e1-8465-659b4b0256fd",
+          "profile": {
+            "id": "91bde6c3-9828-46e1-8465-659b4b0256fd",
+            "nickname": "SplashingToad",
+            "tag": "4297",
+            "animal": "frog",
+            "hat": "none",
+            "xp": 0,
+            "level": 1,
+            "tier": "Pond",
+            "ratingDuel": 1000,
+            "ratingFfa": 1000,
+            "gamesDuel": 0,
+            "gamesFfa": 0,
+            "unlocks": [
+              "duck",
+              "frog",
+              "none"
+            ],
+            "hasNickname": true
+          },
+          "token": "[REDACTED]"
+        },
+        "ping": {
+          "t": "ping",
+          "ts": 1792575092953
+        }
+      },
+      "sockets": 1,
+      "sent": [
+        {
+          "t": "hello",
+          "token": "[REDACTED]"
+        },
+        {
+          "t": "pong",
+          "ts": 1792575090952
+        },
+        {
+          "t": "pong",
+          "ts": 1792575092953
+        }
+      ],
+      "text": "An 8-bit online water balloon battler. Last critter dry wins.\n\nSigned in as SplashingToad#4297\nPLAY\nTUTORIAL\n\nBEST WITH FRIENDS - 2 TO 4 PLAYERS"
+    }
+  },
+  {
+    "name": "deepseek-v4.1-flash",
+    "status": 200,
+    "errors": [],
+    "game": {
+      "counts": {
+        "welcome": 1,
+        "ping": 8,
+        "profile_update": 1,
+        "notice": 1,
+        "lobby_state": 3,
+        "room_list": 1,
+        "room_created": 1,
+        "match_start": 1,
+        "round_start": 1,
+        "snapshot": 139,
+        "event": 7
+      },
+      "last": {
+        "welcome": {
+          "t": "welcome",
+          "playerId": "4b6911a5-1705-4d3d-b7c3-8e5c532b2752",
+          "profile": {
+            "id": "4b6911a5-1705-4d3d-b7c3-8e5c532b2752",
+            "nickname": "SaltyBeaver",
+            "tag": "3212",
+            "displayName": "SaltyBeaver#3212",
+            "xp": 0,
+            "level": 1,
+            "selectedAnimal": "frog",
+            "selectedHat": "none",
+            "needsNickname": true,
+            "tutorialDone": false,
+            "unlocks": [
+              "duck",
+              "frog",
+              "none"
+            ],
+            "ratings": {
+              "duel": {
+                "rating": 1000,
+                "games": 0,
+                "wins": 0,
+                "peak": 1000
+              },
+              "ffa": {
+                "rating": 1000,
+                "games": 0,
+                "wins": 0,
+                "peak": 1000
+              }
+            }
+          },
+          "token": "[REDACTED]",
+          "serverTick": 4951
+        },
+        "ping": {
+          "t": "ping",
+          "sentAt": 1792575108428,
+          "rtt": 0
+        },
+        "profile_update": {
+          "t": "profile_update",
+          "profile": {
+            "id": "4b6911a5-1705-4d3d-b7c3-8e5c532b2752",
+            "nickname": "SaltyBeaver",
+            "tag": "3212",
+            "displayName": "SaltyBeaver#3212",
+            "xp": 50,
+            "level": 1,
+            "selectedAnimal": "frog",
+            "selectedHat": "none",
+            "needsNickname": true,
+            "tutorialDone": true,
+            "unlocks": [
+              "duck",
+              "frog",
+              "none"
+            ],
+            "ratings": {
+              "duel": {
+                "rating": 1000,
+                "games": 0,
+                "wins": 0,
+                "peak": 1000
+              },
+              "ffa": {
+                "rating": 1000,
+                "games": 0,
+                "wins": 0,
+                "peak": 1000
+              }
+            }
+          }
+        },
+        "notice": {
+          "t": "notice",
+          "msg": "Tutorial complete! +50 XP"
+        },
+        "lobby_state": {
+          "t": "lobby_state",
+          "lobby": {
+            "code": "RMDJDW",
+            "name": "Practice Pond",
+            "mode": "ffa",
+            "size": 4,
+            "theme": "pool",
+            "roundsToWin": 3,
+            "isPrivate": true,
+            "hostId": "4b6911a5-1705-4d3d-b7c3-8e5c532b2752",
+            "slots": [
+              {
+                "slot": 0,
+                "kind": "human",
+                "playerId": "4b6911a5-1705-4d3d-b7c3-8e5c532b2752",
+                "name": "SaltyBeaver#3212",
+                "animal": "frog",
+                "hat": "none",
+                "difficulty": null,
+                "ready": false,
+                "connected": true,
+                "host": true
+              },
+              {
+                "slot": 1,
+                "kind": "bot",
+                "playerId": null,
+                "name": "BubblesBot#5659",
+                "animal": "frog",
+                "hat": "bucket",
+                "difficulty": "medium",
+                "ready": true,
+                "connected": true,
+                "host": false
+              },
+              {
+                "slot": 2,
+                "kind": "bot",
+                "playerId": null,
+                "name": "PebbleBot#3455",
+                "animal": "turtle",
+                "hat": "snorkel",
+                "difficulty": "medium",
+                "ready": true,
+                "connected": true,
+                "host": false
+              },
+              {
+                "slot": 3,
+                "kind": "bot",
+                "playerId": null,
+                "name": "TuxBot#2075",
+                "animal": "penguin",
+                "hat": "crown",
+                "difficulty": "medium",
+                "ready": true,
+                "connected": true,
+                "host": false
+              }
+            ],
+            "youAreHost": true,
+            "rematchVotes": 0,
+            "rematchNeeded": 1,
+            "status": "lobby"
+          }
+        },
+        "room_list": {
+          "t": "room_list",
+          "rooms": []
+        },
+        "room_created": {
+          "t": "room_created",
+          "code": "RMDJDW"
+        },
+        "match_start": {
+          "t": "match_start",
+          "config": {
+            "roomCode": "RMDJDW",
+            "mode": "ffa",
+            "ranked": false,
+            "theme": "pool",
+            "roundsToWin": 3,
+            "players": [
+              {
+                "id": "4b6911a5-1705-4d3d-b7c3-8e5c532b2752",
+                "name": "SaltyBeaver#3212",
+                "animal": "frog",
+                "hat": "none",
+                "isBot": false,
+                "difficulty": null,
+                "level": 1
+              },
+              {
+                "id": "bot:RMDJDW:1:1",
+                "name": "BubblesBot#5659",
+                "animal": "frog",
+                "hat": "bucket",
+                "isBot": true,
+                "difficulty": "medium",
+                "level": 1
+              },
+              {
+                "id": "bot:RMDJDW:2:2",
+                "name": "PebbleBot#3455",
+                "animal": "turtle",
+                "hat": "snorkel",
+                "isBot": true,
+                "difficulty": "medium",
+                "level": 1
+              },
+              {
+                "id": "bot:RMDJDW:3:3",
+                "name": "TuxBot#2075",
+                "animal": "penguin",
+                "hat": "crown",
+                "isBot": true,
+                "difficulty": "medium",
+                "level": 1
+              }
+            ],
+            "introMs": 2200
+          }
+        },
+        "round_start": {
+          "t": "round_start",
+          "data": {
+            "roundNo": 1,
+            "mapSeed": 782164864,
+            "castleGrid": [
+              [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                1,
+                0,
+                1,
+                0,
+                0,
+                0,
+                1,
+                0,
+                1,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                1,
+                0,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                0,
+                1,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                1,
+                0,
+                1,
+                0,
+                0,
+                0,
+                1,
+                0,
+                0,
+                0,
+                1,
+                0
+              ],
+              [
+                0,
+                0,
+                1,
+                0,
+                1,
+                0,
+                1,
+                0,
+                1,
+                0,
+                1,
+                1,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                1,
+                0,
+                1,
+                0,
+                1,
+                0,
+                1,
+                0,
+                1,
+                0,
+                1,
+                0
+              ],
+              [
+                0,
+                0,
+                1,
+                0,
+                1,
+                0,
+                1,
+                1,
+                0,
+                1,
+                0,
+                1,
+                1,
+                1,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                1,
+                0,
+                1,
+                0,
+                1,
+                0,
+                1,
+                0,
+                1,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                0,
+                0,
+                1,
+                1,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                1,
+                0,
+                1,
+                0,
+                1,
+                0,
+                1,
+                0,
+                1,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ]
+            ],
+            "boulderGrid": [
+              [
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true
+              ],
+              [
+                true,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                true
+              ],
+              [
+                true,
+                false,
+                true,
+                false,
+                true,
+                false,
+                true,
+                false,
+                true,
+                false,
+                true,
+                false,
+                true,
+                false,
+                true
+              ],
+              [
+                true,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                true
+              ],
+              [
+                true,
+                false,
+                true,
+                false,
+                true,
+                false,
+                true,
+                false,
+                true,
+                false,
+                true,
+                false,
+                true,
+                false,
+                true
+              ],
+              [
+                true,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                true
+              ],
+              [
+                true,
+                false,
+                true,
+                false,
+                true,
+                false,
+                true,
+                false,
+                true,
+                false,
+                true,
+                false,
+                true,
+                false,
+                true
+              ],
+              [
+                true,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                true
+              ],
+              [
+                true,
+                false,
+                true,
+                false,
+                true,
+                false,
+                true,
+                false,
+                true,
+                false,
+                true,
+                false,
+                true,
+                false,
+                true
+              ],
+              [
+                true,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                true
+              ],
+              [
+                true,
+                false,
+                true,
+                false,
+                true,
+                false,
+                true,
+                false,
+                true,
+                false,
+                true,
+                false,
+                true,
+                false,
+                true
+              ],
+              [
+                true,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                true
+              ],
+              [
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true
+              ]
+            ],
+            "w": 15,
+            "h": 13,
+            "theme": "pool",
+            "spawnTiles": [
+              {
+                "x": 1,
+                "y": 1
+              },
+              {
+                "x": 13,
+                "y": 1
+              },
+              {
+                "x": 1,
+                "y": 11
+              },
+              {
+                "x": 13,
+                "y": 11
+              }
+            ],
+            "countdownMs": 3000
+          }
+        },
+        "snapshot": {
+          "t": "snapshot",
+          "tick": 276,
+          "players": [
+            {
+              "id": "4b6911a5-1705-4d3d-b7c3-8e5c532b2752",
+              "slot": 0,
+              "name": "SaltyBeaver#3212",
+              "animal": "frog",
+              "hat": "none",
+              "x": 3.1,
+              "y": 1.5,
+              "dir": "right",
+              "alive": false,
+              "eliminatedTick": 204,
+              "speed": 4,
+              "balloonCount": 1,
+              "splashRange": 2,
+              "kickCharges": 0,
+              "isBot": false,
+              "difficulty": null,
+              "revengeReadyTick": 354,
+              "soakedAtX": 3.0999999999999996,
+              "soakedAtY": 1.5
+            },
+            {
+              "id": "bot:RMDJDW:1:1",
+              "slot": 1,
+              "name": "BubblesBot#5659",
+              "animal": "frog",
+              "hat": "bucket",
+              "x": 1.9,
+              "y": 1.633,
+              "dir": "down",
+              "alive": true,
+              "eliminatedTick": null,
+              "speed": 4,
+              "balloonCount": 1,
+              "splashRange": 2,
+              "kickCharges": 0,
+              "isBot": true,
+              "difficulty": "medium",
+              "revengeReadyTick": 0,
+              "soakedAtX": 13.5,
+              "soakedAtY": 1.5
+            },
+            {
+              "id": "bot:RMDJDW:2:2",
+              "slot": 2,
+              "name": "PebbleBot#3455",
+              "animal": "turtle",
+              "hat": "snorkel",
+              "x": 1.633,
+              "y": 3.1,
+              "dir": "right",
+              "alive": true,
+              "eliminatedTick": null,
+              "speed": 4,
+              "balloonCount": 1,
+              "splashRange": 2,
+              "kickCharges": 0,
+              "isBot": true,
+              "difficulty": "medium",
+              "revengeReadyTick": 0,
+              "soakedAtX": 1.5,
+              "soakedAtY": 11.5
+            },
+            {
+              "id": "bot:RMDJDW:3:3",
+              "slot": 3,
+              "name": "TuxBot#2075",
+              "animal": "penguin",
+              "hat": "crown",
+              "x": 2.3,
+              "y": 11.367,
+              "dir": "right",
+              "alive": true,
+              "eliminatedTick": null,
+              "speed": 4,
+              "balloonCount": 1,
+              "splashRange": 2,
+              "kickCharges": 0,
+              "isBot": true,
+              "difficulty": "medium",
+              "revengeReadyTick": 0,
+              "soakedAtX": 13.5,
+              "soakedAtY": 11.5
+            }
+          ],
+          "balloons": [
+            {
+              "id": 30,
+              "ownerId": "bot:RMDJDW:1:1",
+              "x": 1,
+              "y": 1,
+              "range": 2,
+              "placedTick": 209,
+              "burstTick": 299,
+              "kickedDir": "none",
+              "slideCooldown": 0,
+              "source": "balloon"
+            },
+            {
+              "id": 31,
+              "ownerId": "bot:RMDJDW:2:2",
+              "x": 1,
+              "y": 2,
+              "range": 2,
+              "placedTick": 249,
+              "burstTick": 339,
+              "kickedDir": "none",
+              "slideCooldown": 0,
+              "source": "balloon"
+            }
+          ],
+          "splashes": [
+            {
+              "id": 32,
+              "ownerId": "bot:RMDJDW:3:3",
+              "x": 7,
+              "y": 11,
+              "createdTick": 271,
+              "endTick": 283,
+              "kind": "splash"
+            },
+            {
+              "id": 33,
+              "ownerId": "bot:RMDJDW:3:3",
+              "x": 7,
+              "y": 10,
+              "createdTick": 271,
+              "endTick": 283,
+              "kind": "splash"
+            },
+            {
+              "id": 34,
+              "ownerId": "bot:RMDJDW:3:3",
+              "x": 6,
+              "y": 11,
+              "createdTick": 271,
+              "endTick": 283,
+              "kind": "splash"
+            },
+            {
+              "id": 35,
+              "ownerId": "bot:RMDJDW:3:3",
+              "x": 5,
+              "y": 11,
+              "createdTick": 271,
+              "endTick": 283,
+              "kind": "splash"
+            },
+            {
+              "id": 36,
+              "ownerId": "bot:RMDJDW:3:3",
+              "x": 8,
+              "y": 11,
+              "createdTick": 271,
+              "endTick": 283,
+              "kind": "splash"
+            },
+            {
+              "id": 37,
+              "ownerId": "bot:RMDJDW:3:3",
+              "x": 9,
+              "y": 11,
+              "createdTick": 271,
+              "endTick": 283,
+              "kind": "splash"
+            }
+          ],
+          "powerups": [
+            {
+              "id": 12,
+              "x": 11,
+              "y": 10,
+              "kind": "balloon",
+              "revealedTick": 107
+            }
+          ],
+          "tide": {
+            "active": false,
+            "ring": 0,
+            "startTick": 3600,
+            "nextAdvanceTick": 3645
+          },
+          "ended": false,
+          "winnerId": null,
+          "draw": false,
+          "acks": {
+            "4b6911a5-1705-4d3d-b7c3-8e5c532b2752": 271,
+            "bot:RMDJDW:1:1": 0,
+            "bot:RMDJDW:2:2": 0,
+            "bot:RMDJDW:3:3": 0
+          }
+        },
+        "event": {
+          "t": "event",
+          "type": "castle_washed",
+          "x": 7,
+          "y": 10,
+          "ownerId": "bot:RMDJDW:3:3"
+        }
+      },
+      "sockets": 1,
+      "sent": [
+        {
+          "t": "hello"
+        },
+        {
+          "t": "pong",
+          "sentAt": 1792575094423
+        },
+        {
+          "t": "tutorial_complete"
+        },
+        {
+          "t": "create_room",
+          "opts": {
+            "name": "Practice Pond",
+            "size": 4,
+            "isPrivate": true,
+            "theme": "random",
+            "roundsToWin": 3,
+            "botFill": true,
+            "practice": true
+          }
+        },
+        {
+          "t": "pong",
+          "sentAt": 1792575096425
+        },
+        {
+          "t": "pong",
+          "sentAt": 1792575098426
+        },
+        {
+          "t": "pong",
+          "sentAt": 1792575100428
+        },
+        {
+          "t": "pong",
+          "sentAt": 1792575102428
+        },
+        {
+          "t": "pong",
+          "sentAt": 1792575104428
+        },
+        {
+          "t": "pong",
+          "sentAt": 1792575106428
+        },
+        {
+          "t": "pong",
+          "sentAt": 1792575108428
+        }
+      ]
+    },
+    "reconnect": {
+      "counts": {
+        "welcome": 1,
+        "match_start": 1,
+        "round_start": 1,
+        "snapshot": 46,
+        "event": 2,
+        "ping": 1
+      },
+      "last": {
+        "welcome": {
+          "t": "welcome",
+          "playerId": "4b6911a5-1705-4d3d-b7c3-8e5c532b2752",
+          "profile": {
+            "id": "4b6911a5-1705-4d3d-b7c3-8e5c532b2752",
+            "nickname": "SaltyBeaver",
+            "tag": "3212",
+            "displayName": "SaltyBeaver#3212",
+            "xp": 50,
+            "level": 1,
+            "selectedAnimal": "frog",
+            "selectedHat": "none",
+            "needsNickname": true,
+            "tutorialDone": true,
+            "unlocks": [
+              "duck",
+              "frog",
+              "none"
+            ],
+            "ratings": {
+              "duel": {
+                "rating": 1000,
+                "games": 0,
+                "wins": 0,
+                "peak": 1000
+              },
+              "ffa": {
+                "rating": 1000,
+                "games": 0,
+                "wins": 0,
+                "peak": 1000
+              }
+            }
+          },
+          "serverTick": 5461
+        },
+        "match_start": {
+          "t": "match_start",
+          "config": {
+            "roomCode": "RMDJDW",
+            "mode": "ffa",
+            "ranked": false,
+            "theme": "pool",
+            "roundsToWin": 3,
+            "players": [
+              {
+                "id": "4b6911a5-1705-4d3d-b7c3-8e5c532b2752",
+                "name": "SaltyBeaver#3212",
+                "animal": "frog",
+                "hat": "none",
+                "isBot": false,
+                "difficulty": null,
+                "level": 1
+              },
+              {
+                "id": "bot:RMDJDW:1:1",
+                "name": "BubblesBot#5659",
+                "animal": "frog",
+                "hat": "bucket",
+                "isBot": true,
+                "difficulty": "medium",
+                "level": 1
+              },
+              {
+                "id": "bot:RMDJDW:2:2",
+                "name": "PebbleBot#3455",
+                "animal": "turtle",
+                "hat": "snorkel",
+                "isBot": true,
+                "difficulty": "medium",
+                "level": 1
+              },
+              {
+                "id": "bot:RMDJDW:3:3",
+                "name": "TuxBot#2075",
+                "animal": "penguin",
+                "hat": "crown",
+                "isBot": true,
+                "difficulty": "medium",
+                "level": 1
+              }
+            ],
+            "introMs": 2200
+          }
+        },
+        "round_start": {
+          "t": "round_start",
+          "data": {
+            "roundNo": 1,
+            "mapSeed": 782164864,
+            "castleGrid": [
+              [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                1,
+                0,
+                1,
+                0,
+                0,
+                0,
+                1,
+                0,
+                1,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                1,
+                0,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                0,
+                1,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                1,
+                0,
+                1,
+                0,
+                0,
+                0,
+                1,
+                0,
+                0,
+                0,
+                1,
+                0
+              ],
+              [
+                0,
+                0,
+                1,
+                0,
+                1,
+                0,
+                1,
+                0,
+                1,
+                0,
+                1,
+                1,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                1,
+                0,
+                1,
+                0,
+                1,
+                0,
+                1,
+                0,
+                1,
+                0,
+                1,
+                0
+              ],
+              [
+                0,
+                0,
+                1,
+                0,
+                1,
+                0,
+                1,
+                1,
+                0,
+                1,
+                0,
+                1,
+                1,
+                1,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                1,
+                0,
+                1,
+                0,
+                1,
+                0,
+                1,
+                0,
+                1,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                0,
+                0,
+                1,
+                1,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                1,
+                0,
+                1,
+                0,
+                1,
+                0,
+                1,
+                0,
+                1,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ]
+            ],
+            "boulderGrid": [
+              [
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true
+              ],
+              [
+                true,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                true
+              ],
+              [
+                true,
+                false,
+                true,
+                false,
+                true,
+                false,
+                true,
+                false,
+                true,
+                false,
+                true,
+                false,
+                true,
+                false,
+                true
+              ],
+              [
+                true,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                true
+              ],
+              [
+                true,
+                false,
+                true,
+                false,
+                true,
+                false,
+                true,
+                false,
+                true,
+                false,
+                true,
+                false,
+                true,
+                false,
+                true
+              ],
+              [
+                true,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                true
+              ],
+              [
+                true,
+                false,
+                true,
+                false,
+                true,
+                false,
+                true,
+                false,
+                true,
+                false,
+                true,
+                false,
+                true,
+                false,
+                true
+              ],
+              [
+                true,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                true
+              ],
+              [
+                true,
+                false,
+                true,
+                false,
+                true,
+                false,
+                true,
+                false,
+                true,
+                false,
+                true,
+                false,
+                true,
+                false,
+                true
+              ],
+              [
+                true,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                true
+              ],
+              [
+                true,
+                false,
+                true,
+                false,
+                true,
+                false,
+                true,
+                false,
+                true,
+                false,
+                true,
+                false,
+                true,
+                false,
+                true
+              ],
+              [
+                true,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                true
+              ],
+              [
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true
+              ]
+            ],
+            "w": 15,
+            "h": 13,
+            "theme": "pool",
+            "spawnTiles": [
+              {
+                "x": 1,
+                "y": 1
+              },
+              {
+                "x": 13,
+                "y": 1
+              },
+              {
+                "x": 1,
+                "y": 11
+              },
+              {
+                "x": 13,
+                "y": 11
+              }
+            ],
+            "countdownMs": 0
+          }
+        },
+        "snapshot": {
+          "t": "snapshot",
+          "tick": 368,
+          "players": [
+            {
+              "id": "4b6911a5-1705-4d3d-b7c3-8e5c532b2752",
+              "slot": 0,
+              "name": "SaltyBeaver#3212",
+              "animal": "frog",
+              "hat": "none",
+              "x": 3.1,
+              "y": 1.5,
+              "dir": "right",
+              "alive": false,
+              "eliminatedTick": 204,
+              "speed": 4,
+              "balloonCount": 1,
+              "splashRange": 2,
+              "kickCharges": 0,
+              "isBot": false,
+              "difficulty": null,
+              "revengeReadyTick": 354,
+              "soakedAtX": 3.0999999999999996,
+              "soakedAtY": 1.5
+            },
+            {
+              "id": "bot:RMDJDW:1:1",
+              "slot": 1,
+              "name": "BubblesBot#5659",
+              "animal": "frog",
+              "hat": "bucket",
+              "x": 1.9,
+              "y": 1.633,
+              "dir": "down",
+              "alive": true,
+              "eliminatedTick": null,
+              "speed": 4,
+              "balloonCount": 1,
+              "splashRange": 2,
+              "kickCharges": 0,
+              "isBot": true,
+              "difficulty": "medium",
+              "revengeReadyTick": 0,
+              "soakedAtX": 13.5,
+              "soakedAtY": 1.5
+            },
+            {
+              "id": "bot:RMDJDW:2:2",
+              "slot": 2,
+              "name": "PebbleBot#3455",
+              "animal": "turtle",
+              "hat": "snorkel",
+              "x": 1.633,
+              "y": 3.1,
+              "dir": "right",
+              "alive": false,
+              "eliminatedTick": 299,
+              "speed": 4,
+              "balloonCount": 1,
+              "splashRange": 2,
+              "kickCharges": 0,
+              "isBot": true,
+              "difficulty": "medium",
+              "revengeReadyTick": 449,
+              "soakedAtX": 1.6333333333333333,
+              "soakedAtY": 3.1
+            },
+            {
+              "id": "bot:RMDJDW:3:3",
+              "slot": 3,
+              "name": "TuxBot#2075",
+              "animal": "penguin",
+              "hat": "crown",
+              "x": 1.9,
+              "y": 11.367,
+              "dir": "up",
+              "alive": true,
+              "eliminatedTick": null,
+              "speed": 4,
+              "balloonCount": 1,
+              "splashRange": 2,
+              "kickCharges": 0,
+              "isBot": true,
+              "difficulty": "medium",
+              "revengeReadyTick": 0,
+              "soakedAtX": 13.5,
+              "soakedAtY": 11.5
+            }
+          ],
+          "balloons": [
+            {
+              "id": 38,
+              "ownerId": "bot:RMDJDW:3:3",
+              "x": 5,
+              "y": 11,
+              "range": 2,
+              "placedTick": 298,
+              "burstTick": 388,
+              "kickedDir": "none",
+              "slideCooldown": 0,
+              "source": "balloon"
+            }
+          ],
+          "splashes": [],
+          "powerups": [
+            {
+              "id": 12,
+              "x": 11,
+              "y": 10,
+              "kind": "balloon",
+              "revealedTick": 107
+            }
+          ],
+          "tide": {
+            "active": false,
+            "ring": 0,
+            "startTick": 3600,
+            "nextAdvanceTick": 3645
+          },
+          "ended": false,
+          "winnerId": null,
+          "draw": false,
+          "acks": {
+            "4b6911a5-1705-4d3d-b7c3-8e5c532b2752": 273,
+            "bot:RMDJDW:1:1": 0,
+            "bot:RMDJDW:2:2": 0,
+            "bot:RMDJDW:3:3": 0
+          }
+        },
+        "event": {
+          "t": "event",
+          "type": "player_soaked",
+          "playerId": "bot:RMDJDW:2:2",
+          "byId": "bot:RMDJDW:1:1",
+          "cause": "splash",
+          "x": 1,
+          "y": 3
+        },
+        "ping": {
+          "t": "ping",
+          "sentAt": 1792575112429,
+          "rtt": 0
+        }
+      },
+      "sockets": 1,
+      "sent": [
+        {
+          "t": "hello",
+          "token": "[REDACTED]"
+        },
+        {
+          "t": "pong",
+          "sentAt": 1792575112429
+        }
+      ]
+    }
+  },
+  {
+    "name": "glm-oct21",
+    "status": 404,
+    "errors": [],
+    "probe": {
+      "counts": {},
+      "last": {},
+      "sockets": 0,
+      "sent": [],
+      "text": "Cannot GET /",
+      "canvas": false,
+      "nonzero": null
+    }
+  },
+  {
+    "name": "glm-oct21-dev",
+    "status": 200,
+    "errors": [],
+    "probe": {
+      "counts": {
+        "undefined": 1
+      },
+      "last": {
+        "undefined": {
+          "type": "connected"
+        }
+      },
+      "sockets": 1,
+      "sent": [],
+      "text": "",
+      "canvas": true,
+      "nonzero": false
+    }
+  }
+]

@@ -1,0 +1,65 @@
+2026-10-21 score review. Existing installed dependencies; build then test.
+
+--- ['npm', 'run', 'build']
+
+> splash-critters@1.0.0 build
+> npm run build -w @splash/shared && npm run build -w @splash/server && npm run build -w @splash/client
+
+
+> @splash/shared@1.0.0 build
+> tsc -p .
+
+
+> @splash/server@1.0.0 build
+> tsc -p .
+
+
+> @splash/client@1.0.0 build
+> tsc --noEmit && vite build
+
+vite v5.4.21 building for production...
+transforming...
+✓ 38 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/debug.html                                             0.50 kB │ gzip:  0.31 kB
+dist/index.html                                             0.89 kB │ gzip:  0.45 kB
+dist/assets/silkscreen-latin-400-normal-D0DfPJut.woff       4.94 kB
+dist/assets/silkscreen-latin-400-normal-CtPo2yA5.woff2      8.40 kB
+dist/assets/space-grotesk-latin-700-normal-RjhwGPKo.woff2  12.84 kB
+dist/assets/space-grotesk-latin-600-normal-DjKNqYRj.woff2  13.28 kB
+dist/assets/space-grotesk-latin-500-normal-lFbtlQH6.woff2  13.31 kB
+dist/assets/space-grotesk-latin-400-normal-CJ-V5oYT.woff2  13.39 kB
+dist/assets/space-grotesk-latin-700-normal-CwsQ-cCU.woff   16.42 kB
+dist/assets/space-grotesk-latin-600-normal-BflQw4A9.woff   16.88 kB
+dist/assets/space-grotesk-latin-500-normal-CNSSEhBt.woff   16.99 kB
+dist/assets/space-grotesk-latin-400-normal-BnQMeOim.woff   17.00 kB
+dist/assets/main-Cmv56CUG.css                               0.48 kB │ gzip:  0.21 kB
+dist/assets/audio-DFlGueXp.css                             52.28 kB │ gzip: 16.65 kB
+dist/assets/debug-4ddjYYlh.js                               8.90 kB │ gzip:  3.89 kB
+dist/assets/audio-BgOpBMCW.js                              22.65 kB │ gzip:  8.99 kB
+dist/assets/main-CvjtPlyo.js                               51.39 kB │ gzip: 18.81 kB
+✓ built in 362ms
+RESULT build=0
+
+--- ['npm', 'run', 'test']
+
+> splash-critters@1.0.0 test
+> vitest run
+
+
+ RUN  v3.2.7 /Users/jackychou/splash-critters-llm-comparison/results/gpt-6-astra
+
+ ✓ packages/shared/src/elo.test.ts (7 tests) 3ms
+ ✓ packages/shared/src/sim.test.ts (8 tests) 30ms
+ ✓ packages/server/src/net.test.ts (2 tests) 4ms
+ ✓ packages/client/src/prediction.test.ts (2 tests) 5ms
+ ✓ packages/server/src/db/queries.test.ts (1 test) 52ms
+ ✓ packages/server/src/bots/bot.test.ts (2 tests) 34ms
+
+ Test Files  6 passed (6)
+      Tests  22 passed (22)
+   Start at  17:53:02
+   Duration  678ms (transform 531ms, setup 0ms, collect 1.42s, tests 128ms, environment 4ms, prepare 741ms)
+
+RESULT test=0

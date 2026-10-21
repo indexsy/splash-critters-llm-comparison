@@ -1,0 +1,28 @@
+
+> splash-critters@1.0.0 start
+> npm start -w @splash/server
+
+
+> @splash/server@1.0.0 start
+> node dist/index.js
+
+Splash Critters listening on http://localhost:4411
+file:///Users/jackychou/splash-critters-llm-comparison/results/gpt-6-astra/packages/server/dist/rooms.js:65
+            throw new Error("All pools are busy. Please try again shortly.");
+            ^
+
+Error: All pools are busy. Please try again shortly.
+    at Rooms.create (file:///Users/jackychou/splash-critters-llm-comparison/results/gpt-6-astra/packages/server/dist/rooms.js:65:19)
+    at Matchmaker.tick (file:///Users/jackychou/splash-critters-llm-comparison/results/gpt-6-astra/packages/server/dist/matchmaker.js:78:41)
+    at Timeout._onTimeout (file:///Users/jackychou/splash-critters-llm-comparison/results/gpt-6-astra/packages/server/dist/matchmaker.js:9:45)
+    at listOnTimeout (node:internal/timers:614:17)
+    at process.processTimers (node:internal/timers:549:7)
+
+Node.js v23.7.0
+npm error Lifecycle script `start` failed with error:
+npm error code 1
+npm error path /Users/jackychou/splash-critters-llm-comparison/results/gpt-6-astra/packages/server
+npm error workspace @splash/server@1.0.0
+npm error location /Users/jackychou/splash-critters-llm-comparison/results/gpt-6-astra/packages/server
+npm error command failed
+npm error command sh -c node dist/index.js
