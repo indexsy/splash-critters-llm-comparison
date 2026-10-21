@@ -1,16 +1,10 @@
-# Splash Critters — one prompt, sixteen AI coding agents
+# Splash Critters — one prompt, nineteen AI coding setups
 
-> **2026-10-21 — three new submissions evaluated:**
-> [DeepSeek v4.1 Flash **5.65**, MiniMax **5.00**, GLM **3.00**](comparison/OCT21-EVALUATION.md).
-> The dated supplement contains the score breakdown, reproduced defects, browser
-> evidence and source imports. It was evaluated by GPT-6.1 SOL through OpenCode;
-> the sixteen-entry tables below retain their original evaluation and authorship.
->
-> **Score review:** [Independent review of the historical scores](comparison/SCORE-REVIEW.md)
-> agrees with the broad tiers but challenges several scores, reproduces key
-> failures, and identifies refuted findings still present in the ranking.
+**Updated October 21, 2026:** MiniMax, DeepSeek v4.1 Flash, and a new GLM
+submission are included in the rankings below, alongside an independent review
+of the original scores by **GPT-6.1 SOL through OpenCode**.
 
-An experiment: give sixteen frontier LLM coding setups the **same ~200-line spec** —
+An experiment: give nineteen LLM coding setups the **same ~200-line spec** —
 build a complete, shippable 8-bit online multiplayer water-balloon battler
 (deterministic shared sim, server-authoritative netcode, bots, ranked Elo,
 SQLite, lobby browser, cosmetics, procedural pixel art) — and compare what
@@ -20,12 +14,12 @@ The full prompt is in [`prompt.md`](prompt.md). Each agent's output is
 committed verbatim under [`results/`](results/) (only `node_modules/`, build
 output, and database files were stripped).
 
-> **Disclosure:** this comparison README was compiled by **Claude Fable 5 —
-> one of the contestants.** Every claim below comes from a scripted,
-> reproducible check (harness + raw logs + screenshots are in
-> [`comparison/`](comparison/)), and the one evaluation mistake made along the
-> way (which initially made *both Kimi builds look broken when they weren't*)
-> is documented in the Methodology section. Judge for yourself.
+> **Evaluator disclosure:** the original sixteen-entry comparison was compiled
+> by **Claude Fable 5 — one of the contestants**, with later Claude-led additions.
+> **GPT-6.1 SOL through OpenCode** evaluated the three October 21 submissions and
+> independently reviewed the older scores. Published scores and the new review
+> are shown side by side below. Logs, harnesses and screenshots are in
+> [`comparison/`](comparison/); detailed methodology accompanies each report.
 
 ## Contenders
 
@@ -47,74 +41,113 @@ output, and database files were stripped).
 | [`results/grok-4.7/`](results/grok-4.7/) | **Grok 4.7 (default)** (xAI; added 2026-09-21; successor to the Grok 4.5 and 4.6 entries) |
 | [`results/grok-4.7-xhigh/`](results/grok-4.7-xhigh/) | **Grok 4.7 (xhigh)** (xAI, same model at xhigh reasoning effort; added 2026-09-22; a controlled A/B against the default-effort build) |
 | [`results/opus-5.5/`](results/opus-5.5/) | **Claude Opus 5.5** (added 2026-09-23; **self-authored**: the orchestrator ran as Opus 5.5, so it got the adversarial audit. Built with multi-agent waves and with memory notes from two earlier Claude builds of this spec) |
+| [`results/deepseek-v4.1-flash/`](results/deepseek-v4.1-flash/) | **DeepSeek v4.1 Flash** (added 2026-10-21; evaluated by GPT-6.1 SOL through OpenCode) |
+| [`results/minimax/`](results/minimax/) | **MiniMax** (added 2026-10-21; exact model version unspecified) |
+| [`results/glm-oct21/`](results/glm-oct21/) | **GLM — October 21 submission** (exact model version unspecified; separate from GLM 5.2 above) |
 
 ## Code audit & rankings
 
-Beyond "does it run," every codebase got a deep **independent code audit** (one
-Claude Fable 5 subagent each, same six-dimension rubric, every claim cites
-`file:line`). Full reports in [`comparison/audits/`](comparison/audits/),
-synthesis + methodology in
-[`comparison/AUDIT-RANKINGS.md`](comparison/AUDIT-RANKINGS.md).
+The original sixteen audits are in [`comparison/audits/`](comparison/audits/),
+with their synthesis in [`comparison/AUDIT-RANKINGS.md`](comparison/AUDIT-RANKINGS.md).
+The three new evaluations use the same six-dimension weighting and are documented
+in [`comparison/OCT21-EVALUATION.md`](comparison/OCT21-EVALUATION.md).
 
-> **⚠️ Conflict of interest:** Four entries are Claude-family (Fable 5, Opus 5.5,
-> Opus 5, Opus 4.8), every audit was run by Claude subagents, and the orchestrator is
-> a Claude model. The newest Claude entry, **Opus 5.5, was judged while the
+**How to read this table:** rank is by the published weighted score. The
+**SOL review** column gives independent provisional judgment bands for the older
+entries, not freshly calculated scores or statistical confidence intervals.
+The two evaluators' numbers are not precisely calibrated against each other.
+
+> **Original-evaluation conflict of interest:** Four entries are Claude-family
+> (Fable 5, Opus 5.5, Opus 5, Opus 4.8), and the original sixteen audits were run
+> by Claude subagents under a Claude orchestrator. **Opus 5.5 was judged while the
 > orchestrator itself ran as Opus 5.5.** So it got this repo's self-authored
 > treatment: an adversarial audit, plus a "generosity check" that no rival received.
 > That check pulled it from a raw **8.50 (#1)** to a published **8.30 (#3)**; both
-> numbers are shown. The top three (8.45 / 8.35 / 8.30) are a statistical tie, and
-> every close call went *against* the Claude entries. Two findings cut hardest
+> numbers are shown. The top three published scores are close subjective
+> assessments; no statistical error model establishes their order. Two findings cut hardest
 > against the house. **The single best anti-cheat result belongs to a non-Claude
 > entry:** GPT-6 Astra gives every tile its own crypto secret, and the attack that
-> cracked Fable 5's loot in 21.8s scores at pure chance against it. Only one other
-> entry, Opus 5.5, also closes the hole. And Opus 5.5 was built with advantages no
+> cracked Fable 5's loot in 21.8s scores at pure chance against it. Opus 5.5 also
+> separates loot onto a secret keyed stream. And Opus 5.5 was built with advantages no
 > rival lab had: memory notes from two earlier Claude builds of this exact spec, and
 > many multi-agent verification waves. Verify the loot claims yourself:
 > [`harness/attack-astra-loot.mjs`](comparison/harness/attack-astra-loot.mjs),
 > [`harness/attack-opus55-content.ts`](comparison/harness/attack-opus55-content.ts),
 > [`harness/attack-seed-recovery.mjs`](comparison/harness/attack-seed-recovery.mjs).
 
-| Rank | Model | Weighted score /10 | One-line |
-| :-: | --- | :-: | --- |
-| 🥇 1 | **Fable 5** † | 8.45 | No fatal bug, working ranked-Elo path — but its "hidden" power-ups fall to a 21.8s brute force, plus a flaky Hard bot |
-| 🥈 2 | **GPT-6 Astra** ✚ | 8.35 | The **only** entry that actually makes hidden power-ups unguessable (per-tile CSPRNG loot, survives the derivation attack at chance) — best validator, real netcode, but one guest socket can crash the whole server by exhausting rooms |
-| 🥉 3 | **Opus 5.5** ⚑ | 8.30 | Most complete and best-hardened build (774 tests, 14/14 e2e, survives every malformed frame) and one of only two that make loot unguessable. But a mid-round reconnect is stranded on the VS card, bots drift into tide draws, and ranked Elo can be farmed. Self-authored: raw 8.50 |
-| 4 | **Opus 5** ¶ | 7.75 | Best engineering in the field (103 tests, 47 hostile frames survived, no seed on the wire) — but the client loses round 1 of every match |
-| 5 | **Opus 4.8 (ultracode)** ‡ | 7.40 | Excellent, playable, cleanly integrated — but leaks the real map seed AND one malformed packet crashes the whole server |
-| 6 | **GPT-5.6 SOL (xhigh)** ‡ | 7.00 | Playable, robust, clean — but leaks the seed, bots crawl in production, and `npm start` 404s without `NODE_ENV=production` |
-| 7 | **Kimi K3** | 6.70 | Playable — but ranked duels can draw (killing Elo), forfeit is dead code, and the default Space key can't drop a balloon |
-| 8 | **Grok 4.7 (default)** ▲ | 6.30 | The best-engineered Grok: every predecessor crash fixed, real ping, real netcode, loot on a separate stream. But no bot ever places a balloon (every match is tide roulette), and the loot salt is derivable from the broadcast seed |
-| 9 | **Grok 4.5** | 6.18 | Real netcode, playable — but a malformed WS frame crashes the server, and the HUD ping is fake |
-| 10 | **Grok 4.6** ‡ | 5.80 | Fixes two of 4.5's bugs (draw handling, bot self-soak) but audits *below* it: weaker netcode, still leaks the seed, still one-packet-crashes, still fake ping |
-| 11 | **Grok 4.7 (xhigh)** ◇ | 5.60 | Same model + prompt as #7 at higher reasoning effort, an entirely different build: FIXED default's dead bots (they fight now, though Hard wins only 52% of matches vs Easy), but regressed anti-cheat to a free seed leak and shipped a server any client can crash five ways. More effort, a worse game |
-| 12 | **0x alpha** ‡ | 4.40 | Strong sim + 26 tests + survives fuzzing + playable *offline* tutorial — but the server never sends `match_start`, so online play freezes on the lobby |
-| 13 | **GLM 5.2** | 3.60 | Renders a match, but it's a hologram: players phase through walls and the client is never sent the real map |
-| 14 | **Kimi K2.7** | 3.60 | Deterministic core, but the server crashes on the first connection and ranked never starts |
-| 15 | **Muse Spark 1.3** ‡ | 3.20 | Actually runs through round 2 — but every bot suicides in ~3s (the soak says PASS), five one-packet crashes, seed leaked, clients pick their own credentials, and the server rate-limits its own player's inputs |
-| 16 | **Kimi K2.6 swarm** | 3.20 | Textbook swarm failure: competent modules never wired together — crashes at boot, never sends snapshots, no mouse handling |
+| Published rank | Model | Weighted score /10 | SOL review /10 | Main finding |
+| :-: | --- | :-: | :-: | --- |
+| 1 | **Fable 5** † | 8.45 | **7.5–8.0** | Working ranked path; loot recoverable from the grid, flaky Hard-bot gate, long tide draws. Exact #1 is not established. |
+| 2 | **GPT-6 Astra** ✚ | 8.35 | **7.0–7.8** | Strongest per-tile loot isolation; room exhaustion plus a ranked pairing kills the whole server. |
+| 3 | **Opus 5.5** ⚑ | 8.30 | **7.5–8.0** | Substantial engineering and 774 tests; reconnect initialization race and long bot matches. Plausible co-leader with Fable. |
+| 4 | **Opus 5** ¶ | 7.75 | **6.0–6.8** | Strong internals, but ordinary matches lose round 1. Biggest overrating near the top. |
+| 5 | **Opus 4.8 (ultracode)** ‡ | 7.40 | **6.5–7.0** | Playable and coherent; public loot seed and a one-packet server kill. SOL prefers it over Opus 5 for normal play. |
+| 6 | **GPT-5.6 SOL (xhigh)** ‡ | 7.00 | **6.0–6.5** | Real netcode; production bots crawl, and default `npm start` does not serve the client. |
+| 7 | **Kimi K3** | 6.70 | **5.5–6.0** | Casual play works; default Space, ranked forfeit, and drawn-duel rating handling are broken. |
+| 8 | **Grok 4.7 (default)** ▲ | 6.30 | **4.8–5.5** | Real netcode and ping, but bots never place balloons and loot salt is recoverable. Alleged concurrent-hello crash refuted. |
+| 9 | **Grok 4.5** | 6.18 | **5.5–6.0** | Playable with real prediction; malformed frames crash the server, mutual-soak draw handling and ping are wrong. |
+| 10 | **Grok 4.6** ‡ | 5.80 | **5.0–5.7** | Some sim fixes, but weaker netcode, failed reconnects, free loot disclosure and a one-frame crash. |
+| **11 — new** | **[DeepSeek v4.1 Flash](results/deepseek-v4.1-flash/)** | **5.65** | New SOL evaluation | Best of the new batch: real reconciliation and persisted ranked ratings. Hard wins only 18/48 slot-balanced probe rounds; exposed items survive splashes; soak script missing. |
+| 12 | **Grok 4.7 (xhigh)** ◇ | 5.60 | **4.5–5.2** | Bots fight, but tutorial Skip freezes first-time clients; five process-kill vectors, free loot seed and fake ping. |
+| **13 — new** | **[MiniMax](results/minimax/)** | **5.00** | New SOL evaluation | Browser match completes with XP; reconciliation ignores server truth, later-round inputs are rejected, one ranked pairing creates two matches. |
+| 14 | **0x alpha** ‡ | 4.40 | **3.5–4.2** | Offline tutorial works; missing `match_start` prevents online gameplay from mounting. |
+| 15 | **GLM 5.2** | 3.60 | **3.0–3.6** | Collision fails and the client never receives the authoritative map. |
+| 16 | **Kimi K2.7** | 3.60 | **2.5–3.2** | First legitimate connection crashes the server; further ranked and mechanic wiring is missing. |
+| 17 | **Muse Spark 1.3** ‡ | 3.20 | **2.5–3.2** | Runs, but own-balloon collision can trap humans and bots; multiple server-kill frames and broken input pacing. |
+| 18 | **Kimi K2.6 swarm** | 3.20 | **2.0–3.0** | Boot crash, absent snapshots, inert buttons and unintegrated modules. |
+| **19 — new** | **[GLM — Oct 21](results/glm-oct21/)** | **3.00** | New SOL evaluation | Backend ranked ratings work, but homepage is 404 and dev canvas stays blank: `boot()` is never called. Exact model version unspecified. |
+
+### Independent score-review notes — GPT-6.1 SOL, October 21
+
+**I agree with the broad tiers, but not the exact scores or ordering.** The older
+grading gives too much credit to implemented-looking systems behind broken
+gameplay. My leading group is **Opus 5.5 ≈ Fable 5**, with **Astra** also strong
+but carrying a serious availability defect. None earns a clean shippability pass.
+
+I read all sixteen audits and their fact-checks, rebuilt and reran tests for
+Fable, Astra, Opus 5.5, Opus 5 and Grok 4.7, and independently reproduced:
+
+- **Opus 5:** normal Practice drops `round_start` before the game listener mounts;
+  180 snapshots arrive while the client still lacks first-round initialization.
+- **Opus 5.5:** ordinary startup works, but **6/8 actual document reopens** lose
+  round initialization. This is a timing-dependent race.
+- **Astra:** **200 abandoned rooms plus a ranked pairing** terminate the server.
+- **Grok 4.7:** **60 simultaneous same-token hellos succeed**; the claimed
+  concurrent-hello crash is refuted, as its original fact-check already reported.
+- **Fable:** the grid-recovery attack reconstructs every hidden item. Astra's
+  per-tile secrets and Opus 5.5's separate keyed stream defeat the tested
+  layout-seed guesses; that is not a proof against every possible PRNG attack.
+
+The table's review bands are provisional, with overlapping ranges. In particular,
+**DeepSeek's 5.65 versus Kimi K3's historical 6.70 is not a calibrated 1.05-point
+quality gap**. The previous sixteen scores and the new three were assigned by
+different evaluators. Full reasoning and fresh evidence:
+**[Independent score review](comparison/SCORE-REVIEW.md)** ·
+**[October 21 evaluations](comparison/OCT21-EVALUATION.md)**.
 
 † Fable 5 audited under the harsher adversarial framing; ‡ Opus 4.8 and SOL under
 neutral framing + an extra verifier; ¶ Opus 5 under three passes (neutral,
 adversarial, steelman) — the neutral pass missed the round-1 bug the adversarial
-pass caught; ✚ GPT-6 Astra and ⚑ Opus 5.5 are the two entries that satisfy the anti-cheat
-requirement; ⚑ Opus 5.5 is self-authored and was cut from a raw 8.50 by an extra
+pass caught; ✚ GPT-6 Astra and ⚑ Opus 5.5 isolate loot from the layout and defeat
+the tested derivation attacks; ⚑ Opus 5.5 is self-authored and was cut from a raw 8.50 by an extra
 generosity check; ▲ Grok 4.7's Security
 was anchor-adjusted 4 to 5 (raw total 6.15, a tie with Grok 4.5), see AUDIT-RANKINGS. Scored on correctness (25%), spec fidelity (20%), netcode (15%),
 security (15%), code quality (15%), test depth (10%).
 
-**The headline finding: fourteen of the sixteen entries fail the spec's
-"unguessable, unhackable" power-up requirement, and the two that pass are the
-whole story.** Eleven broadcast the real seed (free, instant recovery). Three more are
+**Loot secrecy remains a widespread failure:** all three new submissions expose
+the loot-generating seed. In the original sixteen-entry analysis, eleven entries
+broadcast the real seed (free, instant recovery). Three more are
 brute-forceable: Opus 5 omits it and Fable 5 sends a decoy, but both still ship the
 castle grid, which pins the seed (~76s for Opus 5, **21.8s for Fable 5**); Grok 4.7
 rolls loot from a separate stream but draws its secret salt from the same PRNG that
 emits the public seed, so the seed pins the salt (8 to 38s on one thread).
-**Two entries close it.** **GPT-6 Astra** rolls each tile's contents from an
+**Two entries isolate loot from layout.** **GPT-6 Astra** rolls each tile's contents from an
 independent per-tile CSPRNG stream, exactly the "independently seeded PRNG" fix the
 others missed, and an attacker holding the entire wire scores at chance (1.29 hits/map
 vs a 1.30 control). **Opus 5.5** uses one fresh 128-bit crypto key per round instead.
-A full round leaks at most ~72-100 bits of it, so it can never be pinned (1.56 vs a
-1.48 control). **A second near-universal flaw:** one
+Its tested layout-seed guess scores at chance (1.56 vs a 1.48 control), but the
+older entropy argument does not prove universal unpredictability of SFC32; see
+the independent review. **A second widespread flaw:** one
 malformed packet crashes the server for **seven** of them (K2.7, K2.6, Opus 4.8,
 Grok 4.5, Grok 4.6, Muse Spark, and Grok 4.7 xhigh — which reintroduced the exact
 crash the default build had fixed); Fable 5, SOL, Opus 5, 0x alpha, GPT-6 Astra and
@@ -129,7 +162,28 @@ lands one task too late — which is exactly where each model's own tests don't 
 
 ## Scoreboard
 
-Same machine (macOS, Node 23), same gauntlet for everyone
+### New submissions — October 21
+
+| Check | DeepSeek v4.1 Flash | MiniMax | GLM — Oct 21 |
+| --- | --- | --- | --- |
+| Install / build | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ |
+| Own unit tests | ✅ **17/17** | ✅ **34/34** | ✅ **23/23** |
+| Server / health | ✅ | ✅ | ✅ |
+| Homepage on server port | ✅ 200 | ✅ 200 | ❌ 404 |
+| Browser reaches round 1 | ✅ | ✅ | ❌ dev canvas also blank |
+| Full idle-human browser practice | Round 5 reached; 180s observation limit | ✅ results +35 XP in 156s | Unreachable |
+| Ranked disconnect test | ✅ 1032/968 persisted, APIs verified | +32/−32 payload; duplicate-match defect | Backend-only ✅ 1032/968, APIs verified |
+| Shipped soak | ❌ script missing | Inconclusive at 120s; runs in real time | ❌ script missing |
+| Twenty malformed-message cases | Health survived 20/20 | Health survived 20/20 | Health survived 20/20; one uncaught handler error |
+
+Observation limits do not establish nontermination. Supplemental production-room
+probes completed matches for DeepSeek and MiniMax. Source imports, detailed
+findings, logs and screenshots: [October 21 report](comparison/OCT21-EVALUATION.md).
+Screenshots were captured but could not be visually inspected by the new evaluator.
+
+### Original sixteen submissions
+
+Same machine (macOS, Node 23), original gauntlet
 ([`comparison/harness/evaluate.sh`](comparison/harness/evaluate.sh)):
 `npm install` → `npm test` → `npm run build` → `npm start` → `/health` →
 client served → headless browser probe.
