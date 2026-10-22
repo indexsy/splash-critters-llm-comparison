@@ -162,8 +162,8 @@ Recorded outputs: [`score-review-loot.json`](logs/score-review-loot.json).
    race remains in the synthesis after being refuted. Fable's raw audit still
    says its loot is underivable, though the synthesis later correctly lowers
    Security to 7. The SOL audit's supposed 500-line spec cap was refuted by its
-   fact-check; no such requirement appears in `prompt.md`, yet the cap still
-   appears as a spec claim elsewhere in the synthesis.
+   fact-check; no such requirement appears in the original task specification,
+   yet the cap still appears as a spec claim elsewhere in the synthesis.
 
 5. **Some security conclusions overstate the proof.** Opus 5.5 uses an
    independently generated 128-bit key but feeds a non-cryptographic SFC32 PRNG.

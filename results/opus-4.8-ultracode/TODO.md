@@ -1,6 +1,6 @@
 # Splash Critters — Build Brain (TODO / progress log)
 
-8-bit online water-balloon battler. Monorepo: `shared` (pure deterministic sim), `server` (ws + express + SQLite + bots + Elo), `client` (Vite + Canvas2D + Web Audio). Built from scratch per `~/Downloads/prompt.md`. Do NOT reference any other codebase.
+8-bit online water-balloon battler. Monorepo: `shared` (pure deterministic sim), `server` (ws + express + SQLite + bots + Elo), `client` (Vite + Canvas2D + Web Audio). Built from scratch per `~/Downloads/original specification`. Do NOT reference any other codebase.
 
 ## STATUS: COMPLETE ✅ (all 6 milestones)
 Built from scratch. `npm test` (22 green), `npm run soak` (PASSED), `npx tsc -b` clean,

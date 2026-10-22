@@ -87,7 +87,7 @@ All findings verified against source. Here is my independent assessment.
 
 3. **CONFIRMED (cosmetic).** In `accumulate` (match.ts:171-177), `burstSlot` latches the first `balloon_burst.ownerSlot` of the tick; all `balloon_burst` events precede all `chain_burst` events in the array (burst.ts:106 vs 181), and `chain_burst` carries no owner field (types.ts:208). So a second independent cascade's chain is credited to the first cascade's burster. Affects only the `biggestChain` fun-stat.
 
-4. **CONFIRMED (minor/interpretation).** `rematchVote` restarts when `rematchVotes.size >= Math.ceil(humans/2)` (room.ts:314). For 2 humans that is `ceil(1)=1`, so a single vote (a tie) restarts; prompt.md:67 says "majority restarts." Accurate, though "half-or-more" is a defensible reading for odd counts.
+4. **CONFIRMED (minor/interpretation).** `rematchVote` restarts when `rematchVotes.size >= Math.ceil(humans/2)` (room.ts:314). For 2 humans that is `ceil(1)=1`, so a single vote (a tie) restarts; the original specification says "majority restarts." Accurate, though "half-or-more" is a defensible reading for odd counts.
 
 5. **CONFIRMED (harmless seam).** `announceRoundStart` sends `startAtTick: CONFIG.ROUND_INTRO_TICKS` = `3*30` = 90 (match.ts:111, config.ts:126); `reattach` sends `startAtTick: 0` (room.ts:169). The client turns this into `introEndMs` (game.ts:50), so a reconnector skips the 3-2-1 gate. The two emitters do diverge as claimed — though `0` for a mid-round reconnect is arguably the correct behavior (no countdown mid-round), making this a real inconsistency but not a defect.
 

@@ -2,8 +2,8 @@
 
 **Verdict: DeepSeek > MiniMax > GLM. None meets the complete, shippable-game bar.**
 
-Evaluated by **GPT-6.1 SOL through OpenCode**, in one session, against
-[`prompt.md`](../prompt.md) and the existing six-dimension rubric. These are
+Evaluated by **GPT-6.1 SOL through OpenCode**, in one session, against the
+original task specification and the existing six-dimension rubric. These are
 judgment scores supported by reproducible checks, not statistically calibrated
 measurements. The older sixteen entries were not re-audited in this session.
 The exact model versions behind the MiniMax and GLM archive names were not supplied.

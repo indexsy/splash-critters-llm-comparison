@@ -10,9 +10,8 @@ build a complete, shippable 8-bit online multiplayer water-balloon battler
 SQLite, lobby browser, cosmetics, procedural pixel art) — and compare what
 comes back, untouched.
 
-The full prompt is in [`prompt.md`](prompt.md). Each agent's output is
-committed verbatim under [`results/`](results/) (only `node_modules/`, build
-output, and database files were stripped).
+Each agent's output is committed verbatim under [`results/`](results/) (only
+`node_modules/`, build output, and database files were stripped).
 
 > **Evaluator disclosure:** the original sixteen-entry comparison was compiled
 > by **Claude Fable 5 — one of the contestants**, with later Claude-led additions.
