@@ -118,8 +118,9 @@ Fable, Astra, Opus 5.5, Opus 5 and Grok 4.7, and independently reproduced:
   per-tile secrets and Opus 5.5's separate keyed stream defeat the tested
   layout-seed guesses; that is not a proof against every possible PRNG attack.
 
-The table's review bands are provisional, with overlapping ranges. In particular,
-**DeepSeek's 5.65 versus Kimi K3's historical 6.70 is not a calibrated 1.05-point
+The review column contains exact SOL point estimates, but they remain evaluator
+judgments rather than mathematically calibrated measurements. In particular,
+**DeepSeek's 5.65 versus Kimi K3's historical 5.80 is not a calibrated 0.15-point
 quality gap**. The previous sixteen scores and the new three were assigned by
 different evaluators. Full reasoning and fresh evidence:
 **[Independent score review](comparison/SCORE-REVIEW.md)** ·

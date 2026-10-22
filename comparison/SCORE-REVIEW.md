@@ -1,8 +1,7 @@
 # Independent review of the historical scores
 
-**Verdict: the broad tiers are credible; I do not endorse the exact scores or
-the precise ordering. Several entries score too highly for the game actually
-delivered.**
+**Verdict: the broad tiers are credible, but several original scores are too
+high for the game actually delivered. Here are my exact point estimates.**
 
 Reviewed on October 21, 2026 by GPT-6.1 SOL through OpenCode. I read all sixteen
 historical audit reports, their appended fact-checks, the ranking synthesis, and
@@ -12,29 +11,29 @@ calibration review with targeted reproduction, not sixteen fresh full audits.
 
 ## My assessment of each score
 
-The ranges below are **provisional judgment bands**, not newly calculated
-six-dimension scorecards or statistical confidence intervals. They express the
-standard I would apply to the shipped game, including the severity and frequency
-of its defects. Overlapping ranges do not establish an exact order.
+These are **exact point estimates**, rather than claims of mathematical
+precision. They are my direct replacement scores under the same six-dimension
+weighting, after the targeted rechecks below. This was not a fresh full
+sixteen-way audit.
 
-| Historical entry | Published | My provisional band | Assessment |
+| Historical entry | Published | SOL point estimate | Assessment |
 | --- | ---: | ---: | --- |
-| Fable 5 | 8.45 | **7.5–8.0** | Top tier, but the precise #1 and near-9 test/quality marks are not compelling. Recoverable loot, flaky bot-strength gate, long tide-draw matches. |
-| GPT-6 Astra | 8.35 | **7.0–7.8** | Top tier and strongest loot-isolation design. Security 8 and Correctness 8 are generous given a reproduced remote whole-process kill. |
-| Opus 5.5 | 8.30 | **7.5–8.0** | Strongest overall engineering candidate; plausible co-leader with Fable. Reconnect ordering bug and very long bot matches prevent a clean readiness endorsement. |
-| Opus 5 | 7.75 | **6.0–6.8** | Biggest overrating near the top: ordinary first-round gameplay is lost. Strong internals cannot make that a nearly-8 shipped game. |
-| Opus 4.8 ultracode | 7.40 | **6.5–7.0** | Coherent and playable, but a one-message process kill plus free loot disclosure is a major delivery defect. I would put it ahead of Opus 5 for normal play. |
-| GPT-5.6 SOL xhigh | 7.00 | **6.0–6.5** | Good foundation, but default production hosting fails and bots crawl in the real loop. |
-| Kimi K3 | 6.70 | **5.5–6.0** | Working casual foundation; broken default Space input and ranked forfeit/persistence flows cost more than the published score suggests. |
-| Grok 4.7 default | 6.30 | **4.8–5.5** | Too high for a bot battler whose bots never place balloons. Good netcode and typing do not restore that gameplay. Remove the refuted hello-race crash claim. |
-| Grok 4.5 | 6.18 | **5.5–6.0** | Broad mid-tier placement is reasonable; slightly generous for remote crashability, wrong draw handling and broken ping. |
-| Grok 4.6 | 5.80 | **5.0–5.7** | Roughly the right tier. Better sim decisions but weaker netcode and unchanged availability/loot flaws. |
-| Grok 4.7 xhigh | 5.60 | **4.5–5.2** | Too generous after the first-visit tutorial freeze was confirmed; also multiple process-kill inputs. One run cannot establish that higher reasoning effort generally makes models worse. |
-| 0x alpha | 4.40 | **3.5–4.2** | Strong isolated sim, but normal online gameplay never mounts. Architectural credit is substantial at 4.40. |
-| GLM 5.2 | 3.60 | **3.0–3.6** | Broadly agree with the low tier: collision and authoritative-map integration are broken. |
-| Kimi K2.7 | 3.60 | **2.5–3.2** | Too much credit for an artifact that crashes on the first legitimate connection and has further unreachable ranked code. |
-| Muse Spark 1.3 | 3.20 | **2.5–3.2** | Broadly agree with the failing tier. The appended fact-check is worse than the headline: walking off a balloon can trap human players too. |
-| Kimi K2.6 swarm | 3.20 | **2.0–3.0** | Correctly near the bottom. Boot failure, missing state delivery and inert UI are multiple independent blockers. |
+| Fable 5 | 8.45 | **7.80** | Top tier, but recoverable loot, flaky bot-strength gating and long tide-draw matches prevent a near-9 score. |
+| GPT-6 Astra | 8.35 | **7.50** | Strongest loot-isolation design, but a reproduced room-exhaustion attack kills the entire server. |
+| Opus 5.5 | 8.30 | **7.80** | Strongest overall engineering candidate; reconnect ordering and very long bot matches remain real shipped defects. |
+| Opus 5 | 7.75 | **6.40** | Excellent internals, but ordinary matches lose round 1. That is too severe for a nearly-8 shipped game. |
+| Opus 4.8 ultracode | 7.40 | **6.80** | Coherent and playable, but a one-message process kill plus free loot disclosure are major delivery defects. |
+| GPT-5.6 SOL xhigh | 7.00 | **6.30** | Good foundation, but default production hosting fails and real-loop bots crawl. |
+| Kimi K3 | 6.70 | **5.80** | Casual foundation works; default Space, ranked forfeit and drawn-duel rating flows are broken. |
+| Grok 4.7 default | 6.30 | **5.20** | Strong netcode and typing cannot compensate for bots that never place balloons. The alleged hello-race crash is refuted. |
+| Grok 4.5 | 6.18 | **5.80** | Playable with real prediction, but remote crashability, draw handling and fake ping are substantial. |
+| Grok 4.6 | 5.80 | **5.40** | Better sim decisions, but weaker netcode and unchanged seed, reconnect and crash flaws. |
+| Grok 4.7 xhigh | 5.60 | **4.90** | Bots fight, but first-run tutorial freeze, multiple kill vectors, free loot and fake ping make it worse than the published score. |
+| 0x alpha | 4.40 | **3.90** | Strong isolated sim, but normal online gameplay never mounts. |
+| GLM 5.2 | 3.60 | **3.30** | Collision and authoritative-map integration are broken. |
+| Kimi K2.7 | 3.60 | **2.80** | First legitimate connection crashes the server and ranked remains unreachable. |
+| Muse Spark 1.3 | 3.20 | **2.80** | Runs, but own-balloon collision can trap humans and bots; server kills and input pacing are broken. |
+| Kimi K2.6 swarm | 3.20 | **2.40** | Boot crash, absent snapshots, inert buttons and unintegrated modules. |
 
 ### Ordering I would defend
 
@@ -185,11 +184,12 @@ Recorded outputs: [`score-review-loot.json`](logs/score-review-loot.json).
 
 I retain **DeepSeek > MiniMax > the new GLM** on the evidence from their full
 batch evaluation. However, it would be misleading to read DeepSeek's 5.65 beside
-Kimi K3's historical 6.70 as a precisely calibrated 1.05-point quality gap. The
-older scores are generally more generous about code/features behind broken
-integration. The three new scores and these historical bands are more consistent
-with my assessment of the delivered game, but a replacement nineteen-way exact
-scoreboard would require the same acceptance harness and grading anchors for all.
+Kimi K3's SOL estimate of 5.80 as a precisely calibrated 0.15-point quality gap.
+The older scores are generally more generous about code/features behind broken
+integration. The three new scores and these historical point estimates are more
+consistent with my assessment of the delivered game, but a replacement
+nineteen-way exact scoreboard would require the same acceptance harness and
+grading anchors for all.
 
 ### Reproduce the targeted checks
 

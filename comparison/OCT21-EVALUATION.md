@@ -27,10 +27,10 @@ a visible match and ships more delivery artifacts, but its predictor can ignore
 the server, later-round inputs are rejected, and one ranked pairing creates two
 matches. GLM has substantial backend code behind an unstarted client.
 
-These scores would place DeepSeek between the historical Grok 4.6 and Grok 4.7
-xhigh scores, MiniMax between Grok 4.7 xhigh and 0x alpha, and GLM below the
-historical 3.20 entries. That is a **score comparison across evaluators**, not a
-freshly validated nineteen-way ranking.
+These scores place DeepSeek between the SOL estimates for Kimi K3 (**5.80**) and
+Grok 4.6 (**5.40**), MiniMax between Grok 4.7 default (**5.20**) and Grok 4.7
+xhigh (**4.90**), and GLM below the SOL bottom-tier estimates. The comparison is
+across evaluators, not a freshly validated nineteen-way ranking.
 
 **Follow-up:** the [independent historical-score review](SCORE-REVIEW.md) finds
 uneven calibration in those older numbers. The numerical placements above should
