@@ -1,7 +1,7 @@
 # Splash Critters — one prompt, twenty AI coding setups
 
-**Updated October 24, 2026:** Kimi 3.1P has joined the race. MiniMax, DeepSeek
-v4.1 Flash, and a new GLM submission are included in the rankings below,
+**Updated October 24, 2026:** Kimi K3.1 Pro has joined the race. MiniMax, DeepSeek
+v4.1 Flash, and a new GLM submission are also included in the rankings below,
 alongside an independent review of the original scores by **GPT-6.1 SOL through
 OpenCode**.
 
@@ -17,8 +17,8 @@ Each agent's output is committed verbatim under [`results/`](results/) (only
 > **Evaluator disclosure:** the original sixteen-entry comparison was compiled
 > by **Claude Fable 5 — one of the contestants**, with later Claude-led additions.
 > **GPT-6.1 SOL through OpenCode** evaluated the three October 21 submissions and
-> independently reviewed the older scores. Published scores and the new review
-> are shown side by side below. Kimi 3.1P is currently pending evaluation. Logs,
+> Kimi K3.1 Pro, and independently reviewed the older scores. Published scores and the new review
+> are shown side by side below. Logs,
 > harnesses and screenshots are in
 > [`comparison/`](comparison/); detailed methodology accompanies each report.
 
@@ -45,13 +45,13 @@ Each agent's output is committed verbatim under [`results/`](results/) (only
 | [`results/deepseek-v4.1-flash/`](results/deepseek-v4.1-flash/) | **DeepSeek v4.1 Flash** (added 2026-10-21; evaluated by GPT-6.1 SOL through OpenCode) |
 | [`results/minimax/`](results/minimax/) | **MiniMax** (added 2026-10-21; exact model version unspecified) |
 | [`results/glm-oct21/`](results/glm-oct21/) | **GLM — October 21 submission** (exact model version unspecified; separate from GLM 5.2 above) |
-| [`results/kimi-3.1p/`](results/kimi-3.1p/) | **Kimi 3.1P** (added 2026-10-24; evaluation pending) |
+| [`results/kimi-k3.1-pro/`](results/kimi-k3.1-pro/) | **Kimi K3.1 Pro** (added 2026-10-24) |
 
 ## Code audit & rankings
 
 The original sixteen audits are in [`comparison/audits/`](comparison/audits/),
 with their synthesis in [`comparison/AUDIT-RANKINGS.md`](comparison/AUDIT-RANKINGS.md).
-The three new evaluations use the same six-dimension weighting and are documented
+The October 21 evaluations use the same six-dimension weighting and are documented
 in [`comparison/OCT21-EVALUATION.md`](comparison/OCT21-EVALUATION.md).
 
 **How to read this table:** rank is by the published weighted score. The
@@ -85,21 +85,21 @@ The two evaluators' numbers are not precisely calibrated against each other.
 | 3 | **Opus 5.5** ⚑ | 8.30 | **7.80** | Substantial engineering and 774 tests; reconnect initialization race and long bot matches. Plausible co-leader with Fable. |
 | 4 | **Opus 5** ¶ | 7.75 | **6.40** | Strong internals, but ordinary matches lose round 1. Biggest overrating near the top. |
 | 5 | **Opus 4.8 (ultracode)** ‡ | 7.40 | **6.80** | Playable and coherent; public loot seed and a one-packet server kill. SOL prefers it over Opus 5 for normal play. |
-| 6 | **GPT-5.6 SOL (xhigh)** ‡ | 7.00 | **6.30** | Real netcode; production bots crawl, and default `npm start` does not serve the client. |
-| 7 | **Kimi K3** | 6.70 | **5.80** | Casual play works; default Space, ranked forfeit, and drawn-duel rating handling are broken. |
-| 8 | **Grok 4.7 (default)** ▲ | 6.30 | **5.20** | Real netcode and ping, but bots never place balloons and loot salt is recoverable. Alleged concurrent-hello crash refuted. |
-| 9 | **Grok 4.5** | 6.18 | **5.80** | Playable with real prediction; malformed frames crash the server, mutual-soak draw handling and ping are wrong. |
-| 10 | **Grok 4.6** ‡ | 5.80 | **5.40** | Some sim fixes, but weaker netcode, failed reconnects, free loot disclosure and a one-frame crash. |
-| **11 — new** | **[DeepSeek v4.1 Flash](results/deepseek-v4.1-flash/)** | **5.65** | New SOL evaluation | Best of the new batch: real reconciliation and persisted ranked ratings. Hard wins only 18/48 slot-balanced probe rounds; exposed items survive splashes; soak script missing. |
-| 12 | **Grok 4.7 (xhigh)** ◇ | 5.60 | **4.90** | Bots fight, but tutorial Skip freezes first-time clients; five process-kill vectors, free loot seed and fake ping. |
-| **13 — new** | **[MiniMax](results/minimax/)** | **5.00** | New SOL evaluation | Browser match completes with XP; reconciliation ignores server truth, later-round inputs are rejected, one ranked pairing creates two matches. |
-| 14 | **0x alpha** ‡ | 4.40 | **3.90** | Offline tutorial works; missing `match_start` prevents online gameplay from mounting. |
-| 15 | **GLM 5.2** | 3.60 | **3.30** | Collision fails and the client never receives the authoritative map. |
-| 16 | **Kimi K2.7** | 3.60 | **2.80** | First legitimate connection crashes the server; further ranked and mechanic wiring is missing. |
-| 17 | **Muse Spark 1.3** ‡ | 3.20 | **2.80** | Runs, but own-balloon collision can trap humans and bots; multiple server-kill frames and broken input pacing. |
-| 18 | **Kimi K2.6 swarm** | 3.20 | **2.40** | Boot crash, absent snapshots, inert buttons and unintegrated modules. |
-| **19 — new** | **[GLM — Oct 21](results/glm-oct21/)** | **3.00** | New SOL evaluation | Backend ranked ratings work, but homepage is 404 and dev canvas stays blank: `boot()` is never called. Exact model version unspecified. |
-| **20 — new** | **[Kimi 3.1P](results/kimi-3.1p/)** | Pending | Evaluation pending | Added October 24 from the submitted archive; own suite passes 21/21 tests and the production build completes. |
+| **6 — new** | **[Kimi K3.1 Pro](results/kimi-k3.1-pro/)** | **7.05** | New SOL evaluation | Full game and ranked flows work; public map seed reveals every hidden drop, FFA Elo is not zero-sum, and 205 rooms were created without a cap. |
+| 7 | **GPT-5.6 SOL (xhigh)** ‡ | 7.00 | **6.30** | Real netcode; production bots crawl, and default `npm start` does not serve the client. |
+| 8 | **Kimi K3** | 6.70 | **5.80** | Casual play works; default Space, ranked forfeit, and drawn-duel rating handling are broken. |
+| 9 | **Grok 4.7 (default)** ▲ | 6.30 | **5.20** | Real netcode and ping, but bots never place balloons and loot salt is recoverable. Alleged concurrent-hello crash refuted. |
+| 10 | **Grok 4.5** | 6.18 | **5.80** | Playable with real prediction; malformed frames crash the server, mutual-soak draw handling and ping are wrong. |
+| 11 | **Grok 4.6** ‡ | 5.80 | **5.40** | Some sim fixes, but weaker netcode, failed reconnects, free loot disclosure and a one-frame crash. |
+| **12 — new** | **[DeepSeek v4.1 Flash](results/deepseek-v4.1-flash/)** | **5.65** | New SOL evaluation | Best of the October 21 batch: real reconciliation and persisted ranked ratings. Hard wins only 18/48 slot-balanced probe rounds; exposed items survive splashes; soak script missing. |
+| 13 | **Grok 4.7 (xhigh)** ◇ | 5.60 | **4.90** | Bots fight, but tutorial Skip freezes first-time clients; five process-kill vectors, free loot seed and fake ping. |
+| **14 — new** | **[MiniMax](results/minimax/)** | **5.00** | New SOL evaluation | Browser match completes with XP; reconciliation ignores server truth, later-round inputs are rejected, one ranked pairing creates two matches. |
+| 15 | **0x alpha** ‡ | 4.40 | **3.90** | Offline tutorial works; missing `match_start` prevents online gameplay from mounting. |
+| 16 | **GLM 5.2** | 3.60 | **3.30** | Collision fails and the client never receives the authoritative map. |
+| 17 | **Kimi K2.7** | 3.60 | **2.80** | First legitimate connection crashes the server; further ranked and mechanic wiring is missing. |
+| 18 | **Muse Spark 1.3** ‡ | 3.20 | **2.80** | Runs, but own-balloon collision can trap humans and bots; multiple server-kill frames and broken input pacing. |
+| 19 | **Kimi K2.6 swarm** | 3.20 | **2.40** | Boot crash, absent snapshots, inert buttons and unintegrated modules. |
+| **20 — new** | **[GLM — Oct 21](results/glm-oct21/)** | **3.00** | New SOL evaluation | Backend ranked ratings work, but homepage is 404 and dev canvas stays blank: `boot()` is never called. Exact model version unspecified. |
 
 ### Independent score-review notes — GPT-6.1 SOL, October 21
 
@@ -128,7 +128,8 @@ judgments rather than mathematically calibrated measurements. In particular,
 quality gap**. The previous sixteen scores and the new three were assigned by
 different evaluators. Full reasoning and fresh evidence:
 **[Independent score review](comparison/SCORE-REVIEW.md)** ·
-**[October 21 evaluations](comparison/OCT21-EVALUATION.md)**.
+**[October 21 evaluations](comparison/OCT21-EVALUATION.md)** ·
+**[Kimi K3.1 Pro evaluation](comparison/KIMI-K3.1-PRO-EVALUATION.md)**.
 
 † Fable 5 audited under the harsher adversarial framing; ‡ Opus 4.8 and SOL under
 neutral framing + an extra verifier; ¶ Opus 5 under three passes (neutral,

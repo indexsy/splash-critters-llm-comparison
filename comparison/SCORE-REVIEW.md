@@ -188,7 +188,7 @@ Kimi K3's SOL estimate of 5.80 as a precisely calibrated 0.15-point quality gap.
 The older scores are generally more generous about code/features behind broken
 integration. The three new scores and these historical point estimates are more
 consistent with my assessment of the delivered game, but a replacement
-nineteen-way exact scoreboard would require the same acceptance harness and
+twenty-way exact scoreboard would require the same acceptance harness and
 grading anchors for all.
 
 ### Reproduce the targeted checks
