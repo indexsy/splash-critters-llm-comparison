@@ -1,10 +1,11 @@
-# Splash Critters — one prompt, nineteen AI coding setups
+# Splash Critters — one prompt, twenty AI coding setups
 
-**Updated October 21, 2026:** MiniMax, DeepSeek v4.1 Flash, and a new GLM
-submission are included in the rankings below, alongside an independent review
-of the original scores by **GPT-6.1 SOL through OpenCode**.
+**Updated October 24, 2026:** Kimi 3.1P has joined the race. MiniMax, DeepSeek
+v4.1 Flash, and a new GLM submission are included in the rankings below,
+alongside an independent review of the original scores by **GPT-6.1 SOL through
+OpenCode**.
 
-An experiment: give nineteen LLM coding setups the **same ~200-line spec** —
+An experiment: give twenty LLM coding setups the **same ~200-line spec** —
 build a complete, shippable 8-bit online multiplayer water-balloon battler
 (deterministic shared sim, server-authoritative netcode, bots, ranked Elo,
 SQLite, lobby browser, cosmetics, procedural pixel art) — and compare what
@@ -17,7 +18,8 @@ Each agent's output is committed verbatim under [`results/`](results/) (only
 > by **Claude Fable 5 — one of the contestants**, with later Claude-led additions.
 > **GPT-6.1 SOL through OpenCode** evaluated the three October 21 submissions and
 > independently reviewed the older scores. Published scores and the new review
-> are shown side by side below. Logs, harnesses and screenshots are in
+> are shown side by side below. Kimi 3.1P is currently pending evaluation. Logs,
+> harnesses and screenshots are in
 > [`comparison/`](comparison/); detailed methodology accompanies each report.
 
 ## Contenders
@@ -43,6 +45,7 @@ Each agent's output is committed verbatim under [`results/`](results/) (only
 | [`results/deepseek-v4.1-flash/`](results/deepseek-v4.1-flash/) | **DeepSeek v4.1 Flash** (added 2026-10-21; evaluated by GPT-6.1 SOL through OpenCode) |
 | [`results/minimax/`](results/minimax/) | **MiniMax** (added 2026-10-21; exact model version unspecified) |
 | [`results/glm-oct21/`](results/glm-oct21/) | **GLM — October 21 submission** (exact model version unspecified; separate from GLM 5.2 above) |
+| [`results/kimi-3.1p/`](results/kimi-3.1p/) | **Kimi 3.1P** (added 2026-10-24; evaluation pending) |
 
 ## Code audit & rankings
 
@@ -96,6 +99,7 @@ The two evaluators' numbers are not precisely calibrated against each other.
 | 17 | **Muse Spark 1.3** ‡ | 3.20 | **2.80** | Runs, but own-balloon collision can trap humans and bots; multiple server-kill frames and broken input pacing. |
 | 18 | **Kimi K2.6 swarm** | 3.20 | **2.40** | Boot crash, absent snapshots, inert buttons and unintegrated modules. |
 | **19 — new** | **[GLM — Oct 21](results/glm-oct21/)** | **3.00** | New SOL evaluation | Backend ranked ratings work, but homepage is 404 and dev canvas stays blank: `boot()` is never called. Exact model version unspecified. |
+| **20 — new** | **[Kimi 3.1P](results/kimi-3.1p/)** | Pending | Evaluation pending | Added October 24 from the submitted archive; own suite passes 21/21 tests and the production build completes. |
 
 ### Independent score-review notes — GPT-6.1 SOL, October 21
 

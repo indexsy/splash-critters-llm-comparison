@@ -1,0 +1,12 @@
+id,role,type,description,size/ratio,style line ref,source
+SF1,shared visual contract,style,"Chunky 8-bit pixel art with crisp single-pixel details and two-frame animations; rounded, toy-like animal silhouettes, angular arena tiles, and deep navy outlines. Environments use grassy greens, warm beach sands, or cool pool blues; critters use bright contrasting cream, coral, lime, and lavender, while water hazards and pickups use sparkling cyan with yellow accents. Sunny flat lighting creates a cheerful, mischievous pool-party mood. Strong foreground-background contrast, clean readable silhouettes, and a consistent top-down perspective keep every action legible.",n/a,SF1,procedural
+critters,player and bot actors,sprite set,"Eight cute animals with idle two-frame walk soak and revenge-duck poses plus five hats",16x16,SF1,procedural
+arena_tiles,arena terrain,tile set,"Backyard Beach and Pool Party floors borders boulders and decorative details",16x16,SF1,procedural
+sandcastles,destructible cover,sprite set,"Chunky sandcastles with intact and four crumble stages",16x16,SF1,procedural
+balloons,primary weapon,sprite set,"Inflating wobbling and kicked water balloons",16x16,SF1,procedural
+splashes,water hazard,effect set,"Cross splashes droplets shimmer and colorblind-safe palette",16x16,SF1,procedural
+powerups,reward pickups,icon set,"Extra Balloon Big Splash Flippers and Rubber Boots",16x16,SF1,procedural
+ui,menus and HUD,UI set,"Pixel panels buttons badges speech bubbles VS cards and results icons",256x224,SF1,procedural
+particles,game feel,effect set,"Water droplets sand crumbs soak stars tide foam and confetti",1x1 to 4x4,SF1,procedural
+sfx,game feedback,procedural audio,"Drop burst escalating chain pickup soak kick tide emote and victory oscillator sounds",n/a,SF1,procedural
+music,screen ambience,procedural audio,"Square and triangle chiptune loops for title menu match showdown and results",n/a,SF1,procedural

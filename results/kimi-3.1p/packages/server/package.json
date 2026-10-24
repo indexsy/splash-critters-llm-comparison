@@ -1,0 +1,23 @@
+{
+  "name": "@splash/server",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "main": "./dist/index.js",
+  "scripts": {
+    "dev": "tsx watch src/index.ts",
+    "build": "tsc -p tsconfig.json && mkdir -p dist/db/migrations && cp -R src/db/migrations/* dist/db/migrations/",
+    "typecheck": "tsc -p tsconfig.json --noEmit"
+  },
+  "dependencies": {
+    "@splash/shared": "1.0.0",
+    "better-sqlite3": "^12.11.1",
+    "express": "^4.21.2",
+    "ws": "^8.18.0"
+  },
+  "devDependencies": {
+    "@types/better-sqlite3": "^7.6.12",
+    "@types/express": "^5.0.0",
+    "@types/ws": "^8.5.13"
+  }
+}

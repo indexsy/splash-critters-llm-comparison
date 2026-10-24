@@ -1,0 +1,10 @@
+node_modules
+packages/*/dist
+data
+coverage
+.git
+.gitignore
+.env
+*.log
+.DS_Store
+.playwright-cli
