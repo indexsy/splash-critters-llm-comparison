@@ -52,8 +52,9 @@ The three new evaluations use the same six-dimension weighting and are documente
 in [`comparison/OCT21-EVALUATION.md`](comparison/OCT21-EVALUATION.md).
 
 **How to read this table:** rank is by the published weighted score. The
-**SOL review** column gives independent provisional judgment bands for the older
-entries, not freshly calculated scores or statistical confidence intervals.
+**SOL review** column gives independent exact point estimates for the older
+entries. They are evaluator judgments, not freshly calculated scores or
+statistical confidence intervals.
 The two evaluators' numbers are not precisely calibrated against each other.
 
 > **Original-evaluation conflict of interest:** Four entries are Claude-family
@@ -76,24 +77,24 @@ The two evaluators' numbers are not precisely calibrated against each other.
 
 | Published rank | Model | Weighted score /10 | SOL review /10 | Main finding |
 | :-: | --- | :-: | :-: | --- |
-| 1 | **Fable 5** † | 8.45 | **7.5–8.0** | Working ranked path; loot recoverable from the grid, flaky Hard-bot gate, long tide draws. Exact #1 is not established. |
-| 2 | **GPT-6 Astra** ✚ | 8.35 | **7.0–7.8** | Strongest per-tile loot isolation; room exhaustion plus a ranked pairing kills the whole server. |
-| 3 | **Opus 5.5** ⚑ | 8.30 | **7.5–8.0** | Substantial engineering and 774 tests; reconnect initialization race and long bot matches. Plausible co-leader with Fable. |
-| 4 | **Opus 5** ¶ | 7.75 | **6.0–6.8** | Strong internals, but ordinary matches lose round 1. Biggest overrating near the top. |
-| 5 | **Opus 4.8 (ultracode)** ‡ | 7.40 | **6.5–7.0** | Playable and coherent; public loot seed and a one-packet server kill. SOL prefers it over Opus 5 for normal play. |
-| 6 | **GPT-5.6 SOL (xhigh)** ‡ | 7.00 | **6.0–6.5** | Real netcode; production bots crawl, and default `npm start` does not serve the client. |
-| 7 | **Kimi K3** | 6.70 | **5.5–6.0** | Casual play works; default Space, ranked forfeit, and drawn-duel rating handling are broken. |
-| 8 | **Grok 4.7 (default)** ▲ | 6.30 | **4.8–5.5** | Real netcode and ping, but bots never place balloons and loot salt is recoverable. Alleged concurrent-hello crash refuted. |
-| 9 | **Grok 4.5** | 6.18 | **5.5–6.0** | Playable with real prediction; malformed frames crash the server, mutual-soak draw handling and ping are wrong. |
-| 10 | **Grok 4.6** ‡ | 5.80 | **5.0–5.7** | Some sim fixes, but weaker netcode, failed reconnects, free loot disclosure and a one-frame crash. |
+| 1 | **Fable 5** † | 8.45 | **7.80** | Working ranked path; loot recoverable from the grid, flaky Hard-bot gate, long tide draws. Exact #1 is not established. |
+| 2 | **GPT-6 Astra** ✚ | 8.35 | **7.50** | Strongest per-tile loot isolation; room exhaustion plus a ranked pairing kills the whole server. |
+| 3 | **Opus 5.5** ⚑ | 8.30 | **7.80** | Substantial engineering and 774 tests; reconnect initialization race and long bot matches. Plausible co-leader with Fable. |
+| 4 | **Opus 5** ¶ | 7.75 | **6.40** | Strong internals, but ordinary matches lose round 1. Biggest overrating near the top. |
+| 5 | **Opus 4.8 (ultracode)** ‡ | 7.40 | **6.80** | Playable and coherent; public loot seed and a one-packet server kill. SOL prefers it over Opus 5 for normal play. |
+| 6 | **GPT-5.6 SOL (xhigh)** ‡ | 7.00 | **6.30** | Real netcode; production bots crawl, and default `npm start` does not serve the client. |
+| 7 | **Kimi K3** | 6.70 | **5.80** | Casual play works; default Space, ranked forfeit, and drawn-duel rating handling are broken. |
+| 8 | **Grok 4.7 (default)** ▲ | 6.30 | **5.20** | Real netcode and ping, but bots never place balloons and loot salt is recoverable. Alleged concurrent-hello crash refuted. |
+| 9 | **Grok 4.5** | 6.18 | **5.80** | Playable with real prediction; malformed frames crash the server, mutual-soak draw handling and ping are wrong. |
+| 10 | **Grok 4.6** ‡ | 5.80 | **5.40** | Some sim fixes, but weaker netcode, failed reconnects, free loot disclosure and a one-frame crash. |
 | **11 — new** | **[DeepSeek v4.1 Flash](results/deepseek-v4.1-flash/)** | **5.65** | New SOL evaluation | Best of the new batch: real reconciliation and persisted ranked ratings. Hard wins only 18/48 slot-balanced probe rounds; exposed items survive splashes; soak script missing. |
-| 12 | **Grok 4.7 (xhigh)** ◇ | 5.60 | **4.5–5.2** | Bots fight, but tutorial Skip freezes first-time clients; five process-kill vectors, free loot seed and fake ping. |
+| 12 | **Grok 4.7 (xhigh)** ◇ | 5.60 | **4.90** | Bots fight, but tutorial Skip freezes first-time clients; five process-kill vectors, free loot seed and fake ping. |
 | **13 — new** | **[MiniMax](results/minimax/)** | **5.00** | New SOL evaluation | Browser match completes with XP; reconciliation ignores server truth, later-round inputs are rejected, one ranked pairing creates two matches. |
-| 14 | **0x alpha** ‡ | 4.40 | **3.5–4.2** | Offline tutorial works; missing `match_start` prevents online gameplay from mounting. |
-| 15 | **GLM 5.2** | 3.60 | **3.0–3.6** | Collision fails and the client never receives the authoritative map. |
-| 16 | **Kimi K2.7** | 3.60 | **2.5–3.2** | First legitimate connection crashes the server; further ranked and mechanic wiring is missing. |
-| 17 | **Muse Spark 1.3** ‡ | 3.20 | **2.5–3.2** | Runs, but own-balloon collision can trap humans and bots; multiple server-kill frames and broken input pacing. |
-| 18 | **Kimi K2.6 swarm** | 3.20 | **2.0–3.0** | Boot crash, absent snapshots, inert buttons and unintegrated modules. |
+| 14 | **0x alpha** ‡ | 4.40 | **3.90** | Offline tutorial works; missing `match_start` prevents online gameplay from mounting. |
+| 15 | **GLM 5.2** | 3.60 | **3.30** | Collision fails and the client never receives the authoritative map. |
+| 16 | **Kimi K2.7** | 3.60 | **2.80** | First legitimate connection crashes the server; further ranked and mechanic wiring is missing. |
+| 17 | **Muse Spark 1.3** ‡ | 3.20 | **2.80** | Runs, but own-balloon collision can trap humans and bots; multiple server-kill frames and broken input pacing. |
+| 18 | **Kimi K2.6 swarm** | 3.20 | **2.40** | Boot crash, absent snapshots, inert buttons and unintegrated modules. |
 | **19 — new** | **[GLM — Oct 21](results/glm-oct21/)** | **3.00** | New SOL evaluation | Backend ranked ratings work, but homepage is 404 and dev canvas stays blank: `boot()` is never called. Exact model version unspecified. |
 
 ### Independent score-review notes — GPT-6.1 SOL, October 21
